@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 13:55:52 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/11/21 17:18:59 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/11/27 17:23:44 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,42 @@
 # include <pthread.h>
 # include <sys/time.h>
 
+typedef struct s_env
+{
+	char			*key;
+	char			*separator;
+	char			*value;
+	struct s_env	*next;
+}	t_env;
 
+typedef struct s_redir
+{
+	char			*name;
+	char			*limiter;
+	int				cmd;
+	int				in;
+	int				two;
+	struct s_redir	*next;
+}	t_redir;
 
+typedef struct s_command
+{
+	char				**cmd;
+	t_redir				*in;
+	t_redir				*out;
+	struct s_command	*next;
+}	t_command;
+
+typedef struct s_arg
+{
+	t_command	*cmd;
+	t_redir		*redir;
+	t_env		envp;
+	char		*env;
+	int			num;
+	int			**fd;
+	int			errnum;
+}	t_arg;
 
 int	ft_cd(char **args); //cd with only a relative or absolute path
 // pwd with no options
