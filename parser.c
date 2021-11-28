@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:09:43 by fbeatris          #+#    #+#             */
-/*   Updated: 2021/11/28 16:39:54 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/11/28 17:30:45 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ int	parser(int ac, char **av, char **envp) // ctrl-D, ctrl+C, ctrl+slash
 
 	while (1)
 	{
-		line = readline("\033[1;35m>>>");
+		line = readline("\033[1;35m>>>\033[0;37m");
 		if (line && *line)
 			add_history(line);
 		if (check_syntax(line))
