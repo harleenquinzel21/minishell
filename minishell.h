@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 13:55:52 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/11/27 17:23:44 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/11/28 14:30:35 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include <unistd.h>
 # include <pthread.h>
 # include <sys/time.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 
 typedef struct s_env
 {
@@ -57,6 +59,8 @@ typedef struct s_arg
 	int			**fd;
 	int			errnum;
 }	t_arg;
+
+int	parser(int ac, char **av, char **envp);
 
 int	ft_cd(char **args); //cd with only a relative or absolute path
 // pwd with no options

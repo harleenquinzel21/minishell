@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 17:19:18 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/11/24 13:06:18 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/11/28 14:28:30 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,7 @@
 
 int	main(int ac, char **av, char **envp)
 {
-	(void)ac;
-	(void)av;
-	printf("%s\n", envp[24]);
+	parser(ac, av, envp);
 	return (0);
 }
 

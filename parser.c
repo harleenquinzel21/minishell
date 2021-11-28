@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:09:43 by fbeatris          #+#    #+#             */
-/*   Updated: 2021/11/27 21:44:07 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/11/28 16:39:54 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*
-незакрытые кавычки, незакрытые двойные, бэкслэш в конце, 
+незакрытые кавычки, незакрытые двойные, бэкслэш в конце,
 два пайпа подряд, что еще?
 */
 int	check_syntax(char *line)
@@ -117,10 +117,10 @@ int	parser(int ac, char **av, char **envp) // ctrl-D, ctrl+C, ctrl+slash
 	(void)av;
 	(void)envp;
 	line = NULL;
-	
+
 	while (1)
 	{
-		line = readline(">>>");
+		line = readline("\033[1;35m>>>");
 		if (line && *line)
 			add_history(line);
 		if (check_syntax(line))

@@ -6,13 +6,14 @@
 #    By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/21 16:31:18 by ogarthar          #+#    #+#              #
-#    Updated: 2021/11/21 17:04:27 by ogarthar         ###   ########.fr        #
+#    Updated: 2021/11/28 14:38:28 by ogarthar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = minishel
+NAME = minishell
 
-LIST =	main.c
+LIST =	main.c\
+		parser.c
 
 OBJ = $(LIST:.c=.o)
 
@@ -24,7 +25,7 @@ CC = gcc
 
 CFLAGS = -Wall -Werror -Wextra -g -O3
 
-%.o:  %.c fdf.h Makefile minilibx_macos/mlx.h
+%.o:  %.c Makefile
 	$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
 
 # COLORS
@@ -37,7 +38,7 @@ all : $(NAME)
 	@echo "$(GREEN)MINISHELL : ✅ D O N E ✅$(WHITE)"
 
 $(NAME):	$(OBJ) $(LIBFT) Makefile
-	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -lreadline -o $(NAME)
 
 .FORCE :
 $(LIBFT): .FORCE

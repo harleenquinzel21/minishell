@@ -6,7 +6,7 @@
 #    By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/21 18:36:00 by ogarthar          #+#    #+#              #
-#    Updated: 2021/10/16 19:06:26 by ogarthar         ###   ########.fr        #
+#    Updated: 2021/11/28 14:23:02 by ogarthar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,9 +27,8 @@ LIST =		ft_memchr.c	ft_isalpha.c	ft_atoi.c\
 						ft_strnstr.c	ft_putstr_fd.c\
 			ft_memcmp.c	ft_strchr.c		ft_putchar_fd.c\
 			get_next_line_utils.c		 get_next_line.c\
-			ft_atoi_base.c
-
-LIST_B =	ft_lstnew.c	ft_lstadd_front.c	ft_lstsize.c\
+			ft_atoi_base.c\
+			ft_lstnew.c	ft_lstadd_front.c	ft_lstsize.c\
 			ft_lstlast.c	 ft_lstadd_back.c	ft_lstdelone.c\
 			ft_lstclear.c	ft_lstiter.c	ft_lstmap.c
 
