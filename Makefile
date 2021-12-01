@@ -6,14 +6,15 @@
 #    By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/21 16:31:18 by ogarthar          #+#    #+#              #
-#    Updated: 2021/11/28 14:38:28 by ogarthar         ###   ########.fr        #
+#    Updated: 2021/12/01 20:32:17 by ogarthar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
 LIST =	main.c\
-		parser.c
+		parser.c\
+		builtin.c\
 
 OBJ = $(LIST:.c=.o)
 

@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 13:55:52 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/11/28 14:30:35 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/01 20:40:22 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include "./libft/libft.h"
 # include <unistd.h>
+# include <string.h>
+# include <errno.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -69,9 +71,7 @@ int	ft_cd(char **args); //cd with only a relative or absolute path
 // unset with no options
 // env with no options or arguments
 
-int ft_exit(char **args); //exit with no options
-
-
+void	ft_exit(int errnum, char *msg, t_arg *main_struct); //exit with no options
 
 
 #endif
