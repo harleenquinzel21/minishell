@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 18:36:20 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/10/16 20:21:03 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/03 19:20:56 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void	ft_lstdelone(t_list *lst, void (*del)(void *));
 void	ft_lstclear(t_list **lst, void (*del)(void *));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
+int		ft_strcmp(const char *s1, const char *s2);
 ////gnl////
 int		get_next_line(int fd, char **line);
 int		cut_nl_rem_to_line(char **line, char **remainder, char *ptr_nl);

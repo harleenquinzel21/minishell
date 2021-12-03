@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 13:55:52 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/01 20:40:22 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/03 20:35:01 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,13 @@ typedef struct s_arg
 }	t_arg;
 
 int	parser(int ac, char **av, char **envp);
-
-int	ft_cd(char **args); //cd with only a relative or absolute path
+void	ft_init_structs(t_arg **data);
+int	ft_pwd(t_arg *data);
+int	ft_echo(t_arg *data);
+int	ft_export(t_arg *data);
+int	ft_env(t_arg *data);
+int	ft_unset(t_arg *data);
+int	ft_cd(t_arg *data); //cd with only a relative or absolute path
 // pwd with no options
 // echo with option -n
 //export with no options

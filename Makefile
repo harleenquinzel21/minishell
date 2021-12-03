@@ -6,7 +6,7 @@
 #    By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/21 16:31:18 by ogarthar          #+#    #+#              #
-#    Updated: 2021/12/01 20:32:17 by ogarthar         ###   ########.fr        #
+#    Updated: 2021/12/03 20:45:36 by ogarthar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,9 @@ NAME = minishell
 
 LIST =	main.c\
 		parser.c\
-		builtin.c\
+		init_structs.c\
+		built_in/exit_builtin.c\
+		built_in/echo_builtin.c
 
 OBJ = $(LIST:.c=.o)
 

@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin.c                                          :+:      :+:    :+:   */
+/*   exit_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 20:19:43 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/01 21:00:01 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/03 19:10:57 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
-# include "minishell.h"
+# include "../minishell.h"
 
-void	ft_exit(int errnum, char *msg, t_arg *main_struct)
+void	ft_exit(int errnum, char *msg, t_arg *data)
 {
 	char	*errmsg;
 
-	(void)main_struct;///
+	(void)data;///
 
 	if (msg)
 	{
@@ -27,6 +27,6 @@ void	ft_exit(int errnum, char *msg, t_arg *main_struct)
 		write(2, errmsg, ft_strlen(errmsg));
 		write(2, "\n", 1);
 	}
-	// free_arg(main_struct);////
+	// ft_free(data);////
 	exit(errnum);
 }

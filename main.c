@@ -6,11 +6,31 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 17:19:18 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/01 22:07:21 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/03 20:52:40 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "minishell.h"
+
+int	ft_check_builtin(t_arg *data)
+{
+	// if (!(ft_strcmp(data->cmd->cmd[0], "pwd")))
+	// 	return (ft_pwd(data));
+	// else
+	if (!(ft_strcmp(data->cmd->cmd[0], "echo")))
+		return (ft_echo(data));
+	// else if (!(ft_strcmp(data->cmd->cmd[0], "cd")))
+	// 	return (ft_cd(data));
+	// else if (!(ft_strcmp(data->cmd->cmd[0], "export")))
+	// 	return (ft_export(data));
+	// else if (!(ft_strcmp(data->cmd->cmd[0], "env")))
+	// 	return (ft_env(data));
+	// else if (!(ft_strcmp(data->cmd->cmd[0], "unset")))
+	// 	return (ft_unset(data));
+	else if (!(ft_strcmp(data->cmd->cmd[0], "exit")))
+		ft_exit(0, NULL, data);///
+	return (0);
+}
 
 char	*find_path(char *cmd, char **envp)
 {
@@ -48,36 +68,37 @@ void	execute(char *av, char **envp)
 	}
 }
 
-void	child_process(char **av, char **envp)
+void	child_process(t_arg *data, char **av, char **envp)
 {
-	execute(av[1], envp);
+	if (ft_check_builtin(data) != 1)
+		execute(av[1], envp);
 }
 
 int	main(int ac, char **av, char **envp)
 {
-	// t_arg	main_struct;
+	t_arg		*data;///
+	// t_command	*cmd;///
 
 	pid_t	child_pid;
 
-	// (void)av;
+	(void)av;
 	(void)ac;
-	// (void)envp;
-
+	(void)envp;
+	ft_init_structs(&data);
 	// parser(ac, av, envp);
-	// ft_init_structs(&main_struct);
 
-	// if (ac != 1)
-	// 	ft_exit(1, NULL, NULL/*&main_struct*/);
+	if (ac != 1)
+		ft_exit(1, NULL, NULL/*&main_struct*/);
+
 	while (1)
 	{
+
 		child_pid = fork();
 		if (child_pid == 0)
-			child_process(av, envp);
+			child_process(data, av, envp);
 		waitpid(child_pid, NULL, 0);
 		return (0);
 	}
-
-
-
+	return (0);
 }
 
