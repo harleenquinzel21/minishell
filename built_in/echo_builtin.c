@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 19:28:40 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/03 20:57:17 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/04 19:04:12 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,26 @@ int	ft_echo(t_arg *data)
 {
 	int	i;
 
-	i = 2;
+	if (!data->cmd->cmd[1])
+		printf("\n");
+	i = 1;
 	if (!(ft_strcmp(data->cmd->cmd[1], "-n")))
 	{
-		while (data->cmd->cmd[i])
-			printf("%s", data->cmd->cmd[i++]);
+		while (data->cmd->cmd[++i])
+		{
+			printf("%s", data->cmd->cmd[i]);
+			if (data->cmd->cmd[i + 1] != NULL)
+				printf(" ");
+		}
+		return (1);
 	}
-	else
+	i = 0;
+	while (data->cmd->cmd[++i])
 	{
-		i = 1;
-		while (data->cmd->cmd[i])
-			printf("%s", data->cmd->cmd[i++]);
-		printf("\n");
+		printf("%s", data->cmd->cmd[i]);
+		if (data->cmd->cmd[i + 1] != NULL)
+			printf(" ");
 	}
+	printf("\n");
 	return (1);
 }
