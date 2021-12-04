@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 17:19:18 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/04 16:40:49 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/04 17:59:23 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,8 @@ char	*find_path(char *cmd, char **envp)
 	return (0);
 }
 
-void	execute(char *av, char **envp)
+void	execute(char **cmd, char **envp)
 {
-	char	**cmd;
-
-	cmd = ft_split(av, ' ');
 	if (execve(find_path(cmd[0], envp), cmd, envp) == -1)
 	{
 		write(1, "command not found: ", 19);
@@ -68,35 +65,42 @@ void	execute(char *av, char **envp)
 	}
 }
 
-void	child_process(t_arg *data, char **av, char **envp)
+void	child_process(t_arg *data, char **envp)
 {
 	if (ft_check_builtin(data) != 1)
-		execute(av[1], envp);
+		execute(data->cmd->cmd, envp);
 }
+
+
 
 int	main(int ac, char **av, char **envp)
 {
-	t_arg		*data;///
-	// t_command	*cmd;///
-
+	t_arg	data;
 	pid_t	child_pid;
+	char	*line;
 
 	(void)av;
 	(void)ac;
-	(void)envp;
 	ft_init_structs(&data);
-	// parser(ac, av, envp);
+	
 
 	if (ac != 1)
 		ft_exit(1, NULL, NULL/*&data*/);
 
 	while (1)
 	{
+		line = readline("\033[1;35m>>>\033[0;37m");
+		
+		if (line && *line)
+			add_history(line);
+		parser(envp, &data, line);
 		child_pid = fork();
 		if (child_pid == 0)
-			child_process(data, av, envp);
+		{
+			child_process(&data, envp);
+		}
 		waitpid(child_pid, NULL, 0);
-		return (0);
+		// return (0);
 	}
 	return (0);
 }

@@ -3,22 +3,25 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+         #
+#    By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/21 16:31:18 by ogarthar          #+#    #+#              #
-#    Updated: 2021/12/04 15:23:15 by ogarthar         ###   ########.fr        #
+#    Updated: 2021/12/04 16:58:27 by fbeatris         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
 LIST =	main.c\
-		parser.c\
 		init_structs.c\
 		built_in/exit_builtin.c\
 		built_in/echo_builtin.c\
 		built_in/pwd_builtin.c\
-		built_in/env_builtin.c
+		built_in/env_builtin.c\
+		parser/parser.c \
+		parser/quotes.c \
+		parser/replace_env.c \
+		parser/syntax_errors.c
 
 OBJ = $(LIST:.c=.o)
 
