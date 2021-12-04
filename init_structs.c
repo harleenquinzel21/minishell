@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 20:02:15 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/03 21:03:14 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/04 16:37:00 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,23 @@ void	ft_init_structs(t_arg **data)
 	(*data)->redir = (t_redir *)malloc(sizeof (t_redir));
 	if (!(*data)->redir)
 		exit(EXIT_FAILURE);//обработать нормально через errno
+	(*data)->envp = (t_env *)malloc(sizeof (t_env));
+	if (!(*data)->envp)
+		exit(EXIT_FAILURE);//обработать нормально через errno
+	//  (*data)->envp = NULL;
+
 	(*data)->cmd->cmd = ft_calloc(10, 10);
 
 //*/*//*/*/*/*/*/*/*/**/*/*/*/*/**/*/*/*/*/*/
-	(*data)->cmd->cmd[0] = "echo";
+	(*data)->cmd->cmd[0] = "env";
+	(*data)->envp->key = "USER";
+	(*data)->envp->separator = "=";
+	(*data)->envp->value = "ogarthar";
+	(*data)->envp->next = NULL;
+	// printf("\n%s", (*data)->cmd->cmd[0]);///////
 	// (*data)->cmd->cmd[1] = "-n";
-	// (*data)->cmd->cmd[2] = "krgkrkg";
-	(*data)->cmd->cmd[1] = "krgkr rrrr 12121 \'\\'kg";
-
+	// // (*data)->cmd->cmd[2] = "krgkrkg";
+	// // (*data)->cmd->cmd[1] = "str1 ";
+	// (*data)->cmd->cmd[2] = "str 2 !";
+	// (*data)->cmd->cmd[3] = "s t r 3 ";
 }

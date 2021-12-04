@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 13:55:52 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/03 20:35:01 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/04 15:48:15 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ typedef struct s_arg
 {
 	t_command	*cmd;
 	t_redir		*redir;
-	t_env		envp;
+	t_env		*envp;
 	char		*env;
 	int			num;
 	int			**fd;

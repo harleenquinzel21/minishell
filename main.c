@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 17:19:18 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/03 20:52:40 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/04 16:40:49 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,17 @@
 
 int	ft_check_builtin(t_arg *data)
 {
-	// if (!(ft_strcmp(data->cmd->cmd[0], "pwd")))
-	// 	return (ft_pwd(data));
-	// else
-	if (!(ft_strcmp(data->cmd->cmd[0], "echo")))
+	if (!(ft_strcmp(data->cmd->cmd[0], "pwd")))
+		return (ft_pwd(data));
+	else if (!(ft_strcmp(data->cmd->cmd[0], "echo")))
 		return (ft_echo(data));
+	else if (!(ft_strcmp(data->cmd->cmd[0], "env")))
+		return (ft_env(data));
 	// else if (!(ft_strcmp(data->cmd->cmd[0], "cd")))
 	// 	return (ft_cd(data));
 	// else if (!(ft_strcmp(data->cmd->cmd[0], "export")))
 	// 	return (ft_export(data));
-	// else if (!(ft_strcmp(data->cmd->cmd[0], "env")))
-	// 	return (ft_env(data));
+
 	// else if (!(ft_strcmp(data->cmd->cmd[0], "unset")))
 	// 	return (ft_unset(data));
 	else if (!(ft_strcmp(data->cmd->cmd[0], "exit")))
@@ -88,11 +88,10 @@ int	main(int ac, char **av, char **envp)
 	// parser(ac, av, envp);
 
 	if (ac != 1)
-		ft_exit(1, NULL, NULL/*&main_struct*/);
+		ft_exit(1, NULL, NULL/*&data*/);
 
 	while (1)
 	{
-
 		child_pid = fork();
 		if (child_pid == 0)
 			child_process(data, av, envp);
