@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+         #
+#    By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/21 16:31:18 by ogarthar          #+#    #+#              #
-#    Updated: 2021/12/04 16:58:27 by fbeatris         ###   ########.fr        #
+#    Updated: 2021/12/06 20:39:51 by ogarthar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,10 +18,13 @@ LIST =	main.c\
 		built_in/echo_builtin.c\
 		built_in/pwd_builtin.c\
 		built_in/env_builtin.c\
+		built_in/cd_builtin.c\
 		parser/parser.c \
 		parser/quotes.c \
 		parser/replace_env.c \
 		parser/syntax_errors.c
+
+#	 built_in/export_builtin.c\#
 
 OBJ = $(LIST:.c=.o)
 

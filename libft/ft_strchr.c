@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 18:36:35 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/09/21 18:38:18 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/06 15:32:38 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,3 +25,20 @@ char	*ft_strchr(const char *s, int c)
 	}
 	return ((char *)(s + i));
 }
+
+int	ft_strnchr(const char *s, int c)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (s[i] != '\0')
+	{
+		if (s[i] == (char)c)
+			j++;
+		i++;
+	}
+	return (j);
+}
+

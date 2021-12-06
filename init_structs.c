@@ -3,48 +3,103 @@
 /*                                                        :::      ::::::::   */
 /*   init_structs.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 20:02:15 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/04 17:48:32 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/12/06 20:40:10 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "minishell.h"
 
-void	ft_init_structs(t_arg *data)
+void	ft_init_structs(t_arg **data)
 {
-	data->cmd = malloc(sizeof(t_command));
-	data->redir = NULL;
-	data->envp = NULL;
-	data->env = NULL;
-	data->num = 0;
-	data->fd = NULL;
-	data->errnum = 0;
-	
-	
-	// data = (t_arg *)malloc(sizeof (t_arg));
-	// if (!data)
-	// 	exit(EXIT_FAILURE);//обработать нормально через errno
-	// (*data)->cmd = (t_command *)malloc(sizeof (t_command));
-	// if (!(*data)->cmd)
-	// 	exit(EXIT_FAILURE);//обработать нормально через errno
-	// (*data)->redir = (t_redir *)malloc(sizeof (t_redir));
-	// if (!(*data)->redir)
-	// 	exit(EXIT_FAILURE);//обработать нормально через errno
-	// (*data)->envp = (t_env *)malloc(sizeof (t_env));
-	// if (!(*data)->envp)
-//		exit(EXIT_FAILURE);//обработать нормально через errno
+	// (*data)->cmd = malloc(sizeof(t_command));
+	// data->redir = NULL;
+	// data->envp = NULL;
+	// data->env = NULL;
+	// data->num = 0;
+	// data->fd = NULL;
+	// data->errnum = 0;
+
+
+	(*data) = (t_arg *)malloc(sizeof (t_arg));
+	if (!(*data))
+	{
+		// sleep(3);
+		write(1, "1", 1);
+		sleep(3);
+		// return;
+	}
+		// exit(EXIT_FAILURE);//обработать нормально через errno
+	(*data)->cmd = (t_command *)malloc(sizeof (t_command));
+	if (!(*data)->cmd)
+	{
+		// sleep(3);
+		write(1, "2", 1);
+		sleep(3);
+		// return;
+	}
+		// exit(EXIT_FAILURE);//обработать нормально через errno
+	(*data)->redir = (t_redir *)malloc(sizeof (t_redir));
+	if (!(*data)->redir)
+	{
+		// sleep(3);
+		write(1, "2", 1);
+		sleep(3);
+		// return;
+	}
+		// exit(EXIT_FAILURE);//обработать нормально через errno
+	(*data)->envp = (t_env *)malloc(sizeof (t_env));
+	if (!(*data)->envp)
+	{
+		// sleep(3);
+		write(1, "3", 1);
+		sleep(3);
+		// return;
+	}
+		// exit(EXIT_FAILURE);//обработать нормально через errno
 	//  (*data)->envp = NULL;
 
-	// (*data)->cmd->cmd = ft_calloc(10, 10);
+	(*data)->cmd->cmd = ft_calloc(10, 10);
 
 //*/*//*/*/*/*/*/*/*/**/*/*/*/*/**/*/*/*/*/*/
-	// (*data)->cmd->cmd[0] = "env";
-	// (*data)->envp->key = "USER";
-	// (*data)->envp->separator = "=";
-	// (*data)->envp->value = "ogarthar";
-	// (*data)->envp->next = NULL;
+	(*data)->cmd->cmd[0] = "env";
+	// (*data)->cmd->cmd[1] = "";
+	// (*data)->cmd->cmd[1] = "";
+	// (*data)->cmd->cmd[1] = "builtin";
+
+	if(!((*data)->envp->next = (t_env *)malloc(sizeof (t_env))))
+	{
+		// sleep(3);
+		write(1, "2", 1);
+		sleep(3);
+		// return;
+	}
+	if (!((*data)->envp->next->next = (t_env *)malloc(sizeof (t_env))))
+	{
+		// sleep(3);
+		write(1, "2", 1);
+		sleep(3);
+		// return;
+	}
+
+	(*data)->envp->key = "HOME";
+	(*data)->envp->next->key = "PWD";
+	(*data)->envp->next->next->key = "OLDPWD";
+	(*data)->envp->separator = "=";
+	(*data)->envp->next->separator = "=";
+	(*data)->envp->next->next->separator = "=";
+	(*data)->envp->value = "/Users/ogarthar";
+	(*data)->envp->next->value = "/Users/ogarthar/minishell";
+	(*data)->envp->next->next->value = "/Users/ogarthar";
+
+
+	// ft_putstr_fd("OLDPWD: ", 1);
+	// ft_putstr_fd((*data)->envp->next->next->value, 1);
+	// ft_putstr_fd("PWD: ", 1);
+	// ft_putstr_fd((*data)->envp->next->value, 1);
+
 	// printf("\n%s", (*data)->cmd->cmd[0]);///////
 	// (*data)->cmd->cmd[1] = "-n";
 	// // (*data)->cmd->cmd[2] = "krgkrkg";

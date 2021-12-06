@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 17:19:18 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/04 17:59:23 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/12/06 20:37:46 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ int	ft_check_builtin(t_arg *data)
 		return (ft_echo(data));
 	else if (!(ft_strcmp(data->cmd->cmd[0], "env")))
 		return (ft_env(data));
-	// else if (!(ft_strcmp(data->cmd->cmd[0], "cd")))
-	// 	return (ft_cd(data));
+	else if (!(ft_strcmp(data->cmd->cmd[0], "cd")))
+		return (ft_cd(data));
 	// else if (!(ft_strcmp(data->cmd->cmd[0], "export")))
 	// 	return (ft_export(data));
 
@@ -65,42 +65,50 @@ void	execute(char **cmd, char **envp)
 	}
 }
 
-void	child_process(t_arg *data, char **envp)
+void	child_process(t_arg **data, char **envp)
 {
-	if (ft_check_builtin(data) != 1)
-		execute(data->cmd->cmd, envp);
+	if (ft_check_builtin(*data) != 1)
+		execute((*data)->cmd->cmd, envp);
+
 }
-
-
 
 int	main(int ac, char **av, char **envp)
 {
-	t_arg	data;
+	t_arg	*data;
 	pid_t	child_pid;
 	char	*line;
 
 	(void)av;
 	(void)ac;
+
 	ft_init_structs(&data);
-	
+
 
 	if (ac != 1)
 		ft_exit(1, NULL, NULL/*&data*/);
 
 	while (1)
 	{
+
 		line = readline("\033[1;35m>>>\033[0;37m");
-		
+
 		if (line && *line)
 			add_history(line);
-		parser(envp, &data, line);
+		// parser(envp, &data, line);
 		child_pid = fork();
 		if (child_pid == 0)
 		{
 			child_process(&data, envp);
 		}
 		waitpid(child_pid, NULL, 0);
-		// return (0);
+
+		// child_pid = fork();
+		// if (child_pid == 0)
+		// {
+		// 	ft_putstr_fd("\n\n", 1);
+		// 	execve(find_path("env", envp), NULL, envp);
+		// }
+		// waitpid(child_pid, NULL, 0);
 	}
 	return (0);
 }
