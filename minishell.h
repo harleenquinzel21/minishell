@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 13:55:52 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/06 20:38:11 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/06 23:41:23 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ int		parser(char **envp, t_arg *data, char *line);
 char	*parse_line(char *line_const, char **env);
 int		check_syntax(char *line);
 char	*env_replace(char *line, int *i, char **env);
+char 	**parse_redirects(char *line, t_arg *data);
+t_env	*env_create_new(char *key, char *sep, char *value);
 
 void	ft_init_structs(t_arg **data);
 

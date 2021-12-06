@@ -6,7 +6,7 @@
 /*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 16:13:54 by misha             #+#    #+#             */
-/*   Updated: 2021/12/03 21:37:43 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/12/06 21:49:58 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,9 @@ int	unclosed_quotes(char *line)
 
 static int	pipes_slash(char *line)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
+	char	*tmp;
 
 	i = 0;
 	while (line[++i])
@@ -51,15 +52,17 @@ static int	pipes_slash(char *line)
 	}
 	i = 0;
 	j = ft_strlen(line) - 1;
-	line = ft_strtrim(line, "\t ");
-	// while (line[i] && (line[i] == ' ' || line[i] == '\t'))
-	// 	i++;
-	// while (j >= 0 && (line[j] == ' ' || line[j] == '\t'))
-	// 	j--;
-	if (line[i] == '|' || line[j] == '|' || (line[j] == '\\' && line[j - 1] != '\\'))
-		return (1);	
+	tmp = ft_strtrim(line, "\t ");
+	if (tmp[i] == '|' || tmp[j] == '|' || (tmp[j] == '\\' && tmp[j - 1] != '\\'))
+	{
+		free(tmp);
+		return (1);
+	}
 	else
+	{
+		free(tmp);
 		return (0);
+	}
 }
 
 int	check_syntax(char *line)

@@ -6,7 +6,7 @@
 /*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:09:43 by fbeatris          #+#    #+#             */
-/*   Updated: 2021/12/04 17:58:38 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/12/06 23:33:43 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,71 +16,62 @@
 незакрытые кавычки, незакрытые двойные, бэкслэш в конце,
 два пайпа подряд, что еще?
 */
-/*
-static void	redir_w_space(char **arr, int *i)
+
+t_env	*env_create_new(char *key, char *sep, char *value)
 {
-	int		j;
-	char	*out;
-	char	*redir;
-
-	j = 0;
-
-	redir = ft_strdup(arr[*i]);
-	if (ft_strcmp(arr[*i], ">") == 0)
-		out = ft_strdup(arr[*i + 1]);
-	while (arr[*i + 2])
-	{
-		arr[*i] = arr[*i + 2];
-		i++;
-	}
-	arr[*i] = NULL;
-	free(arr[i + 1]);
-	free(arr[i + 2]);
+	t_env	*new;
+	
+	new = malloc(sizeof(t_env));
+	new->key = key;
+	new->separator = sep;
+	new->value = value;
+	new->next = NULL;
+	return (new);
 }
-*/
-/*
-void parse_redirects(char *line, char **arr)
+static void	env_add_new(char *env_line, t_env **first)
 {
-//	char	**arr;
+	t_env	*tmp;
+	char	*key;
+	char	*sep;
+	char	*value;
 	int		i;
-//	int		line_end;
-	char	*in;
-	char	*out;
 
 	i = 0;
-	arr = ft_split(line, ' ');	//еще таб разделитель
-	// while (arr[i])
-	// {
-	// 	if (ft_strcmp(arr[i], ">") == 0 || ft_strcmp(arr[i], ">>") == 0)
-	// 		redir_w_space(arr, &i);
-	// 	else if (ft_strcmp(arr[i], "<") == 0)
-	// 		back_redir_w_space(arr, &i);
-	// 	else if (arr[i][0] == '>')
-	// 		redir_wo_space(arr, &i);
-	// 	else if (arr[i][0] == '<')
-	// 		back_redir_wo_space(arr, &i);
-	// 	i++;
-	// }
-//	return ();
+	while (env_line[i] && (env_line[i] == '_' || ft_isalnum(env_line[i])))
+		i++;
+	key = ft_substr(env_line, 0, i);
+	sep = ft_substr(env_line, i, 1);
+	value = ft_strdup(&env_line[i + 1]);
+	if (*first == NULL)
+		*first = env_create_new(key, sep, value);
+	tmp = *first;
+//	printf("key %s\nsep %s\nval %s\n", key, sep, value);
+	while (tmp->next)
+		tmp = tmp->next;
+	tmp->next = env_create_new(key, sep, value);
 }
-*/
 
+static void	parse_env(char **envp, t_arg *data)
+{
+	int	i;
+
+	i = 0;
+	while(envp[i])
+	{
+		env_add_new(envp[i], &data->envp);
+		i++;
+	}
+}
 
 int	parser(char **envp, t_arg *data, char *line) // ctrl-D, ctrl+C, ctrl+slash
 {
-	
-		if (check_syntax(line))
-		{
-			printf("syntax error\n");
-			exit (1);
-		}
-		
-		line = parse_line(line, envp);
-
-		data->cmd->cmd = ft_split(line, ' ');
-		
-		free(line);
-
-
+	if (check_syntax(line))
+	{
+		printf("syntax error\n");
+		exit (1);
+	}
+	line = parse_line(line, envp);
+	data->cmd->cmd = parse_redirects(line, data);
+	parse_env(envp, data);	
 	return (0);
 }
