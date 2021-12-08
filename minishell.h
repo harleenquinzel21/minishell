@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 13:55:52 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/08 21:54:32 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/08 23:59:37 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,15 @@ typedef struct s_arg
 	int			errnum;
 }	t_arg;
 
-int		parser(char **envp, t_arg *data, char *line);
-void	parse_env(char **envp, t_arg *data);
-char	*parse_line(char *line_const, char **env);
+int		parser(t_arg *data, char *line);
+char	*parse_line(char *line_const, t_arg *data);
 int		check_syntax(char *line);
-char	*env_replace(char *line, int *i, char **env);
-char 	**parse_redirects(char *line, t_arg *data);
+char	*env_replace(char *line, int *i, t_env *envp);
+char	*single_quotes(char *line, int *i);
+char	*double_quotes(char *line, int *i, t_env *envp);
+char	*parse_redirects(char *line, int *i, t_arg *data);
+
+void	parse_env(char **envp, t_arg *data);
 t_env	*env_create_new(char *key, char *sep, char *value);
 void	env_add_new(char *env_line, t_env **first);
 

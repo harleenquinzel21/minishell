@@ -6,7 +6,7 @@
 /*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 16:10:50 by misha             #+#    #+#             */
-/*   Updated: 2021/12/03 21:17:37 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/12/08 23:43:47 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static char	*remove_quotes(char *line, int begin, int *i)
 	return (final);
 }
 
-static char	*single_quot(char *line, int *i)
+char	*single_quotes(char *line, int *i)
 {
 	int		begin;
 	char	*new_line;
@@ -62,7 +62,7 @@ static char	*single_quot(char *line, int *i)
 	return (new_line);
 }
 
-static char	*double_quot(char *line, int *i, char **env)
+char	*double_quotes(char *line, int *i, t_env *envp)
 {
 	int		begin;
 	char	*new_line;
@@ -71,35 +71,14 @@ static char	*double_quot(char *line, int *i, char **env)
 	(*i)++;
 	while (line[*i] && line[*i + 1] && line[*i] != '\"')
 	{
-		// if (line[*i] == '\\' && (line[*i + 1] == '\\' || \
+		// if (line[*i] == '\\' && (line[*i + 1] == '\\' ||
 		// 	line[*i + 1] == '\'' || line[*i + 1] == '$'))
 		// 	line = backslash(line, i);
-		if (line[*i] == '$' && (line[*i + 1] == '_' || ft_isalpha(line[*i + 1])))
-			line = env_replace(line, i, env);
+		if (line[*i] == '$' && (line[*i + 1] == '_' || \
+			ft_isalpha(line[*i + 1])))
+			line = env_replace(line, i, envp);
 		(*i)++;
 	}
 	new_line = remove_quotes(line, begin, i);
 	return (new_line);
-}
-
-char	*parse_line(char *line_const, char **env)
-{
-	int		i;
-	char	*line;
-
-	i = 0;
-	line = ft_strdup(line_const);
-	while (line[i])
-	{
-		if (line[i] == '\"')
-			line = double_quot(line, &i, env);
-		if (line[i] == '\'')
-			line = single_quot(line, &i);
-		// if (line[i] == '\\')
-		// 	line = backslash(line, &i);
-		if (line[i] == '$' && (line[i + 1] == '_' || ft_isalpha(line[i + 1])))
-			line = env_replace(line, &i, env);
-		i++;
-	}
-	return (line);
 }

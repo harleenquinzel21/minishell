@@ -6,83 +6,71 @@
 /*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 22:19:52 by fbeatris          #+#    #+#             */
-/*   Updated: 2021/12/06 22:25:56 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/12/08 23:52:51 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	redir_w_space(char **arr, int *i, t_arg *data)
+static void	remove_redirect(char *line, int start, int end)
 {
-	if (ft_strcmp(arr[*i], ">") == 0 || ft_strcmp(arr[*i], ">>") == 0)
-	{
-		data->cmd->out->limiter = ft_strdup(arr[*i]);
-		data->cmd->out->name = ft_strdup(arr[*i + 1]);
-	}
-	else if (ft_strcmp(arr[*i], "<") == 0)
-	{
-		data->cmd->in->limiter = ft_strdup(arr[*i]);
-		data->cmd->in->name = ft_strdup(arr[*i + 1]);
-	}
-	while (arr[*i + 2])
-	{
-		arr[*i] = arr[*i + 2];
-		(*i)++;
-	}
-//	free(arr[*i]);
-	arr[*i] = NULL;
-	if (arr[*i + 1])
-	 	free(arr[*i + 1]);
-	if (arr[*i + 2])
-	 	free(arr[*i + 2]);
-	// printf("i %d\n", *i);
-}
+	int	len;
+	int	i;
 
-static void	redir_wo_space(char **arr, int *i, t_arg *data)
-{
-	if (arr[*i][0] == '>')
-	{
-		data->cmd->out->limiter = ft_strdup(">");
-		data->cmd->out->name = ft_strdup(&arr[*i][1]);
-	}
-	else if (arr[*i][0] == '<')
-	{
-		data->cmd->in->limiter = ft_strdup("<");
-		data->cmd->in->name = ft_strdup(&arr[*i][1]);
-	}
-	while (arr[*i + 1])
-	{
-		arr[*i] = arr[*i + 1];
-		(*i)++;
-	}
-	free(arr[*i]);
-	arr[*i] = NULL;
-	if (arr[*i + 1])
-		free(arr[*i + 1]);
-}
-
-char **parse_redirects(char *line, t_arg *data)
-{
-	char	**arr;
-	int		i;
-
-	arr = ft_split(line, ' ');
-	free(line);
+	len = end - start;
 	i = 0;
-	while (arr[i])
+	(void)line;
+	while (line[end + i])
 	{
-		if (ft_strcmp(arr[i], ">") == 0 || ft_strcmp(arr[i], ">>") == 0 || ft_strcmp(arr[i], "<") == 0)
-			redir_w_space(arr, &i, data);
-		else if (arr[i][0] == '>' || arr[i][0] == '<')
-			redir_wo_space(arr, &i, data);
+		line[start + i] = line[end + i];
 		i++;
 	}
-	// int j = 0;
-	// while (arr[j])
-	// {
-	// 	printf("-%s-\n", arr[j]);
-	// 	j++;
-	// }
-	// printf("j %d\n", j);
-	return (arr);
+	line[start + i] = '\0';
+	while (line[start + i])
+	{
+		line[start + i] = '\0';
+		i++;
+	}
+}
+
+static char	*save_redir_name(char *line, int *i)
+{
+	int		begin;
+	int		save;
+	int		count;
+	char	*result;
+
+	save = *i;
+	count = 0;
+	while (line[*i] && (line[*i] == '>' || line[*i] == '<'))
+		(*i)++;
+	while (line[*i] && line[*i] == ' ')
+		(*i)++;
+	begin = *i;
+	while (line[*i] && line[*i] != ' ')
+		(*i)++;
+	result = ft_substr(line, begin, *i);
+	remove_redirect(line, save, *i);
+	*i = save;
+	return (result);
+}
+
+char	*parse_redirects(char *line, int *i, t_arg *data)
+{
+	if (line[*i] == '>' && line[*i + 1] != '>')
+	{
+		data->cmd->out->limiter = ft_strdup(">");
+		data->cmd->out->name = save_redir_name(line, i);
+	}
+	else if (line[*i] == '>' && line[*i + 1] == '>')
+	{
+		data->cmd->out->limiter = ft_strdup(">>");
+		data->cmd->out->name = save_redir_name(line, i);
+	}
+	else if (line[*i] == '<' && line[*i + 1] != '<')
+	{
+		data->cmd->in->limiter = ft_strdup("<");
+		data->cmd->in->name = save_redir_name(line, i);
+	}
+	return (line);
 }

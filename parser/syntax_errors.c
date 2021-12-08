@@ -6,7 +6,7 @@
 /*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 16:13:54 by misha             #+#    #+#             */
-/*   Updated: 2021/12/06 21:49:58 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/12/07 20:38:24 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	unclosed_quotes(char *line)
 		i++;
 	}
 	if (quotes1 || quotes2)
-		return (1);	//errno
+		return (1);
 	return (0);
 }
 
@@ -53,7 +53,8 @@ static int	pipes_slash(char *line)
 	i = 0;
 	j = ft_strlen(line) - 1;
 	tmp = ft_strtrim(line, "\t ");
-	if (tmp[i] == '|' || tmp[j] == '|' || (tmp[j] == '\\' && tmp[j - 1] != '\\'))
+	if (tmp[i] == '|' || tmp[j] == '|' || \
+		(tmp[j] == '\\' && tmp[j - 1] != '\\'))
 	{
 		free(tmp);
 		return (1);
@@ -68,8 +69,8 @@ static int	pipes_slash(char *line)
 int	check_syntax(char *line)
 {
 	if (pipes_slash(line))
-		return (1);	//errno
+		return (1);
 	if (unclosed_quotes(line))
-		return (1);	//errno
+		return (1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 16:21:14 by misha             #+#    #+#             */
-/*   Updated: 2021/12/03 21:17:39 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/12/08 23:55:16 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,13 @@ static char	*replace_str(char *line, char *old, char *new)
 	return (result);
 }
 
-char	*env_replace(char *line, int *i, char **env)
+char	*env_replace(char *line, int *i, t_env *envp)
 {
 	int		begin;
 	char	*env_key;
 	char	*env_value;
-	int		j;
 	int		key_len;
+	t_env	*temp;
 
 	begin = *i;
 	env_value = ft_strdup("");
@@ -54,15 +54,14 @@ char	*env_replace(char *line, int *i, char **env)
 		(*i)++;
 	env_key = ft_substr(line, begin + 1, *i - begin - 1);
 	key_len = ft_strlen(env_key);
-	j = 0;
-	while (env[j])
+	temp = envp;
+	while (temp)
 	{
-		if (ft_strncmp(env[j], env_key, key_len) == 0 && env[j][key_len] == '=')
-			env_value = ft_strdup(&env[j][key_len + 1]);
-		j++;
+		if (ft_strcmp(temp->key, env_key) == 0)
+			env_value = temp->value;
+		temp = temp->next;
 	}
-	line = replace_str(line, env_key, env_value);		
+	line = replace_str(line, env_key, env_value);
 	free(env_key);
-	free(env_value);
 	return (line);
 }
