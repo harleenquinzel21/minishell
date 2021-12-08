@@ -1,41 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_builtin.c                                      :+:      :+:    :+:   */
+/*   echo_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/04 15:17:44 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/08 20:39:24 by ogarthar         ###   ########.fr       */
+/*   Created: 2021/12/03 19:28:40 by ogarthar          #+#    #+#             */
+/*   Updated: 2021/12/04 19:04:12 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../minishell.h"
 
-int	ft_env(t_arg *data)
+int	ft_echo(t_arg *data)
 {
-	t_env	*tmp;
+	int	i;
 
-	if (!(data->envp))
-		return (0);
-	tmp = data->envp;
-	while (tmp)
+	if (!data->cmd->cmd[1])
+		printf("\n");
+	i = 1;
+	if (!(ft_strcmp(data->cmd->cmd[1], "-n")))
 	{
-		if (!ft_strcmp(tmp->separator, "="))
+		while (data->cmd->cmd[++i])
 		{
-			ft_putstr_fd(tmp->key, 1);
-			ft_putstr_fd(tmp->separator, 1);
-			ft_putstr_fd(tmp->value, 1);
-			ft_putstr_fd("\n", 1);
-			tmp = tmp->next;
+			printf("%s", data->cmd->cmd[i]);
+			if (data->cmd->cmd[i + 1] != NULL)
+				printf(" ");
 		}
+		return (1);
 	}
-	return (1);
-}
-
-
-int	ft_unset(t_arg *data)
-{
-	(void)data;
+	i = 0;
+	while (data->cmd->cmd[++i])
+	{
+		printf("%s", data->cmd->cmd[i]);
+		if (data->cmd->cmd[i + 1] != NULL)
+			printf(" ");
+	}
+	printf("\n");
 	return (1);
 }

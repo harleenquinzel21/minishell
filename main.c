@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 17:19:18 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/06 23:38:50 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/12/08 21:54:56 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,9 @@ void	execute(char **cmd, char **envp)
 {
 	if (execve(find_path(cmd[0], envp), cmd, envp) == -1)
 	{
-		write(1, "command not found: ", 19);
-		write(1, &cmd[0], ft_strlen(cmd[0]));
+		write(2, "minishell: command not found: ", 30);
+		write(2, cmd[0], ft_strlen(cmd[0]));
+		write(2, "\n", 1);
 	}
 }
 
@@ -82,6 +83,7 @@ int	main(int ac, char **av, char **envp)
 	(void)ac;
 
 	ft_init_structs(&data);
+	parse_env(envp, data);
 
 
 	if (ac != 1)
@@ -101,15 +103,27 @@ int	main(int ac, char **av, char **envp)
 			child_process(&data, envp);
 		}
 		waitpid(child_pid, NULL, 0);
-
-		// child_pid = fork();
-		// if (child_pid == 0)
-		// {
-		// 	ft_putstr_fd("\n\n", 1);
-		// 	execve(find_path("env", envp), NULL, envp);
-		// }
-		// waitpid(child_pid, NULL, 0);
 	}
+	// while (1)
+	// {
+	// 	line = readline("\033[1;35m>>>\033[0;37m");
+
+	// 	if (line && *line)
+	// 	{
+	// 		add_history(line);
+	// 		parser(envp, data, line);
+	// 		child_pid = fork();
+	// 		if (child_pid == 0)
+	// 		{
+	// 			child_process(&data, envp);
+	// 		}
+	// 		waitpid(child_pid, NULL, 0);
+
+
+	// 		if (!(ft_strcmp(data->cmd->cmd[0], "exit")))///cmd->current
+	// 			ft_exit(0, NULL, data);///
+	// 	}
+	// }
 	return (0);
 }
 

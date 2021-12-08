@@ -1,41 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_builtin.c                                      :+:      :+:    :+:   */
+/*   pwd_builtin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/04 15:17:44 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/08 20:39:24 by ogarthar         ###   ########.fr       */
+/*   Created: 2021/12/04 14:06:28 by ogarthar          #+#    #+#             */
+/*   Updated: 2021/12/04 15:12:43 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../minishell.h"
 
-int	ft_env(t_arg *data)
+int	ft_pwd(t_arg *data)
 {
-	t_env	*tmp;
-
-	if (!(data->envp))
-		return (0);
-	tmp = data->envp;
-	while (tmp)
-	{
-		if (!ft_strcmp(tmp->separator, "="))
-		{
-			ft_putstr_fd(tmp->key, 1);
-			ft_putstr_fd(tmp->separator, 1);
-			ft_putstr_fd(tmp->value, 1);
-			ft_putstr_fd("\n", 1);
-			tmp = tmp->next;
-		}
-	}
-	return (1);
-}
+	char	*pwd;
 
 
-int	ft_unset(t_arg *data)
-{
-	(void)data;
+	pwd = getcwd(NULL, 0);
+	if (!pwd)
+		ft_exit(errno, "getcwd", data);
+	printf("%s\n", pwd);
+	free(pwd);
 	return (1);
 }

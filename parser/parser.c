@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:09:43 by fbeatris          #+#    #+#             */
-/*   Updated: 2021/12/06 23:33:43 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/12/08 21:06:48 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 t_env	*env_create_new(char *key, char *sep, char *value)
 {
 	t_env	*new;
-	
+
 	new = malloc(sizeof(t_env));
 	new->key = key;
 	new->separator = sep;
@@ -28,7 +28,7 @@ t_env	*env_create_new(char *key, char *sep, char *value)
 	new->next = NULL;
 	return (new);
 }
-static void	env_add_new(char *env_line, t_env **first)
+void	env_add_new(char *env_line, t_env **first)
 {
 	t_env	*tmp;
 	char	*key;
@@ -44,14 +44,17 @@ static void	env_add_new(char *env_line, t_env **first)
 	value = ft_strdup(&env_line[i + 1]);
 	if (*first == NULL)
 		*first = env_create_new(key, sep, value);
-	tmp = *first;
-//	printf("key %s\nsep %s\nval %s\n", key, sep, value);
-	while (tmp->next)
-		tmp = tmp->next;
-	tmp->next = env_create_new(key, sep, value);
+	else
+	{
+		tmp = *first;
+	//	printf("key %s\nsep %s\nval %s\n", key, sep, value);
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->next = env_create_new(key, sep, value);
+	}
 }
 
-static void	parse_env(char **envp, t_arg *data)
+void	parse_env(char **envp, t_arg *data)
 {
 	int	i;
 
@@ -72,6 +75,6 @@ int	parser(char **envp, t_arg *data, char *line) // ctrl-D, ctrl+C, ctrl+slash
 	}
 	line = parse_line(line, envp);
 	data->cmd->cmd = parse_redirects(line, data);
-	parse_env(envp, data);	
+
 	return (0);
 }

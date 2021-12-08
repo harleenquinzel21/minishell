@@ -1,41 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_builtin.c                                      :+:      :+:    :+:   */
+/*   exit_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/04 15:17:44 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/08 20:39:24 by ogarthar         ###   ########.fr       */
+/*   Created: 2021/12/01 20:19:43 by ogarthar          #+#    #+#             */
+/*   Updated: 2021/12/03 19:10:57 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
 # include "../minishell.h"
 
-int	ft_env(t_arg *data)
+void	ft_exit(int errnum, char *msg, t_arg *data)
 {
-	t_env	*tmp;
+	char	*errmsg;
 
-	if (!(data->envp))
-		return (0);
-	tmp = data->envp;
-	while (tmp)
+	(void)data;///
+
+	if (msg)
 	{
-		if (!ft_strcmp(tmp->separator, "="))
-		{
-			ft_putstr_fd(tmp->key, 1);
-			ft_putstr_fd(tmp->separator, 1);
-			ft_putstr_fd(tmp->value, 1);
-			ft_putstr_fd("\n", 1);
-			tmp = tmp->next;
-		}
+		errmsg = strerror(errnum);
+		write(2, msg, ft_strlen(msg));
+		write(2, ": ", 2);
+		write(2, errmsg, ft_strlen(errmsg));
+		write(2, "\n", 1);
 	}
-	return (1);
-}
-
-
-int	ft_unset(t_arg *data)
-{
-	(void)data;
-	return (1);
+	// ft_free(data);////
+	exit(errnum);
 }

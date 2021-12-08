@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 15:17:44 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/08 20:39:24 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/05 14:26:12 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,8 @@ int	ft_env(t_arg *data)
 	while (tmp)
 	{
 		if (!ft_strcmp(tmp->separator, "="))
-		{
-			ft_putstr_fd(tmp->key, 1);
-			ft_putstr_fd(tmp->separator, 1);
-			ft_putstr_fd(tmp->value, 1);
-			ft_putstr_fd("\n", 1);
-			tmp = tmp->next;
-		}
+		printf("%s%s%s\n", tmp->key, tmp->separator, tmp->value);
+		tmp = tmp->next;
 	}
-	return (1);
-}
-
-
-int	ft_unset(t_arg *data)
-{
-	(void)data;
 	return (1);
 }
