@@ -6,12 +6,11 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 20:19:43 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/08 18:11:24 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/09 16:53:59 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-# include "../minishell.h"
+#include "../minishell.h"
 
 int	ft_exit_cmd(t_arg *data)
 {
@@ -28,7 +27,6 @@ void	ft_exit(int errnum, char *msg, t_arg *data)
 	char	*errmsg;
 
 	(void)data;///
-
 	if (msg)
 	{
 		errmsg = strerror(errnum);
@@ -43,13 +41,10 @@ void	ft_exit(int errnum, char *msg, t_arg *data)
 	// return (0);
 }
 
-
 int	ft_minishell(t_arg *data)
 {
 	(void)data;///
-
 	//change shlvl in envp
 	//execve() in child_process
 	return (0);
 }
-

@@ -6,69 +6,37 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 17:06:22 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/08 21:52:06 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/09 16:52:51 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../minishell.h"
+#include "../minishell.h"
 
-void	ft_del_env(t_env *env)
+int	ft_search_dups(t_env *envp, char *new, int i)
 {
 	t_env	*tmp;
+	char	*newkey;
+	char	*newvalue;
 
-	tmp = env->next;
-	env->next = tmp->next;
-	free(tmp->key);
-	free(tmp->separator);
-	free(tmp->value);
-	free(tmp);
-}
-
-void	free_new(t_env *new)
-{
-	t_env	*tmp;
-
-	while (new)
-	{
-		tmp = new;
-		new = new->next;
-		free(tmp->key);
-		free(tmp->separator);
-		free(tmp->value);
-		free(tmp);
-	}
-}
-
-int	ft_search_dups(t_env *envp, char *new, t_arg *data)
-{
-	t_env	*tmp;
-	int		len;
-	int stpncmp = 0;
-
-	(void)data;
 	tmp = envp;
-	len = ft_strlen(tmp->key);
-	stpncmp = ft_strncmp(new, tmp->key, len - 1);
-	printf("%d", stpncmp);
-		while (tmp)
+	while (new[i] && (new[i] == '_' || ft_isalnum(new[i])))
+		i++;
+	newkey = ft_substr(new, 0, i);
+	newvalue = ft_strdup(&new[i + 1]);
+	while (tmp)
+	{
+		if (!(ft_strcmp(tmp->key, newkey)))
 		{
-			if (!stpncmp)
-			{
-				if (new[len + 1] && !tmp->separator[0])
-				{
-					tmp->separator = NULL;
-					tmp->separator = ft_strdup("=");
-				}
+			if (tmp->value)
 				tmp->value = NULL;
-				tmp->value = ft_strdup(&new[len + 2]);
-				return(1);
-			}
-			else
-				tmp = tmp->next;
+			tmp->value = ft_strdup(newvalue);
+			return (1);
 		}
-		// if (!tmp2)
-		// 	ft_env_lst_add_back(&envp, ft_one_lst(new, data));
-		// new = new->next;
+		else
+			tmp = tmp->next;
+	}
+	free(newkey);
+	free(newvalue);
 	return (0);
 }
 
@@ -90,38 +58,37 @@ static int	if_without_arg(t_env *env)
 	return (1);
 }
 
-
+void	ft_expor_unset_error(t_arg *data, char *str, char *namecmd)
+{
+	data->errnum = 1;
+	ft_putstr_fd(namecmd, 2);
+	write(2, ": `", 3);
+	write(2, str, ft_strlen(str));
+	write(2, "': not a valid identifier\n", 26);
+}
 
 int	ft_export(t_arg *data)
 {
-	int		i;
-	t_env	*new;
+	int	i;
+	int	j;
 
-	data->errnum = 0;
 	i = 1;
-	new = NULL;
+	j = 0;
+	data->errnum = 0;
 	if (!data->cmd->cmd[1])
 		return (if_without_arg(data->envp));
-
-	while (data->cmd->cmd[i])///добавление элемента в конец списка
+	while (data->cmd->cmd[i])
 	{
-		if (ft_isalpha(data->cmd->cmd[i][0]) && ft_strchr(data->cmd->cmd[i], '='))
+		if (ft_isalpha(data->cmd->cmd[i][0]) && \
+			ft_strchr(data->cmd->cmd[i], '='))
 		{
-			if (ft_search_dups(data->envp, data->cmd->cmd[i], data))
+			if (ft_search_dups(data->envp, data->cmd->cmd[i], j))
 				return (1);
 			env_add_new(data->cmd->cmd[i], &data->envp);
 		}
 		else
-		{
-			data->errnum = 1;
-			write(2, "export: `", 9);
-			write(2, data->cmd->cmd[i], ft_strlen(data->cmd->cmd[i]));
-			write(2, "': not a valid identifier\n", 26);
-		}
+			ft_expor_unset_error(data, data->cmd->cmd[i], "export");
 		i++;
 	}
-
-
-	free_new(new);
 	return (1);
 }

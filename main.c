@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 17:19:18 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/09 00:00:02 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/12/09 16:52:25 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+#include "minishell.h"
 
 int	ft_check_builtin(t_arg *data)
 {
@@ -22,11 +22,11 @@ int	ft_check_builtin(t_arg *data)
 		return (ft_env(data));
 	else if (!(ft_strcmp(data->cmd->cmd[0], "cd")))
 		return (ft_cd(data));
-	// else if (!(ft_strcmp(data->cmd->cmd[0], "export")))
-	// 	return (ft_export(data));
+	else if (!(ft_strcmp(data->cmd->cmd[0], "export")))
+		return (ft_export(data));
 
-	// else if (!(ft_strcmp(data->cmd->cmd[0], "unset")))
-	// 	return (ft_unset(data));
+	else if (!(ft_strcmp(data->cmd->cmd[0], "unset")))
+		return (ft_unset(data->cmd, data));
 	else if (!(ft_strcmp(data->cmd->cmd[0], "exit")))
 		ft_exit(0, NULL, data);///
 	return (0);

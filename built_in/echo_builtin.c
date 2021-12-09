@@ -6,11 +6,11 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 19:28:40 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/04 19:04:12 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/09 16:52:00 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../minishell.h"
+#include "../minishell.h"
 
 int	ft_echo(t_arg *data)
 {

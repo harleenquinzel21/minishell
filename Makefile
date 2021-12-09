@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+         #
+#    By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/21 16:31:18 by ogarthar          #+#    #+#              #
-#    Updated: 2021/12/09 00:00:51 by fbeatris         ###   ########.fr        #
+#    Updated: 2021/12/09 14:54:59 by ogarthar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,9 +24,9 @@ LIST =	main.c\
 		parser/replace_env.c \
 		parser/syntax_errors.c \
 		parser/redirects.c \
-		parser/parse_env.c
-
-# built_in/export_builtin.c\
+		parser/parse_env.c\
+		built_in/export_builtin.c\
+		built_in/unset_builtin.c
 
 OBJ = $(LIST:.c=.o)
 

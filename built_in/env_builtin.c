@@ -6,11 +6,11 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 15:17:44 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/08 20:39:24 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/09 16:51:32 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../minishell.h"
+#include "../minishell.h"
 
 int	ft_env(t_arg *data)
 {
@@ -30,12 +30,5 @@ int	ft_env(t_arg *data)
 			tmp = tmp->next;
 		}
 	}
-	return (1);
-}
-
-
-int	ft_unset(t_arg *data)
-{
-	(void)data;
 	return (1);
 }

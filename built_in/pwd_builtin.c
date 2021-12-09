@@ -6,16 +6,15 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 14:06:28 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/08 21:07:05 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/09 16:51:34 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../minishell.h"
+#include "../minishell.h"
 
 int	ft_pwd(t_arg *data)
 {
 	char	*pwd;
-
 
 	pwd = getcwd(NULL, 0);
 	if (!pwd)
