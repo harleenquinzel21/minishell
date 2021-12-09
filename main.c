@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 17:19:18 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/09 18:13:58 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/09 19:58:19 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int	ft_check_builtin(t_arg *data)
 		return (ft_cd(data));
 	else if (!(ft_strcmp(data->cmd->cmd[0], "export")))
 		return (ft_export(data));
-
 	else if (!(ft_strcmp(data->cmd->cmd[0], "unset")))
 		return (ft_unset(data->cmd, data));
 	else if (!(ft_strcmp(data->cmd->cmd[0], "exit")))
@@ -36,8 +35,8 @@ char	*find_path(char *cmd, char **envp)
 {
 	char	**paths;
 	char	*path;
-	int		i;
 	char	*part_path;
+	int		i;
 
 	i = 0;
 	while (ft_strnstr(envp[i], "PATH", 4) == 0)
