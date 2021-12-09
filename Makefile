@@ -6,7 +6,7 @@
 #    By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/21 16:31:18 by ogarthar          #+#    #+#              #
-#    Updated: 2021/12/09 20:24:11 by ogarthar         ###   ########.fr        #
+#    Updated: 2021/12/09 20:45:10 by ogarthar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,7 +70,8 @@ fclean : clean
 	rm -f $(NAME)
 	@echo "$(RED)MINISHELL : 💣 D E L E T E D 💣$(WHITE)"
 
-x : all ./minishell
+x : all
+	@./minishell
 
 print :
 	@echo "	                 $(YELOW)▄▄"

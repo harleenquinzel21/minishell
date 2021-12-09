@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 17:19:18 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/09 19:58:19 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/09 20:41:26 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,10 @@ char	*find_path(char *cmd, char **envp)
 	return (0);
 }
 
-void	execute(char **cmd, char **envp)
+void	execute(char **cmd, char **env)
 {
-	if (execve(find_path(cmd[0], envp), cmd, envp) == -1)
+
+	if (execve(find_path(cmd[0], env), cmd, env) == -1)
 	{
 		write(2, "minishell: command not found: ", 30);
 		write(2, cmd[0], ft_strlen(cmd[0]));
@@ -65,10 +66,11 @@ void	execute(char **cmd, char **envp)
 	}
 }
 
-void	child_process(t_arg **data, char **envp)
+void	child_process(t_arg **data, char **env)
 {
+	// ft_env_list_to_array((*data)->envp, &env, data);
 	if (ft_check_builtin(*data) != 1)
-		execute((*data)->cmd->cmd, envp);
+		execute((*data)->cmd->cmd, env);
 
 }
 
