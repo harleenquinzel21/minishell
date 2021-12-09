@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 13:55:52 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/09 16:27:59 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/09 18:15:55 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ t_env	*env_create_new(char *key, char *sep, char *value);
 void	env_add_new(char *env_line, t_env **first);
 
 void	ft_init_structs(t_arg **data);
+int		ft_count_cmd(t_command *cmd);
 
 int		ft_echo(t_arg *data);// echo with option -n
 int		ft_pwd(t_arg *data);// pwd with no options

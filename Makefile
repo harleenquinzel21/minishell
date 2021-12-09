@@ -6,27 +6,20 @@
 #    By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/21 16:31:18 by ogarthar          #+#    #+#              #
-#    Updated: 2021/12/09 14:54:59 by ogarthar         ###   ########.fr        #
+#    Updated: 2021/12/09 19:51:17 by ogarthar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-LIST =	main.c\
-		init_structs.c\
-		built_in/exit_builtin.c\
-		built_in/echo_builtin.c\
-		built_in/pwd_builtin.c\
-		built_in/env_builtin.c\
-		built_in/cd_builtin.c\
-		parser/parser.c \
-		parser/quotes.c \
-		parser/replace_env.c \
-		parser/syntax_errors.c \
-		parser/redirects.c \
-		parser/parse_env.c\
-		built_in/export_builtin.c\
-		built_in/unset_builtin.c
+LIST =	main.c				parser/syntax_errors.c		built_in/export_builtin.c\
+		init_structs.c		parser/replace_env.c		built_in/unset_builtin.c\
+		utils.c				parser/redirects.c			built_in/exit_builtin.c\
+							parser/parse_env.c			built_in/echo_builtin.c\
+							parser/parser.c				built_in/pwd_builtin.c\
+							parser/quotes.c				built_in/env_builtin.c\
+														built_in/cd_builtin.c\
+
 
 OBJ = $(LIST:.c=.o)
 
@@ -43,10 +36,14 @@ CFLAGS = -Wall -Werror -Wextra -g -O3
 
 # COLORS
 GREEN = \033[1;32m
+BLUE = \033[1;34m
 RED = \033[1;31m
 WHITE = \033[0;37m
+YELOW = \033[1;33m
+PINK = \033[1;45m
+VIOLET = \033[1;35m
 
-all : $(NAME)
+all : $(NAME) print
 
 	@echo "$(GREEN)MINISHELL : ✅ D O N E ✅$(WHITE)"
 
@@ -71,5 +68,23 @@ fclean : clean
 	@echo "$(RED)LIBFT : 💣 D E L E T E D 💣$(WHITE)"
 	rm -f $(NAME)
 	@echo "$(RED)MINISHELL : 💣 D E L E T E D 💣$(WHITE)"
+
+print :
+	@echo "	                 $(YELOW)▄▄"
+	@echo "	             $(YELOW)▄▄██████          $(PINK)Fbeatris&$(WHITE)"
+	@echo "	         $(YELOW)▄▄███████████             $(PINK)Ogarthar©$(WHITE)"
+	@echo "	       $(YELOW)▄████████████▀██▄"
+	@echo "	     $(YELOW)▄██████████▀▀$(RED)▄▄▄▄$(YELOW)▀▀█▄▄"
+	@echo "	   $(YELOW)▄█████████▀▀$(GREEN)░░░$(RED)▀██▀$(GREEN)░░░$(YELOW)▀██▄"
+	@echo "	  $(YELOW)▄████████▀$(GREEN)░░$(RED)▄▄▄$(GREEN)░░░░$(RED)▄▄▄$(GREEN)░░░░$(YELOW)▀██▄"
+	@echo "	 $(YELOW)▄████████$(GREEN)░░$(RED)███████$(GREEN)░░$(RED)▀▀▀$(GREEN)░$(RED)▄▄█▄▄$(YELOW)▀▀█▄▄"
+	@echo "	$(YELOW)▄███████▀$(GREEN)░░░$(RED)▀████▀▀$(GREEN)░░░░░░$(RED)▀███▀$(GREEN)░░░$(YELOW)▀██▄"
+	@echo "	$(YELOW)████████▄▄▄▄▄▄▄▄▄$(GREEN)░░░░░░░░░░░░░$(YELOW)▄▄▄▄▄▄███▄$(WHITE)"
+	@echo "	$(YELOW)▀████████████████$(GREEN)░░░$(YELOW)▄▄$(GREEN)░░░░$(YELOW)▄$(GREEN)░░$(YELOW)███████████"
+	@echo "	                $(YELOW)█$(GREEN)░░░$(YELOW)███▄███$(GREEN)░░$(YELOW)██"
+	@echo "	                $(YELOW)█$(GREEN)░░░$(YELOW)██$(WHITE)    $(YELOW)█▄▄██"
+	@echo "	                $(YELOW)█▄$(GREEN)░░$(YELOW)██$(WHITE)     $(YELOW)▀▀▀"
+	@echo "	                 $(YELOW)▀▀▀▀ $(WHITE)"
+	@echo "	"
 
 .PHONY : all clean fclean re bonus

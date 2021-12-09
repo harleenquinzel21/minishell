@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 17:19:18 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/09 16:52:25 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/09 18:13:58 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ int	main(int ac, char **av, char **envp)
 	(void)ac;
 
 	ft_init_structs(&data);
+	data->num = ft_count_cmd(data->cmd);
 	parse_env(envp, data);
 
 
@@ -104,26 +105,6 @@ int	main(int ac, char **av, char **envp)
 		}
 		waitpid(child_pid, NULL, 0);
 	}
-	// while (1)
-	// {
-	// 	line = readline("\033[1;35m>>>\033[0;37m");
-
-	// 	if (line && *line)
-	// 	{
-	// 		add_history(line);
-	// 		parser(envp, data, line);
-	// 		child_pid = fork();
-	// 		if (child_pid == 0)
-	// 		{
-	// 			child_process(&data, envp);
-	// 		}
-	// 		waitpid(child_pid, NULL, 0);
-
-
-	// 		if (!(ft_strcmp(data->cmd->cmd[0], "exit")))///cmd->current
-	// 			ft_exit(0, NULL, data);///
-	// 	}
-	// }
 	return (0);
 }
 
