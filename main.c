@@ -6,7 +6,7 @@
 /*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 17:19:18 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/11 15:54:32 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/12/11 19:44:15 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 
 int	ft_check_builtin(t_arg *data)
 {
+	// printf("start check builtin\n");
+	// printf("-%s-\n", data->cmd->cmd[0]);
+	if (data->cmd->cmd[0] == NULL)
+		return (1);
 	if (!(ft_strcmp(data->cmd->cmd[0], "pwd")))
 		return (ft_pwd(data));
 	else if (!(ft_strcmp(data->cmd->cmd[0], "echo")))
@@ -31,6 +35,7 @@ int	ft_check_builtin(t_arg *data)
 	// 	ft_exit_cmd(data);///
 	// 	exit(data->errnum);
 	// }
+	// printf("finish check builtin\n");
 	return (0);
 }
 
@@ -72,9 +77,9 @@ void	execute(char **cmd, char **env)
 void	child_process(t_arg **data, char **env)
 {
 	// ft_env_list_to_array((*data)->envp, &env, *data);
-	if (ft_check_builtin(*data) == 1)
-		exit(0);
-	else
+	// if (ft_check_builtin(*data) == 1)
+	// 	exit(0);
+	// else
 		execute((*data)->cmd->cmd, env);
 
 }
@@ -112,10 +117,13 @@ int	main(int ac, char **av, char **envp)
 			ft_exit_cmd(data);///
 			exit(data->errnum);
 		}
-		child_pid = fork();
-		if (child_pid == 0)
+		if (ft_check_builtin(data) != 1)
 		{
-			child_process(&data, envp);
+			child_pid = fork();
+			if (child_pid == 0)
+			{
+				child_process(&data, envp);
+			}
 		}
 		waitpid(child_pid, NULL, 0);
 	}
