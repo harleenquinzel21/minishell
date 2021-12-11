@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 17:07:40 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/09 16:54:20 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/11 21:25:29 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,15 @@ char	*get_cd(t_command *cmd, t_env *envp, t_arg *data)
 	return (cd);
 }
 
+void	ft_cd_error(t_arg *data, char *str)
+{
+	data->errnum = 2;
+	ft_putstr_fd("cd", 2);
+	write(2, ": ", 3);
+	write(2, str, ft_strlen(str));
+	write(2, " : No such file or directory\n", 29);
+}
+
 int	ft_cd(t_arg *data)
 {
 	char	*cd;
@@ -100,7 +109,8 @@ int	ft_cd(t_arg *data)
 		chdir(cd);
 		env_after_cd(&data, cd);
 	}
-	data->errnum = errno;
+	else
+		ft_cd_error(data, data->cmd->cmd[1]);
 	free(cd);
 	return (1);
 }
