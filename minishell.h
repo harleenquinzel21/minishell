@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 13:55:52 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/11 14:56:07 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/11 15:55:00 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ typedef struct s_arg
 	int			errnum;
 }	t_arg;
 
+void rl_replace_line(const char *, int);
+
 int		parser(t_arg *data, char *line);
 char	*parse_line(char *line_const, t_arg *data);
 int		check_syntax(char *line);
@@ -73,6 +75,9 @@ char	*parse_redirects(char *line, int *i, t_arg *data);
 void	parse_env(char **envp, t_arg *data);
 t_env	*env_create_new(char *key, char *sep, char *value);
 void	env_add_new(char *env_line, t_env **first);
+
+void	sig_int_handler(int sig_num);
+void	eof_handler(int sig_num);
 
 void	ft_init_structs(t_arg **data);
 int		ft_count_cmd(t_command *cmd);
