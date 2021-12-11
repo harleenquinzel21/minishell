@@ -6,7 +6,7 @@
 #    By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/21 16:31:18 by ogarthar          #+#    #+#              #
-#    Updated: 2021/12/09 20:45:10 by ogarthar         ###   ########.fr        #
+#    Updated: 2021/12/11 15:29:23 by ogarthar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,9 @@ OBJ = $(LIST:.c=.o)
 LIBFT_DIR =	./libft
 
 LIBFT =	./libft/libft.a
+
+RDLN = -lreadline -L ~/.brew/Cellar/readline/8.1.1/lib \
+			  -I~/.brew/Cellar/readline/8.1.1/include
 
 CC = gcc
 
@@ -49,7 +52,7 @@ all : $(NAME) print
 	@echo "$(GREEN)MINISHELL : ✅ D O N E ✅$(WHITE)"
 
 $(NAME):	$(OBJ) $(LIBFT) Makefile
-	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -lreadline -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(RDLN) -o $(NAME)
 
 .FORCE :
 $(LIBFT): .FORCE

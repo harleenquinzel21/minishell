@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 17:19:18 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/09 20:41:26 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/11 15:47:52 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,11 @@ int	ft_check_builtin(t_arg *data)
 		return (ft_export(data));
 	else if (!(ft_strcmp(data->cmd->cmd[0], "unset")))
 		return (ft_unset(data->cmd, data));
-	else if (!(ft_strcmp(data->cmd->cmd[0], "exit")))
-		ft_exit(0, NULL, data);///
+	// else if (!(ft_strcmp(data->cmd->cmd[0], "exit")))
+	// {
+	// 	ft_exit_cmd(data);///
+	// 	exit(data->errnum);
+	// }
 	return (0);
 }
 
@@ -68,8 +71,10 @@ void	execute(char **cmd, char **env)
 
 void	child_process(t_arg **data, char **env)
 {
-	// ft_env_list_to_array((*data)->envp, &env, data);
-	if (ft_check_builtin(*data) != 1)
+	// ft_env_list_to_array((*data)->envp, &env, *data);
+	if (ft_check_builtin(*data) == 1)
+		exit(0);
+	else
 		execute((*data)->cmd->cmd, env);
 
 }
@@ -84,7 +89,7 @@ int	main(int ac, char **av, char **envp)
 	(void)ac;
 
 	ft_init_structs(&data);
-	data->num = ft_count_cmd(data->cmd);
+
 	parse_env(envp, data);
 
 
@@ -99,6 +104,12 @@ int	main(int ac, char **av, char **envp)
 		if (line && *line)
 			add_history(line);
 		parser(data, line);
+		data->num = ft_count_cmd(data->cmd);
+		if (data->cmd->cmd[0] && !(ft_strcmp(data->cmd->cmd[0], "exit")))
+		{
+			ft_exit_cmd(data);///
+			exit(data->errnum);
+		}
 		child_pid = fork();
 		if (child_pid == 0)
 		{

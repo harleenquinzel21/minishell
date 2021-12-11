@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 20:19:43 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/09 16:53:59 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/11 14:56:57 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ int	ft_exit_cmd(t_arg *data)
 		ft_exit((unsigned char)ft_atoi(data->cmd->cmd[1]), NULL, data);
 	else
 		ft_exit(0, NULL, data);
-	return (1);
+	return (2);
 }
 
-void	ft_exit(int errnum, char *msg, t_arg *data)
+int	ft_exit(int errnum, char *msg, t_arg *data)
 {
 	char	*errmsg;
 
@@ -37,8 +37,8 @@ void	ft_exit(int errnum, char *msg, t_arg *data)
 		write(2, "\n", 1);
 	}
 	// ft_free(data);////
-	exit(errnum);
-	// return (0);
+	// exit(errnum);
+	return (0);
 }
 
 int	ft_minishell(t_arg *data)
