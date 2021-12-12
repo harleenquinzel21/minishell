@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 14:00:18 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/12 14:35:00 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/12 17:10:48 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,15 @@ int	ft_check_first(t_env **env, char *str)
 		return (1);
 	}
 	return (0);
+}
+
+void	ft_export_unset_error(t_arg *data, char *str, char *namecmd)
+{
+	data->errnum = 1;
+	ft_putstr_fd(namecmd, 2);
+	write(2, ": `", 3);
+	write(2, str, ft_strlen(str));
+	write(2, "': not a valid identifier\n", 26);
 }
 
 int	ft_check_error(char *cmd, t_arg *data)

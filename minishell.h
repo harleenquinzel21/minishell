@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 13:55:52 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/12 14:24:28 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/12 17:17:33 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ typedef struct s_arg
 	int			errnum;
 }	t_arg;
 
-void rl_replace_line(const char *, int);
+void	rl_replace_line(const char *str, int num);
 
 int		parser(t_arg *data, char *line);
 char	*parse_line(char *line_const, t_arg *data);
@@ -83,18 +83,18 @@ void	ft_init_structs(t_arg **data);
 int		ft_count_cmd(t_command *cmd);
 void	ft_env_list_to_array(t_env *envp, char ***env, t_arg *data);
 
-int		ft_echo(t_arg *data);// echo with option -n
-int		ft_pwd(t_arg *data);// pwd with no options
 int		ft_cd(t_arg *data); //cd with only a relative or absolute path
+int		ft_pwd(t_arg *data);// pwd with no options
 int		ft_env(t_arg *data);// env with no options or arguments
+int		ft_echo(t_arg *data);// echo with option -n
 int		ft_unset(t_command *cmd, t_arg *data);// unset with no options
 int		ft_export(t_arg *data);//export with no options
+int		ft_add_new(char *str, t_arg *data);
 int		ft_export_join(char *str, t_env *envp);
 void	ft_export_unset_error(t_arg *data, char *str, char *namecmd);
 void	ft_cd_error(t_arg *data, char *str);
 int		ft_exit_cmd(t_arg *data);
 int		check_exit(t_arg *data);
 int		ft_exit(int errnum, char *msg, t_arg *data); //exit with no options
-
 
 #endif

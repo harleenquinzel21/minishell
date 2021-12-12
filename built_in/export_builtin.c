@@ -6,18 +6,17 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 17:06:22 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/12 15:10:12 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/12 18:06:07 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	ft_search_dups(t_env *envp, char *new, int i, char *newkey)
+int	ft_search_dups(t_env *envp, char *new, int i)
 {
 	char	*newvalue;
+	char	*newkey;
 
-	if (ft_strchr(new, '+') && (ft_export_join(new, envp)))
-		return (1);
 	while (new[i] && (new[i] == '_' || ft_isalnum(new[i])))
 		i++;
 	newkey = ft_substr(new, 0, i);
@@ -48,24 +47,17 @@ int	if_without_arg(t_env *env)
 	tmp = env;
 	while (tmp)
 	{
-		if (tmp->separator[0])
+		if (tmp->separator && tmp->value)
 			printf("declare -x %s%s\"%s\"\n", tmp->key, \
 					tmp->separator, tmp->value);
+		else if (tmp->separator)
+			printf("declare -x %s%s\"\"\n", tmp->key, \
+					tmp->separator);
 		else
-			printf("declare -x %s%s%s\n", tmp->key, \
-					tmp->separator, tmp->value);
+			printf("declare -x %s\n", tmp->key);
 		tmp = tmp->next;
 	}
 	return (1);
-}
-
-void	ft_export_unset_error(t_arg *data, char *str, char *namecmd)
-{
-	data->errnum = 1;
-	ft_putstr_fd(namecmd, 2);
-	write(2, ": `", 3);
-	write(2, str, ft_strlen(str));
-	write(2, "': not a valid identifier\n", 26);
 }
 
 int	ft_export_join(char *new, t_env *envp)
@@ -86,40 +78,60 @@ int	ft_export_join(char *new, t_env *envp)
 		if (!(ft_strcmp(envp->key, newkey)))
 		{
 			envp->value = ft_strjoin(envp->value, &new[i + 2]);
-			break;
+			return (1);
 		}
 		else
 			envp = envp->next;
 	}
 	free(newkey);
 	free(newvalue);
+	return (0);
+}
+
+int	ft_add_new(char	*new, t_arg *data)
+{
+	char	*line;
+	int		i;
+
+	line = NULL;
+	i = 0;
+	while (new[i] && (new[i] == '_' || ft_isalnum(new[i])))
+		i++;
+	if (new[i] != '+')
+		return (0);
+	line = ft_substr(new, 0, i);
+	line = ft_strjoin(line, "=");
+	line = ft_strjoin(line, &new[i + 2]);
+	env_add_new(line, &data->envp);
+	free(line);
 	return (1);
 }
 
 int	ft_export(t_arg *data)
 {
-	char	*newkey;
 	int		i;
 	int		j;
 
-	i = 1;
+	i = 0;
 	j = 0;
-	newkey = NULL;
 	data->errnum = 0;
 	if (!data->cmd->cmd[1])
 		return (if_without_arg(data->envp));
-	while (data->cmd->cmd[i])
+	while (data->cmd->cmd[++i])
 	{
-		if (ft_isalpha(data->cmd->cmd[i][0]) && \
-			ft_strchr(data->cmd->cmd[i], '='))
+		if (ft_isalpha(data->cmd->cmd[i][0]))
+		//  && ft_strchr(data->cmd->cmd[i], '='))
 		{
-			if (ft_search_dups(data->envp, data->cmd->cmd[i], j, newkey))
+			if (ft_strchr(data->cmd->cmd[i], '+') && \
+				(ft_export_join(data->cmd->cmd[i], data->envp)))
 				return (1);
-			env_add_new(data->cmd->cmd[i], &data->envp);
+			if (ft_search_dups(data->envp, data->cmd->cmd[i], j))
+				return (1);
+			if (!ft_add_new(data->cmd->cmd[i], data))
+				env_add_new(data->cmd->cmd[i], &data->envp);
 		}
 		else
 			ft_export_unset_error(data, data->cmd->cmd[i], "export");
-		i++;
 	}
 	return (1);
 }

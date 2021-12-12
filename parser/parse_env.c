@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 23:03:14 by fbeatris          #+#    #+#             */
-/*   Updated: 2021/12/09 00:01:23 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/12/12 18:06:57 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,15 @@ void	env_add_new(char *env_line, t_env **first)
 	int		i;
 
 	i = 0;
+	sep = NULL;
+	value = NULL;
 	while (env_line[i] && (env_line[i] == '_' || ft_isalnum(env_line[i])))
 		i++;
 	key = ft_substr(env_line, 0, i);
-	sep = ft_substr(env_line, i, 1);
-	value = ft_strdup(&env_line[i + 1]);
+	if (ft_strchr(env_line, '='))
+		sep = ft_substr(env_line, i, 1);
+	if (env_line[i + 1])
+		value = ft_strdup(&env_line[i + 1]);
 	if (*first == NULL)
 		*first = env_create_new(key, sep, value);
 	else

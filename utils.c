@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 18:05:39 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/11 15:03:52 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/12 15:28:36 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,23 +65,23 @@ void	ft_make_array(t_env *envp, char ***env, int len, t_arg *data)
 	(*env)[i] = NULL;
 }
 
-// void	ft_env_list_to_array(t_env *envp, char ***env, t_arg *data)
-// {
-// 	int		len;
+void	ft_env_list_to_array(t_env *envp, char ***env, t_arg *data)
+{
+	int		len;
 
-// 	(void)data;
-// 	len = ft_count_envp(envp);
-// 	*env = malloc(sizeof(char *) * (len + 1));
-// 	if (!*env)
-// 		ft_exit(12, "malloc", data);
-// 	ft_make_array(envp, env, len, data);
+	(void)data;
+	len = ft_count_envp(envp);
+	*env = malloc(sizeof(char *) * (len + 1));
+	if (!*env)
+		ft_exit(12, "malloc", data);
+	ft_make_array(envp, env, len, data);
 
-// 	len = -1;
+	len = -1;
 
-// 	while ((*env[len]))
-// 	{
-// 		printf("%s\n", *env[len]);
-// 		len++;
-// 	}
+	while ((*env[len]))
+	{
+		printf("%s\n", *env[len]);
+		len++;
+	}
 
-// }
+}

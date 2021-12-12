@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 18:36:35 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/06 15:32:38 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/12 17:13:27 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,3 @@ int	ft_strnchr(const char *s, int c)
 	}
 	return (j);
 }
-

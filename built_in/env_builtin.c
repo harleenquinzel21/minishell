@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 15:17:44 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/09 16:51:32 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/12 17:49:27 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,15 @@ int	ft_env(t_arg *data)
 	tmp = data->envp;
 	while (tmp)
 	{
-		if (!ft_strcmp(tmp->separator, "="))
+		if (tmp->separator && !ft_strcmp(tmp->separator, "="))
 		{
 			ft_putstr_fd(tmp->key, 1);
 			ft_putstr_fd(tmp->separator, 1);
 			ft_putstr_fd(tmp->value, 1);
 			ft_putstr_fd("\n", 1);
-			tmp = tmp->next;
+
 		}
+		tmp = tmp->next;
 	}
 	return (1);
 }
