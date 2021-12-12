@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 17:19:18 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/11 19:44:15 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/12/12 20:51:31 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,22 @@ int	ft_check_builtin(t_arg *data)
 	return (0);
 }
 
-char	*find_path(char *cmd, char **envp)
+int	ft_check_path(t_arg *data, char *cmd)
+{
+	t_env	*tmp;
+	tmp = data->envp;
+
+	while (tmp)
+	{
+		if (!ft_strcmp(tmp->key, "PATH"))
+			return (1);
+		tmp=tmp->next;
+	}
+	ft_print_error(2, NULL, cmd);
+	return (0);
+}
+
+char	*find_path(char *cmd, char **envp, t_arg *data)
 {
 	char	**paths;
 	char	*path;
@@ -47,6 +62,8 @@ char	*find_path(char *cmd, char **envp)
 	int		i;
 
 	i = 0;
+	if (!ft_check_path(data, cmd))
+		return (0);
 	while (ft_strnstr(envp[i], "PATH", 4) == 0)
 		i++;
 	paths = ft_split(envp[i] + 5, ':');
@@ -60,27 +77,35 @@ char	*find_path(char *cmd, char **envp)
 			return (path);
 		i++;
 	}
+
+	// ft_print_error(2, NULL, cmd);
 	return (0);
 }
 
-void	execute(char **cmd, char **env)
+void	execute(char **cmd, char **env, t_arg *data)
 {
 
-	if (execve(find_path(cmd[0], env), cmd, env) == -1)
+	// char *path;
+
+	// path = find_path(cmd[0], env, data);
+	// if (path == NULL)
+	// 	return ;
+	if (execve(find_path(cmd[0], env, data), cmd, env) == -1)
 	{
 		write(2, "minishell: command not found: ", 30);
 		write(2, cmd[0], ft_strlen(cmd[0]));
 		write(2, "\n", 1);
 	}
+	// free(path);
 }
 
 void	child_process(t_arg **data, char **env)
 {
-	// ft_env_list_to_array((*data)->envp, &env, *data);
+	ft_env_list_to_array((*data)->envp, &env, *data);
 	// if (ft_check_builtin(*data) == 1)
 	// 	exit(0);
 	// else
-		execute((*data)->cmd->cmd, env);
+		execute((*data)->cmd->cmd, env, *data);
 
 }
 
@@ -94,14 +119,13 @@ int	main(int ac, char **av, char **envp)
 	(void)ac;
 
 	ft_init_structs(&data);
-
-	parse_env(envp, data);
-	
-	signal(SIGINT, &sig_int_handler);
-//	signal(EOF, &eof_handler);
-
 	if (ac != 1)
 		ft_exit(1, NULL, NULL/*&data*/);
+	parse_env(envp, data);
+	ft_shlvl_check(&data);
+
+	signal(SIGINT, &sig_int_handler);
+//	signal(EOF, &eof_handler);
 
 	while (1)
 	{

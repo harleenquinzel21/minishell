@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+         #
+#    By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/21 16:31:18 by ogarthar          #+#    #+#              #
-#    Updated: 2021/12/11 15:53:15 by fbeatris         ###   ########.fr        #
+#    Updated: 2021/12/12 19:29:52 by ogarthar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ LIST =	main.c				parser/syntax_errors.c		built_in/export_builtin.c\
 		init_structs.c		parser/replace_env.c		built_in/unset_builtin.c\
 		utils.c				parser/redirects.c			built_in/exit_builtin.c\
 		signals.c			parser/parse_env.c			built_in/echo_builtin.c\
-							parser/parser.c				built_in/pwd_builtin.c\
+		sh_lvl.c			parser/parser.c				built_in/pwd_builtin.c\
 							parser/quotes.c				built_in/env_builtin.c\
 														built_in/cd_builtin.c\
 
@@ -52,7 +52,8 @@ all : $(NAME) print
 	@echo "$(GREEN)MINISHELL : ✅ D O N E ✅$(WHITE)"
 
 $(NAME):	$(OBJ) $(LIBFT) Makefile
-	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(RDLN) -o $(NAME) -lreadline -L ~/.brew/opt/readline/lib -I ~/.brew/opt/readline/include
+	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(RDLN) -o $(NAME) -lreadline -L \
+	~/.brew/opt/readline/lib -I ~/.brew/opt/readline/include
 
 .FORCE :
 $(LIBFT): .FORCE

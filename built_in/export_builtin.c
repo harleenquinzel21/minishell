@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 17:06:22 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/12 18:06:07 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/12 18:46:22 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,8 @@ int	ft_export_join(char *new, t_env *envp)
 			envp->value = ft_strjoin(envp->value, &new[i + 2]);
 			return (1);
 		}
-		else
-			envp = envp->next;
+		// else
+		envp = envp->next;
 	}
 	free(newkey);
 	free(newvalue);
@@ -109,8 +109,8 @@ int	ft_add_new(char	*new, t_arg *data)
 
 int	ft_export(t_arg *data)
 {
-	int		i;
-	int		j;
+	int	i;
+	int	j;
 
 	i = 0;
 	j = 0;
@@ -120,7 +120,6 @@ int	ft_export(t_arg *data)
 	while (data->cmd->cmd[++i])
 	{
 		if (ft_isalpha(data->cmd->cmd[i][0]))
-		//  && ft_strchr(data->cmd->cmd[i], '='))
 		{
 			if (ft_strchr(data->cmd->cmd[i], '+') && \
 				(ft_export_join(data->cmd->cmd[i], data->envp)))
