@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 14:00:18 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/11 21:14:12 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/12 14:35:00 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	ft_check_error(char *cmd, t_arg *data)
 	{
 		if (!(ft_isalpha(cmd[j])) && (cmd[j] != '_'))
 		{
-			ft_expor_unset_error(data, cmd, "unset");
+			ft_export_unset_error(data, cmd, "unset");
 			return (1);
 		}
 		j++;

@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 13:55:52 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/11 21:24:26 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/12 14:24:28 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,8 @@ int		ft_cd(t_arg *data); //cd with only a relative or absolute path
 int		ft_env(t_arg *data);// env with no options or arguments
 int		ft_unset(t_command *cmd, t_arg *data);// unset with no options
 int		ft_export(t_arg *data);//export with no options
-void	ft_expor_unset_error(t_arg *data, char *str, char *namecmd);
+int		ft_export_join(char *str, t_env *envp);
+void	ft_export_unset_error(t_arg *data, char *str, char *namecmd);
 void	ft_cd_error(t_arg *data, char *str);
 int		ft_exit_cmd(t_arg *data);
 int		check_exit(t_arg *data);

@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 20:19:43 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/11 21:07:54 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/12 13:32:27 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ int	ft_exit(int errnum, char *msg, t_arg *data)
 	}
 
 	// ft_free(data);////
-	// exit(errnum);
-	return (0);
+	exit(errnum);
+	// return (0);
 }
 
 int	ft_minishell(t_arg *data)
