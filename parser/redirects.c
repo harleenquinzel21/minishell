@@ -6,71 +6,67 @@
 /*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 22:19:52 by fbeatris          #+#    #+#             */
-/*   Updated: 2021/12/08 23:52:51 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/12/13 23:51:19 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	remove_redirect(char *line, int start, int end)
+void	add_in_redir(char *line, int *i, t_arg *data)
 {
-	int	len;
-	int	i;
+	t_redir *temp;
 
-	len = end - start;
-	i = 0;
-	(void)line;
-	while (line[end + i])
+	temp = data->cmd->in;
+	if (data->cmd->in == NULL)
+		data->cmd->in = new_redir(line, i);
+	else
 	{
-		line[start + i] = line[end + i];
-		i++;
+		while (data->cmd->in)
+			data->cmd->in = data->cmd->in->next;
+		data->cmd->in = new_redir(line, i);
 	}
-	line[start + i] = '\0';
-	while (line[start + i])
-	{
-		line[start + i] = '\0';
-		i++;
-	}
+	data->cmd->in->in = 1;
+	if (line[*i] == '>' && line[*i + 1] != '>')
+		data->cmd->in->two = 0;
+	else if (line[*i] == '>' && line[*i + 1] == '>')
+		data->cmd->in->two = 1;
 }
 
-static char	*save_redir_name(char *line, int *i)
+void	add_out_redir(char *line, int *i, t_arg *data)
 {
-	int		begin;
-	int		save;
-	int		count;
-	char	*result;
+	t_redir *temp;
 
-	save = *i;
-	count = 0;
-	while (line[*i] && (line[*i] == '>' || line[*i] == '<'))
-		(*i)++;
-	while (line[*i] && line[*i] == ' ')
-		(*i)++;
-	begin = *i;
-	while (line[*i] && line[*i] != ' ')
-		(*i)++;
-	result = ft_substr(line, begin, *i);
-	remove_redirect(line, save, *i);
-	*i = save;
-	return (result);
+	temp = data->cmd->out;
+	if (data->cmd->out == NULL)
+		data->cmd->out = new_redir(line, i);
+	else
+	{
+		while (data->cmd->out)
+			data->cmd->out = data->cmd->out->next;
+		data->cmd->out = new_redir(line, i);
+	}
+	data->cmd->out->in = 0;
+	if (line[*i] == '>' && line[*i + 1] != '>')
+		data->cmd->out->two = 0;
+	else if (line[*i] == '>' && line[*i + 1] == '>')
+		data->cmd->out->two = 1;
+}
+
+void	read_here_doc(char *line, int *i, t_arg *data)
+{
+	(void)line;
+	(void)data;
+	(*i)++;
+	printf("¯\\_(ツ)_/¯   Ooops, \'<<\' not ready yet   :)\n");
 }
 
 char	*parse_redirects(char *line, int *i, t_arg *data)
 {
-	if (line[*i] == '>' && line[*i + 1] != '>')
-	{
-		data->cmd->out->limiter = ft_strdup(">");
-		data->cmd->out->name = save_redir_name(line, i);
-	}
-	else if (line[*i] == '>' && line[*i + 1] == '>')
-	{
-		data->cmd->out->limiter = ft_strdup(">>");
-		data->cmd->out->name = save_redir_name(line, i);
-	}
+	if (line[*i] == '>')
+		add_out_redir(line, i, data);
 	else if (line[*i] == '<' && line[*i + 1] != '<')
-	{
-		data->cmd->in->limiter = ft_strdup("<");
-		data->cmd->in->name = save_redir_name(line, i);
-	}
+		add_in_redir(line, i, data);
+	else if (line[*i] == '<' && line[*i + 1] == '<')
+		read_here_doc(line, i, data);
 	return (line);
 }

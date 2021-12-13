@@ -6,7 +6,7 @@
 /*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 20:02:15 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/08 23:58:58 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/12/13 23:23:49 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,11 @@ void	ft_init_structs(t_arg **data)
 	}
 		// exit(EXIT_FAILURE);//обработать нормально через errno
 
+	(*data)->cmd->in = NULL;
+	(*data)->cmd->out = NULL;
+
+
+/*
 	(*data)->cmd->in = (t_redir *)malloc(sizeof (t_redir));
 	if (!(*data)->cmd->in)
 	{
@@ -55,7 +60,7 @@ void	ft_init_structs(t_arg **data)
 		sleep(3);
 		// return;
 	}
-
+*/
 	(*data)->redir = (t_redir *)malloc(sizeof (t_redir));
 	if (!(*data)->redir)
 	{

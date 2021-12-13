@@ -6,7 +6,7 @@
 /*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 13:55:52 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/13 20:55:20 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/12/13 23:52:38 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,17 +64,21 @@ typedef struct s_arg
 
 /*./parser*/
 void	rl_replace_line(const char *str, int num);
+void	go_readline(char **line);
+
 int		parser(t_arg *data, char *line);
 char	*parse_line(char *line_const, t_arg *data);
 int		check_syntax(char *line);
-char	*env_replace(char *line, int *i, t_env *envp);
 char	*single_quotes(char *line, int *i);
 char	*double_quotes(char *line, int *i, t_env *envp);
+
 char	*parse_redirects(char *line, int *i, t_arg *data);
+t_redir	*new_redir(char *line, int *i);
+
 void	parse_env(char **envp, t_arg *data);
 t_env	*env_create_new(char *key, char *sep, char *value);
 void	env_add_new(char *env_line, t_env **first);
-void	go_readline(char **line);
+char	*env_replace(char *line, int *i, t_env *envp);
 
 /*signals*/
 void	sig_handler(int sig_num);
