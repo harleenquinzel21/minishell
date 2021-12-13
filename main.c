@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 17:19:18 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/13 18:55:18 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/13 20:55:30 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+
 
 int	ft_check_builtin(t_arg *data)
 {
@@ -47,20 +49,21 @@ int	main(int ac, char **av, char **envp)
 
 	(void)av;
 	(void)ac;
-
+	signal(SIGINT, &sig_int_handler);
+	signal(SIGQUIT, SIG_IGN);
+	
 	ft_init_structs(&data);
 	if (ac != 1)
 		ft_exit(1, NULL, NULL/*&data*/);
 	parse_env(envp, data);
 	ft_shlvl_check(&data);
 
-	signal(SIGINT, &sig_int_handler);
-//	signal(EOF, &eof_handler);
+	
 
 	while (1)
 	{
 
-		line = readline("\033[1;35m>>>\033[0;37m");
+		go_readline(&line);
 
 		if (line && *line)
 			add_history(line);
@@ -73,12 +76,15 @@ int	main(int ac, char **av, char **envp)
 		}
 		if (ft_check_builtin(data) != 1)
 		{
+			
 			child_pid = fork();
 			if (child_pid == 0)
 			{
 				child_process(&data);
 			}
+			
 		}
+
 		waitpid(child_pid, NULL, 0);
 	}
 	return (0);

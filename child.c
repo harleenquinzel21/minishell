@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 18:46:11 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/13 19:01:50 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/13 20:54:28 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ char	*find_path(char *cmd, char **envp, t_arg *data)
 	char	*path;
 	char	*part_path;
 	int		i;
+
+	
 
 	i = 0;
 	while (ft_strnstr(envp[i], "PATH", 4) == 0)
@@ -67,8 +69,13 @@ void	execute(char **cmd, char **env, t_arg *data)
 
 }
 
+
+
 void	child_process(t_arg **data)
 {
+	
+	signal(SIGINT, &sig_handler);
+	signal(SIGQUIT, &sig_handler);
 	ft_env_list_to_array((*data)->envp, *data);
 		execute((*data)->cmd->cmd, (*data)->env, *data);
 
