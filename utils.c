@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 18:05:39 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/12 20:43:56 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/13 17:28:18 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	ft_print_error(int errnum, char *str, char *cmd_name)
 	write(2, "\n", 1);
 }
 
-void	ft_make_array(t_env *envp, char ***env, int len, t_arg *data)
+void	ft_make_array(t_env *envp, char **env, int len, t_arg *data)
 {
 	int		i;
 	char	*arr;
@@ -65,46 +65,33 @@ void	ft_make_array(t_env *envp, char ***env, int len, t_arg *data)
 	i = -1;
 	while (++i < len)
 	{
-		(*env)[i] = ft_strdup(envp->key);
-		if (*envp->separator)
+		env[i] = ft_strdup(envp->key);
+		if (envp->separator)
 		{
-			arr = ft_strjoin((*env)[i], envp->separator);
-			free((*env)[i]);
-			(*env)[i] = arr;
+			arr = ft_strjoin(env[i], envp->separator);
+			free(env[i]);
+			env[i] = arr;
 		}
-		if (*envp->value)
+		if (envp->value)
 		{
-			arr = ft_strjoin((*env)[i], envp->value);
-			free((*env)[i]);
-			(*env)[i] = arr;
+			arr = ft_strjoin(env[i], envp->value);
+			free(env[i]);
+			env[i] = arr;
 		}
 		envp = envp->next;
 	}
-	(*env)[i] = NULL;
+	env[i] = NULL;
 }
 
-void	ft_env_list_to_array(t_env *envp, char ***env, t_arg *data)
+void	ft_env_list_to_array(t_env *envp, t_arg *data)
 {
 	int		len;
 
-	(void)data;
 	len = ft_count_envp(envp);
-	// *env = malloc(sizeof(char *) * (len + 1));
-	// if (!*env)
-	// 	ft_exit(12, "malloc", data);
-	ft_make_array(envp, env, len, data);
+	data->env = malloc(sizeof(char *) * (len + 1));
+	if (!data->env)
+		ft_exit(12, "malloc", data);
+	ft_make_array(envp, data->env, len, data);
 
-
-	len = 0;
-	while ((env[len]))
-	{
-		int i = -1;
-		while ((env[len][++i]))
-		{
-			printf("%s\n", env[len][i]);
-
-		}
-	len++;
-	}
 
 }

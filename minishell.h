@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 13:55:52 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/12 20:13:33 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/13 17:24:48 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ typedef struct s_arg
 	t_command	*cmd;
 	t_redir		*redir;
 	t_env		*envp;
-	char		*env;
+	char		**env;
 	int			num;// count cmd
 	int			**fd;
 	int			errnum;
@@ -82,7 +82,7 @@ void	eof_handler(int sig_num);
 void	ft_init_structs(t_arg **data);
 void	ft_shlvl_check(t_arg **data);
 int		ft_count_cmd(t_command *cmd);
-void	ft_env_list_to_array(t_env *envp, char ***env, t_arg *data);
+void	ft_env_list_to_array(t_env *envp, t_arg *data);
 void	ft_print_error(int errnum, char *str, char *cmd_name);
 
 int		ft_cd(t_arg *data); //cd with only a relative or absolute path

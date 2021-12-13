@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 17:19:18 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/12 20:51:31 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/13 17:36:33 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ char	*find_path(char *cmd, char **envp, t_arg *data)
 	while (ft_strnstr(envp[i], "PATH", 4) == 0)
 		i++;
 	paths = ft_split(envp[i] + 5, ':');
+	if (!paths)
+		ft_exit(12, "malloc", data);
 	i = 0;
 	while (paths[i])
 	{
@@ -77,35 +79,30 @@ char	*find_path(char *cmd, char **envp, t_arg *data)
 			return (path);
 		i++;
 	}
-
-	// ft_print_error(2, NULL, cmd);
 	return (0);
 }
 
 void	execute(char **cmd, char **env, t_arg *data)
 {
 
-	// char *path;
+	char *path;
 
-	// path = find_path(cmd[0], env, data);
-	// if (path == NULL)
-	// 	return ;
-	if (execve(find_path(cmd[0], env, data), cmd, env) == -1)
+	path = find_path(cmd[0], env, data);
+	if (path == NULL)
+		return ;
+	if (execve(path, cmd, env) == -1)
 	{
 		write(2, "minishell: command not found: ", 30);
 		write(2, cmd[0], ft_strlen(cmd[0]));
 		write(2, "\n", 1);
 	}
-	// free(path);
+	free(path);
 }
 
-void	child_process(t_arg **data, char **env)
+void	child_process(t_arg **data)
 {
-	ft_env_list_to_array((*data)->envp, &env, *data);
-	// if (ft_check_builtin(*data) == 1)
-	// 	exit(0);
-	// else
-		execute((*data)->cmd->cmd, env, *data);
+	ft_env_list_to_array((*data)->envp, *data);
+		execute((*data)->cmd->cmd, (*data)->env, *data);
 
 }
 
@@ -146,7 +143,7 @@ int	main(int ac, char **av, char **envp)
 			child_pid = fork();
 			if (child_pid == 0)
 			{
-				child_process(&data, envp);
+				child_process(&data);
 			}
 		}
 		waitpid(child_pid, NULL, 0);

@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 14:06:28 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/09 16:51:34 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/13 16:18:32 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,3 @@ int	ft_pwd(t_arg *data)
 	return (1);
 }
 
-// void	env_to_arrey(t_arg *data)
-// {
-
-// }
