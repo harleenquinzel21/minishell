@@ -6,7 +6,7 @@
 #    By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/21 16:31:18 by ogarthar          #+#    #+#              #
-#    Updated: 2021/12/13 16:15:26 by ogarthar         ###   ########.fr        #
+#    Updated: 2021/12/13 19:00:23 by ogarthar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,10 +14,10 @@ NAME = minishell
 
 LIST =	main.c				parser/syntax_errors.c		built_in/export_builtin.c\
 		init_structs.c		parser/replace_env.c		built_in/unset_builtin.c\
-		utils.c				parser/redirects.c			built_in/exit_builtin.c\
-		signals.c			parser/parse_env.c			built_in/echo_builtin.c\
+		child.c				parser/redirects.c			built_in/exit_builtin.c\
+		utils.c				parser/parse_env.c			built_in/echo_builtin.c\
 		sh_lvl.c			parser/parser.c				built_in/pwd_builtin.c\
-							parser/quotes.c				built_in/env_builtin.c\
+		signals.c			parser/quotes.c				built_in/env_builtin.c\
 														built_in/cd_builtin.c\
 
 
