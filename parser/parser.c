@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:09:43 by fbeatris          #+#    #+#             */
-/*   Updated: 2021/12/08 23:50:10 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/12/16 17:36:26 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,9 @@ char	*parse_line(char *line_const, t_arg *data)
 
 int	parser(t_arg *data, char *line)
 {
+
+	data->cmd->in = NULL;
+	data->cmd->out = NULL;
 	if (check_syntax(line))
 	{
 		printf("syntax error\n");

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 13:55:52 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/13 23:52:38 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/12/15 18:06:48 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <errno.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <fcntl.h>
 # include <unistd.h>
 # include <pthread.h>
 # include <sys/time.h>
@@ -96,6 +97,10 @@ void	child_process(t_arg **data);
 void	execute(char **cmd, char **env, t_arg *data);
 char	*find_path(char *cmd, char **envp, t_arg *data);
 int		ft_check_path(t_arg *data, char *cmd);
+
+/*redirects.c*/
+int		dup_cmd(t_command *cmd, t_arg *data);
+void	redup_cmd(int fd, t_arg *data);
 
 /*./built_in*/
 int		ft_cd(t_arg *data); //cd with only a relative or absolute path

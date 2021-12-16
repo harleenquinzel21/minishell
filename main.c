@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 17:19:18 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/14 00:06:00 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/12/16 18:05:27 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,19 +46,20 @@ int	main(int ac, char **av, char **envp)
 	t_arg	*data;
 	pid_t	child_pid;
 	char	*line;
+	int		fd;
 
 	(void)av;
 	(void)ac;
 	signal(SIGINT, &sig_int_handler);
 	signal(SIGQUIT, SIG_IGN);
-	
+
 	ft_init_structs(&data);
 	if (ac != 1)
 		ft_exit(1, NULL, NULL/*&data*/);
 	parse_env(envp, data);
 	ft_shlvl_check(&data);
 
-	
+
 
 	while (1)
 	{
@@ -74,18 +75,22 @@ int	main(int ac, char **av, char **envp)
 			ft_exit_cmd(data);///
 			exit(data->errnum);
 		}
+
+		if (data->num == 1 && data->cmd->out)
+			fd = dup_cmd(data->cmd, data);
 		if (ft_check_builtin(data) != 1)
 		{
-			
+
 			child_pid = fork();
 			if (child_pid == 0)
 			{
 				child_process(&data);
 			}
-			
 		}
-
 		waitpid(child_pid, NULL, 0);
+		if (data->num == 1 && data->cmd->out)
+			redup_cmd(fd, data);
+
 	}
 	return (0);
 }

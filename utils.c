@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 18:05:39 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/13 18:52:47 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/15 18:51:18 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,16 @@ int	ft_count_cmd(t_command *cmd)
 {
 	int	res;
 
+	if (!cmd->cmd[0])
+	return (0);
 	res = 0;
 	while (cmd)
 	{
 		res++;
+
+		// ft_putstr_fd(cmd->cmd[0], 1);
+		// ft_putstr_fd("\n", 1);
+
 		cmd = cmd->next;
 	}
 	return (res);
