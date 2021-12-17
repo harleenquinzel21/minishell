@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 22:19:52 by fbeatris          #+#    #+#             */
-/*   Updated: 2021/12/16 17:35:15 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/17 17:59:26 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,14 @@ void	add_in_redir(char *line, int *i, t_arg *data)
 			data->cmd->in = data->cmd->in->next;
 		data->cmd->in = new_redir(line, i);
 	}
-	data->cmd->in->in = 1;
-	if (line[*i] == '>' && line[*i + 1] != '>')
-		data->cmd->in->two = 0;
-	else if (line[*i] == '>' && line[*i + 1] == '>')
-		data->cmd->in->two = 1;
 }
 
 void	add_out_redir(char *line, int *i, t_arg *data)
 {
 	t_redir *temp;
+	int		save_i;
 
+	save_i = *i;
 	temp = data->cmd->out;
 	if (data->cmd->out == NULL)
 		data->cmd->out = new_redir(line, i);
@@ -46,9 +43,9 @@ void	add_out_redir(char *line, int *i, t_arg *data)
 		data->cmd->out = new_redir(line, i);
 	}
 	data->cmd->out->in = 0;
-	if (line[*i] == '>' && line[*i + 1] != '>')
+	if (line[save_i] == '>' && line[save_i + 1] != '>')
 		data->cmd->out->two = 0;
-	else if (line[*i] == '>' && line[*i + 1] == '>')
+	else if (line[save_i] == '>' && line[save_i + 1] == '>')
 		data->cmd->out->two = 1;
 }
 

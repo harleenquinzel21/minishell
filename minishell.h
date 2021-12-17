@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 13:55:52 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/15 18:06:48 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/17 17:05:39 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,8 @@ int		ft_check_path(t_arg *data, char *cmd);
 /*redirects.c*/
 int		dup_cmd(t_command *cmd, t_arg *data);
 void	redup_cmd(int fd, t_arg *data);
+/*pipe.c*/
+void	ft_pipe(t_arg *data);
 
 /*./built_in*/
 int		ft_cd(t_arg *data); //cd with only a relative or absolute path

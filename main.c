@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 17:19:18 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/16 18:05:27 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/17 17:01:54 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ int	main(int ac, char **av, char **envp)
 			ft_exit_cmd(data);///
 			exit(data->errnum);
 		}
-
+		if (data->num > 1)
+			ft_pipe(data);
 		if (data->num == 1 && data->cmd->out)
 			fd = dup_cmd(data->cmd, data);
 		if (ft_check_builtin(data) != 1)
