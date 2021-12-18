@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_structs.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 20:02:15 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/16 17:34:13 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/18 05:17:32 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,9 @@ void	ft_init_structs(t_arg **data)
 		write(1, "1", 1);
 		sleep(3);
 	}
+	(*data)->cmd = NULL;
 		// exit(EXIT_FAILURE);//обработать нормально через errno
-
+/*
 	(*data)->cmd = (t_command *)malloc(sizeof (t_command));
 	if (!(*data)->cmd)
 	{
@@ -43,7 +44,7 @@ void	ft_init_structs(t_arg **data)
 	(*data)->cmd->out = NULL;
 	(*data)->cmd->next = NULL;
 
-
+*/
 
 /*
 	(*data)->cmd->in = (t_redir *)malloc(sizeof (t_redir));

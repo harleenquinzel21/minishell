@@ -6,7 +6,7 @@
 /*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 19:41:57 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/18 03:30:09 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/12/18 04:44:40 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int		dup_cmd(t_command *cmd, t_arg *data)
 	t_redir	*temp;
 
 	temp = cmd->out;
+	// printf("redir name |%s|\n", cmd->out->name);
 	if (!cmd->out)
 		return (0);
 	while (cmd->out)

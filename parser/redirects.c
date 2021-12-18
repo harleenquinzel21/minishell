@@ -6,70 +6,76 @@
 /*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 22:19:52 by fbeatris          #+#    #+#             */
-/*   Updated: 2021/12/18 03:32:29 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/12/18 06:37:58 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	add_in_redir(char *line, int *i, t_arg *data)
+void	add_in_redir(char *line, int *i, t_command *cmd)
 {
 	t_redir *temp;
 
-	temp = data->cmd->in;
-	if (data->cmd->in == NULL)
+	temp = cmd->in;
+	if (cmd->in == NULL)
 	{
-		data->cmd->in = new_redir(line, i);
-		data->cmd->in->target = 1;
+		cmd->in = new_redir(line, i);
+		cmd->in->target = 1;
 	}
 	else
 	{
-		while (data->cmd->in->next)
-			data->cmd->in = data->cmd->in->next;
-		data->cmd->in->next = new_redir(line, i);
-		data->cmd->in->next->target = 1;
-		data->cmd->in->target = 0;
-		data->cmd->in = temp;
+		while (cmd->in->next)
+			cmd->in = cmd->in->next;
+		cmd->in->next = new_redir(line, i);
+		cmd->in->next->target = 1;
+		cmd->in->target = 0;
+		cmd->in = temp;
 	}
 }
 
-void	add_out_redir(char *line, int *i, t_arg *data)
+void	add_out_redir(char *line, int *i, t_command *cmd)
 {
 	t_redir *temp;
 
-	temp = data->cmd->out;
-	if (data->cmd->out == NULL)
+	temp = cmd->out;
+	if (cmd->out == NULL)
 	{
-		data->cmd->out = new_redir(line, i);
-		data->cmd->out->target = 1;
+		cmd->out = new_redir(line, i);
+		cmd->out->target = 1;
 	}
 	else
 	{
-		while (data->cmd->out->next)
-			data->cmd->out = data->cmd->out->next;
-		data->cmd->out->next = new_redir(line, i);
-		data->cmd->out->next->target = 1;
-		data->cmd->out->target = 0;
-		data->cmd->out = temp;
+		while (cmd->out->next)
+			cmd->out = cmd->out->next;
+		cmd->out->next = new_redir(line, i);
+		cmd->out->next->target = 1;
+		cmd->out->target = 0;
+		cmd->out = temp;
 	}
 }
 
-void	read_here_doc(char *line, int *i, t_arg *data)
+void	read_here_doc(char *line, int *i, t_command *cmd)
 {
 	(void)line;
-	(void)data;
+	(void)cmd;
 	(*i)++;
 	printf("¯\\_(ツ)_/¯   Ooops, \'<<\' not ready yet   :)\n");
 }
 
-char	*parse_redirects(char *line, int *i, t_arg *data)
+char	*parse_redirects(char *line, int *i, t_command *cmd)
 {
 	if (line[*i] == '>')
-		add_out_redir(line, i, data);
+		add_out_redir(line, i, cmd);
 	else if (line[*i] == '<' && line[*i + 1] != '<')
-		add_in_redir(line, i, data);
+		add_in_redir(line, i, cmd);
 	else if (line[*i] == '<' && line[*i + 1] == '<')
-		read_here_doc(line, i, data);
-	// printf("redir line |%s|\n", line);
+		read_here_doc(line, i, cmd);
+	
+	// while (cmd->out)
+	// {
+	// 	printf("out |%s|\n", cmd->out->name);
+	// 	cmd->out = cmd->out->next;
+	// }
+	
 	return (line);
 }

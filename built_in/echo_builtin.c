@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 19:28:40 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/09 16:52:00 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/18 03:55:38 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,10 @@ int	ft_echo(t_arg *data)
 	int	i;
 
 	if (!data->cmd->cmd[1])
+	{
 		printf("\n");
+		return (1);
+	}
 	i = 1;
 	if (!(ft_strcmp(data->cmd->cmd[1], "-n")))
 	{
