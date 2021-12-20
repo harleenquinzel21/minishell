@@ -6,7 +6,7 @@
 /*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 13:55:52 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/18 06:17:58 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/12/20 21:00:49 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct s_redir
 	int				target;
 	int				two;
 	struct s_redir	*next;
+	struct s_redir	*data_next;
 }	t_redir;
 
 typedef struct s_command
@@ -59,6 +60,7 @@ typedef struct s_arg
 	t_env		*envp;
 	char		**env;
 	int			num;// count cmd
+	int			num_cmd;
 	int			**fd;
 	int			errnum;
 }	t_arg;
@@ -73,8 +75,8 @@ int		check_syntax(char *line);
 char	*single_quotes(char *line, int *i);
 char	*double_quotes(char *line, int *i, t_env *envp);
 
-char	*parse_redirects(char *line, int *i, t_command *cmd);
-t_redir	*new_redir(char *line, int *i);
+char	*parse_redirects(char *line, int *i, t_command *cmd, t_arg *data);
+t_redir	*new_redir(char *line, int *i, t_arg *data);
 
 void	parse_env(char **envp, t_arg *data);
 t_env	*env_create_new(char *key, char *sep, char *value);

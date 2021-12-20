@@ -6,7 +6,7 @@
 /*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 17:19:18 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/18 06:36:42 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/12/20 21:29:45 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,26 @@ int	ft_check_builtin(t_arg *data)
 	return (0);
 }
 
+void free_cmd_redir(t_arg *data)
+{
+	t_command	*cmd_temp;
+	t_redir		*redir_temp;
+
+	while (data->cmd)
+	{
+		cmd_temp = data->cmd->next;
+		free(data->cmd);
+		data->cmd = cmd_temp;
+	}
+	while (data->redir)
+	{
+		redir_temp = data->redir->data_next;
+		free(data->redir);
+		data->redir = redir_temp;
+	}
+//	printf("free ok\n");
+}
+
 int	main(int ac, char **av, char **envp)
 {
 	t_arg	*data;
@@ -69,6 +89,8 @@ int	main(int ac, char **av, char **envp)
 		if (line && *line)
 			add_history(line);
 		parser(data, line);
+					
+					
 		data->num = ft_count_cmd(data->cmd);
 		if (data->cmd->cmd[0] && !(ft_strcmp(data->cmd->cmd[0], "exit")))
 		{
@@ -93,8 +115,9 @@ int	main(int ac, char **av, char **envp)
 		waitpid(child_pid, NULL, 0);
 		if (data->num == 1 && data->cmd->out)
 			redup_cmd(fd, data);
-
+		free_cmd_redir(data);
 	}
+	
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 23:51:22 by fbeatris          #+#    #+#             */
-/*   Updated: 2021/12/18 03:20:40 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/12/20 21:26:41 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ static void	remove_redirect(char *line, int start, int end)
 		i++;
 	}
 	line[start + i] = '\0';
-	while (line[start + i])
+	while (line[start + i + 1])
 	{
-		line[start + i] = '\0';
+		line[start + i + 1] = '\0';
 		i++;
 	}
 }
@@ -55,7 +55,32 @@ static char	*save_redir_name(char *line, int *i)
 	return (result);
 }
 
-t_redir	*new_redir(char *line, int *i)
+void	data_redir_list(t_redir *new, t_arg *data)
+{
+	t_redir	*temp;
+	int		i;
+
+	i = 1;
+	temp = data->redir;
+	if (data->redir == NULL)
+	{
+		data->redir = new;
+		data->redir->cmd = 1;
+	}
+	else
+	{
+		while (data->redir->data_next)
+		{
+			data->redir = data->redir->data_next;
+			i++;
+		}
+		data->redir->data_next = new;
+		data->redir->data_next->cmd = data->num_cmd;
+		data->redir = temp;
+	}
+}
+
+t_redir	*new_redir(char *line, int *i, t_arg *data)
 {
 	t_redir *new;
 
@@ -64,14 +89,14 @@ t_redir	*new_redir(char *line, int *i)
 	{
 		new->name = save_redir_name(line, i);
 		new->two = 1;
-		(*i)++;
 	}
 	else
 	{
 		new->name = save_redir_name(line, i);
-		new->two = 0;	
+		new->two = 0;
 	}
-	
-	new->next = NULL;	
+	new->next = NULL;
+	new->data_next = NULL;
+	data_redir_list(new, data);
 	return (new);
 }
