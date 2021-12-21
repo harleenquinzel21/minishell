@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 13:55:52 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/20 21:00:49 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/12/21 20:02:32 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct s_redir
 	int				cmd;
 	int				target;
 	int				two;
+	int				in;
 	struct s_redir	*next;
 	struct s_redir	*data_next;
 }	t_redir;
@@ -64,6 +65,9 @@ typedef struct s_arg
 	int			**fd;
 	int			errnum;
 }	t_arg;
+
+
+void	ft_print_all(t_arg *data);
 
 /*./parser*/
 void	rl_replace_line(const char *str, int num);
@@ -94,7 +98,10 @@ void	ft_env_list_to_array(t_env *envp, t_arg *data);
 void	ft_make_array(t_env *envp, char **env, int len, t_arg *data);
 void	ft_print_error(int errnum, char *str, char *cmd_name);
 
-/*child*/
+/*check_open.c*/
+int	check_open(t_arg *data);
+
+/*child.c*/
 void	child_process(t_arg **data);
 void	execute(char **cmd, char **env, t_arg *data);
 char	*find_path(char *cmd, char **envp, t_arg *data);

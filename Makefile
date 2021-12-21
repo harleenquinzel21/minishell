@@ -6,7 +6,7 @@
 #    By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/21 16:31:18 by ogarthar          #+#    #+#              #
-#    Updated: 2021/12/17 17:06:05 by ogarthar         ###   ########.fr        #
+#    Updated: 2021/12/21 20:03:43 by ogarthar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,9 @@ LIST =	main.c				parser/syntax_errors.c		built_in/export_builtin.c\
 		sh_lvl.c			parser/parser.c				built_in/pwd_builtin.c\
 		signals.c			parser/quotes.c				built_in/env_builtin.c\
 		redirects.c			parser/redirects_utils.c	built_in/cd_builtin.c\
-		pipe.c
+		pipe.c\
+		check_open.c\
+		print.c
 
 
 OBJ = $(LIST:.c=.o)

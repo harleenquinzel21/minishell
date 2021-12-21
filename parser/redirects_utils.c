@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirects_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 23:51:22 by fbeatris          #+#    #+#             */
-/*   Updated: 2021/12/20 21:26:41 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/12/21 18:35:11 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,11 +89,19 @@ t_redir	*new_redir(char *line, int *i, t_arg *data)
 	{
 		new->name = save_redir_name(line, i);
 		new->two = 1;
+		new->in = 0;
+	}
+	else if (line[*i] && line[*i] == '<')
+	{
+		new->name = save_redir_name(line, i);
+		new->two = 0;
+		new->in = 1;
 	}
 	else
 	{
 		new->name = save_redir_name(line, i);
 		new->two = 0;
+		new->in = 0;
 	}
 	new->next = NULL;
 	new->data_next = NULL;

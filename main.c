@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 17:19:18 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/20 21:29:45 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/12/21 20:07:52 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,44 @@ int	ft_check_builtin(t_arg *data)
 	return (0);
 }
 
+void	execution(t_arg *data)
+{
+	int		fd;
+	pid_t	child_pid = 0;
+
+	if (data->cmd->cmd[0] && !(ft_strcmp(data->cmd->cmd[0], "exit")))
+	{
+		ft_exit_cmd(data);///
+		exit(data->errnum);
+	}
+	ft_env_list_to_array(data->envp, data);
+	if (!check_open(data))//проверяет и создает если нужно файлы для редир, обр-ка ошибок
+	{
+		data->num = ft_count_cmd(data->cmd);
+		if (data->num == 1 && data->cmd->out)
+			fd = dup_cmd(data->cmd, data);
+		// if (data->num > 1)
+		// {
+		// 	ft_pipe(data);
+		// }
+		if (ft_check_builtin(data) != 1)
+		{
+
+			child_pid = fork();
+			if (child_pid == 0)
+			{
+				child_process(&data);
+			}
+		}
+		waitpid(child_pid, NULL, 0);
+		if (data->num == 1 && data->cmd->out)
+			redup_cmd(fd, data);
+		// else if (data->num != 1 || data->cmd->cmd[0])
+		// 	pipex(data);
+
+	}
+}
+
 void free_cmd_redir(t_arg *data)
 {
 	t_command	*cmd_temp;
@@ -64,12 +102,9 @@ void free_cmd_redir(t_arg *data)
 int	main(int ac, char **av, char **envp)
 {
 	t_arg	*data;
-	pid_t	child_pid;
 	char	*line;
-	int		fd;
-
 	(void)av;
-	(void)ac;
+
 	signal(SIGINT, &sig_int_handler);
 	signal(SIGQUIT, SIG_IGN);
 
@@ -79,45 +114,20 @@ int	main(int ac, char **av, char **envp)
 	parse_env(envp, data);
 	ft_shlvl_check(&data);
 
-
-
 	while (1)
 	{
 
 		go_readline(&line);
-
 		if (line && *line)
 			add_history(line);
 		parser(data, line);
-					
-					
-		data->num = ft_count_cmd(data->cmd);
-		if (data->cmd->cmd[0] && !(ft_strcmp(data->cmd->cmd[0], "exit")))
-		{
-			ft_exit_cmd(data);///
-			exit(data->errnum);
-		}
 
-		// if (data->num > 1)
-		// 	ft_pipe(data);
+		ft_print_all(data);//
 
-		if (data->num == 1 && data->cmd->out)
-			fd = dup_cmd(data->cmd, data);
-		if (ft_check_builtin(data) != 1)
-		{
-
-			child_pid = fork();
-			if (child_pid == 0)
-			{
-				child_process(&data);
-			}
-		}
-		waitpid(child_pid, NULL, 0);
-		if (data->num == 1 && data->cmd->out)
-			redup_cmd(fd, data);
+		execution(data);
 		free_cmd_redir(data);
 	}
-	
+
 	return (0);
 }
 
