@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_structs.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 20:02:15 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/20 21:04:08 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/12/22 13:46:47 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ void	ft_init_structs(t_arg **data)
 		// exit(EXIT_FAILURE);//обработать нормально через errno
 
 	(*data)->envp = NULL;
+	(*data)->num = 0;
 
 
 	// (*data)->cmd->cmd = ft_calloc(10, 10);

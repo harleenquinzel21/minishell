@@ -6,7 +6,7 @@
 #    By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/21 16:31:18 by ogarthar          #+#    #+#              #
-#    Updated: 2021/12/21 20:03:43 by ogarthar         ###   ########.fr        #
+#    Updated: 2021/12/22 15:19:22 by ogarthar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ LIST =	main.c				parser/syntax_errors.c		built_in/export_builtin.c\
 		redirects.c			parser/redirects_utils.c	built_in/cd_builtin.c\
 		pipe.c\
 		check_open.c\
+		pipex.c\
 		print.c
 
 
@@ -77,8 +78,7 @@ fclean : clean
 	rm -f $(NAME)
 	@echo "$(RED)MINISHELL : 💣 D E L E T E D 💣$(WHITE)"
 
-x : all
-	@./minishell
+x : all;	@./minishell
 
 print :
 	@echo " $(YELOW)⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀⣀⣤⠤⠴⠶⠶⠶⠶⠤⢤⣄⣀⣠⣤⣤⣄⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"

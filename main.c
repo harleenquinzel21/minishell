@@ -6,97 +6,112 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 17:19:18 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/21 20:07:52 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/22 15:44:42 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
-
-int	ft_check_builtin(t_arg *data)
+void	set_built(t_command *cmd)
 {
-	// printf("start check builtin\n");
-	// printf("-%s-\n", data->cmd->cmd[0]);
-	if (data->cmd->cmd[0] == NULL)
-		return (1);
-	if (!(ft_strcmp(data->cmd->cmd[0], "pwd")))
-		return (ft_pwd(data));
-	else if (!(ft_strcmp(data->cmd->cmd[0], "echo")))
+	while (cmd)
+	{
+		if (cmd->cmd[0])
+		{
+			if (!ft_strcmp(cmd->cmd[0], "echo"))
+				cmd->built = 1;
+			else if (!ft_strcmp(cmd->cmd[0], "cd"))
+				cmd->built = 2;
+			else if (!ft_strcmp(cmd->cmd[0], "pwd"))
+				cmd->built = 3;
+			else if (!ft_strcmp(cmd->cmd[0], "export"))
+				cmd->built = 4;
+			else if (!ft_strcmp(cmd->cmd[0], "unset"))
+				cmd->built = 5;
+			else if (!ft_strcmp(cmd->cmd[0], "env"))
+				cmd->built = 6;
+			else if (!ft_strcmp(cmd->cmd[0], "exit"))
+				cmd->built = 7;
+		}
+		cmd = cmd->next;
+	}
+}
+
+// int	ft_check_builtin(t_arg *data)
+// {
+// 	// printf("start check builtin\n");
+// 	// printf("-%s-\n", data->cmd->cmd[0]);
+// 	if (data->cmd->cmd[0] == NULL)
+// 		return (1);
+// 	if (!(ft_strcmp(data->cmd->cmd[0], "pwd")))
+// 		return (ft_pwd(data));
+// 	else if (!(ft_strcmp(data->cmd->cmd[0], "echo")))
+// 		return (ft_echo(data));
+// 	else if (!(ft_strcmp(data->cmd->cmd[0], "env")))
+// 		return (ft_env(data));
+// 	else if (!(ft_strcmp(data->cmd->cmd[0], "cd")))
+// 		return (ft_cd(data));
+// 	else if (!(ft_strcmp(data->cmd->cmd[0], "export")))
+// 		return (ft_export(data));
+// 	else if (!(ft_strcmp(data->cmd->cmd[0], "unset")))
+// 		return (ft_unset(data->cmd, data));
+// 	// else if (!(ft_strcmp(data->cmd->cmd[0], "exit")))
+// 	// {
+// 	// 	ft_exit_cmd(data);///
+// 	// 	exit(data->errnum);
+// 	// }
+// 	// printf("finish check builtin\n");
+// 	return (0);
+// }
+
+int	run_built(t_command *cmd, t_arg *data)
+{
+	if (cmd->built == 1)
 		return (ft_echo(data));
-	else if (!(ft_strcmp(data->cmd->cmd[0], "env")))
-		return (ft_env(data));
-	else if (!(ft_strcmp(data->cmd->cmd[0], "cd")))
+	if (cmd->built == 2)
 		return (ft_cd(data));
-	else if (!(ft_strcmp(data->cmd->cmd[0], "export")))
+	if (cmd->built == 3)
+		return (ft_pwd(data));
+	if (cmd->built == 4)
 		return (ft_export(data));
-	else if (!(ft_strcmp(data->cmd->cmd[0], "unset")))
+	if (cmd->built == 5)
 		return (ft_unset(data->cmd, data));
-	// else if (!(ft_strcmp(data->cmd->cmd[0], "exit")))
-	// {
-	// 	ft_exit_cmd(data);///
-	// 	exit(data->errnum);
-	// }
-	// printf("finish check builtin\n");
+	if (cmd->built == 6)
+		return (ft_env(data));
+	if (cmd->built == 7)
+		return (ft_exit_cmd(data));
 	return (0);
 }
 
 void	execution(t_arg *data)
 {
-	int		fd;
-	pid_t	child_pid = 0;
+	int		fd = 0;
+	// pid_t	child_pid = 0;
 
-	if (data->cmd->cmd[0] && !(ft_strcmp(data->cmd->cmd[0], "exit")))
-	{
-		ft_exit_cmd(data);///
-		exit(data->errnum);
-	}
+	// if (data->cmd->cmd[0] && !(ft_strcmp(data->cmd->cmd[0], "exit")))
+	// {
+	// 	ft_exit_cmd(data);///
+	// 	exit(data->errnum);
+	// }
+	set_built(data->cmd);
 	ft_env_list_to_array(data->envp, data);
 	if (!check_open(data))//проверяет и создает если нужно файлы для редир, обр-ка ошибок
 	{
 		data->num = ft_count_cmd(data->cmd);
-		if (data->num == 1 && data->cmd->out)
-			fd = dup_cmd(data->cmd, data);
-		// if (data->num > 1)
-		// {
-		// 	ft_pipe(data);
-		// }
-		if (ft_check_builtin(data) != 1)
+		if (data->num == 1 && data->cmd->built)
 		{
-
-			child_pid = fork();
-			if (child_pid == 0)
-			{
-				child_process(&data);
-			}
-		}
-		waitpid(child_pid, NULL, 0);
-		if (data->num == 1 && data->cmd->out)
+			fd = dup_cmd(data->cmd, data);
+			data->errnum = run_built(data->cmd, data);
 			redup_cmd(fd, data);
-		// else if (data->num != 1 || data->cmd->cmd[0])
-		// 	pipex(data);
+		}
+		if (data->num > 1)
+		{
+			ft_pipe(data);
+		}
+		if (data->num != 1 || data->cmd->cmd[0])
+			pipex(data);
 
 	}
-}
-
-void free_cmd_redir(t_arg *data)
-{
-	t_command	*cmd_temp;
-	t_redir		*redir_temp;
-
-	while (data->cmd)
-	{
-		cmd_temp = data->cmd->next;
-		free(data->cmd);
-		data->cmd = cmd_temp;
-	}
-	while (data->redir)
-	{
-		redir_temp = data->redir->data_next;
-		free(data->redir);
-		data->redir = redir_temp;
-	}
-//	printf("free ok\n");
 }
 
 int	main(int ac, char **av, char **envp)

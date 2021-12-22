@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 20:19:43 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/12 13:32:27 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/22 13:39:54 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,22 @@ int	ft_exit(int errnum, char *msg, t_arg *data)
 	// return (0);
 }
 
-int	ft_minishell(t_arg *data)
+void free_cmd_redir(t_arg *data)
 {
-	(void)data;///
-	//change shlvl in envp
-	//execve() in child_process
-	return (0);
+	t_command	*cmd_temp;
+	t_redir		*redir_temp;
+
+	while (data->cmd)
+	{
+		cmd_temp = data->cmd->next;
+		free(data->cmd);
+		data->cmd = cmd_temp;
+	}
+	while (data->redir)
+	{
+		redir_temp = data->redir->data_next;
+		free(data->redir);
+		data->redir = redir_temp;
+	}
+//	printf("free ok\n");
 }

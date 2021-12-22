@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:09:43 by fbeatris          #+#    #+#             */
-/*   Updated: 2021/12/20 21:34:21 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/12/22 15:30:06 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ t_command	*new_command(void)
 	new->out = NULL;
 	new->next = NULL;
 	new->cmd = NULL;
+	new->built = 0;
 	return (new);
 }
 
@@ -85,7 +86,7 @@ int	parser(t_arg *data, char *line)
 	// while (data->cmd)
 	// {
 	// 	while (data->cmd->cmd[f])
-	// 	{	
+	// 	{
 	// 		printf("cmd arg%d: %s\n", f, data->cmd->cmd[f]);
 	// 		f++;
 	// 	}
@@ -95,7 +96,7 @@ int	parser(t_arg *data, char *line)
 	// }
 	// data->cmd = temp2;
 
-	// t_redir *temp3 = data->redir; 
+	// t_redir *temp3 = data->redir;
 	// while (data->redir)
 	// {
 	// 	printf("redir for cmd %d - name %s - target %d\n", data->redir->cmd, data->redir->name, data->redir->target);

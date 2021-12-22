@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 13:55:52 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/21 20:02:32 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/22 15:22:30 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,13 @@ typedef struct s_redir
 	struct s_redir	*data_next;
 }	t_redir;
 
-typedef struct s_command
+typedef struct s_cmd
 {
-	char				**cmd;
-	t_redir				*in;
-	t_redir				*out;
-	struct s_command	*next;
+	char			**cmd;
+	t_redir			*in;
+	t_redir			*out;
+	int				built;
+	struct s_cmd	*next;
 }	t_command;
 
 typedef struct s_arg
@@ -60,7 +61,7 @@ typedef struct s_arg
 	t_redir		*redir;
 	t_env		*envp;
 	char		**env;
-	int			num;// count cmd
+	int			num;
 	int			num_cmd;
 	int			**fd;
 	int			errnum;
@@ -102,7 +103,7 @@ void	ft_print_error(int errnum, char *str, char *cmd_name);
 int	check_open(t_arg *data);
 
 /*child.c*/
-void	child_process(t_arg **data);
+void	child_process(int i, t_arg *data);
 void	execute(char **cmd, char **env, t_arg *data);
 char	*find_path(char *cmd, char **envp, t_arg *data);
 int		ft_check_path(t_arg *data, char *cmd);
@@ -112,6 +113,9 @@ int		dup_cmd(t_command *cmd, t_arg *data);
 void	redup_cmd(int fd, t_arg *data);
 /*pipe.c*/
 void	ft_pipe(t_arg *data);
+/*pipex.c*/
+void	pipex(t_arg *data);
+void	ft_dup2(int i, int *file, t_command *cmd, t_arg *data);
 
 /*./built_in*/
 int		ft_cd(t_arg *data); //cd with only a relative or absolute path
@@ -127,8 +131,10 @@ void	ft_cd_error(t_arg *data, char *str);
 int		ft_exit_cmd(t_arg *data);
 int		check_exit(t_arg *data);
 int		ft_exit(int errnum, char *msg, t_arg *data); //exit with no options
+void	free_cmd_redir(t_arg *data);
 
 void	ft_shlvl_check(t_arg **data);
 void	ft_init_structs(t_arg **data);
+int		run_built(t_command *cmd, t_arg *data);
 
 #endif

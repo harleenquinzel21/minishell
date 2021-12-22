@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 19:30:03 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/21 20:01:36 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/22 15:31:49 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ void	ft_close(t_arg *data, int *file, int num)
 		close(data->fd[i][1]);
 		free(data->fd[i]);
 	}
-	if (data->fd)
-		free(data->fd);
+	// if (data->fd)
+	// 	free(data->fd);
 	data->fd = NULL;
 	if (!file)
 		return ;
@@ -116,7 +116,7 @@ void	pipex(t_arg *data)
 		// set_signal(i, data->cmd);
 		pid[i] = fork();
 		if (pid[i] == 0)
-			child(i, data);///
+			child_process(i, data);///
 		if (pid[i] == -1)
 		{
 			data->errnum = errno;

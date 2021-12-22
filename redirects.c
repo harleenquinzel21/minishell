@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirects.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 19:41:57 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/18 04:44:40 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/12/22 14:56:23 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int		dup_cmd(t_command *cmd, t_arg *data)
 	temp = cmd->out;
 	// printf("redir name |%s|\n", cmd->out->name);
 	if (!cmd->out)
-		return (0);
+		return (-1);
 	while (cmd->out)
 	{
 		if (cmd->out->two == 1)
