@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 19:28:40 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/18 03:55:38 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/12/23 16:30:22 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_echo(t_arg *data)
 	if (!data->cmd->cmd[1])
 	{
 		printf("\n");
-		return (1);
+		return (0);
 	}
 	i = 1;
 	if (!(ft_strcmp(data->cmd->cmd[1], "-n")))
@@ -30,7 +30,7 @@ int	ft_echo(t_arg *data)
 			if (data->cmd->cmd[i + 1] != NULL)
 				printf(" ");
 		}
-		return (1);
+		return (0);
 	}
 	i = 0;
 	while (data->cmd->cmd[++i])
@@ -40,5 +40,5 @@ int	ft_echo(t_arg *data)
 			printf(" ");
 	}
 	printf("\n");
-	return (1);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 14:00:18 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/12 17:10:48 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/23 16:35:43 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,5 +92,5 @@ int	ft_unset(t_command *cmd, t_arg *data)
 		if (tmp2)
 			ft_del_env(tmp1);
 	}
-	return (1);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 17:06:22 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/12 18:46:22 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/23 16:32:19 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	ft_export_join(char *new, t_env *envp)
 	while (new[i] && (new[i] == '_' || ft_isalnum(new[i])))
 		i++;
 	if (new[i] != '+' && new[i + 1] != '=')
-		return (0);
+		return (1);
 	newkey = ft_substr(new, 0, i);
 	newvalue = ft_strdup(&new[i + 2]);
 	while (envp)
@@ -78,14 +78,14 @@ int	ft_export_join(char *new, t_env *envp)
 		if (!(ft_strcmp(envp->key, newkey)))
 		{
 			envp->value = ft_strjoin(envp->value, &new[i + 2]);
-			return (1);
+			return (0);
 		}
 		// else
 		envp = envp->next;
 	}
 	free(newkey);
 	free(newvalue);
-	return (0);
+	return (1);
 }
 
 int	ft_add_new(char	*new, t_arg *data)

@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 17:07:40 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/11 21:25:29 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/23 16:50:05 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,5 +112,5 @@ int	ft_cd(t_arg *data)
 	else
 		ft_cd_error(data, data->cmd->cmd[1]);
 	free(cd);
-	return (1);
+	return (errno);
 }

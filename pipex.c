@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 19:30:03 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/22 15:31:49 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/23 18:22:52 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,34 +74,6 @@ static void	ft_waitpid(pid_t *pid, int num, t_arg *data)
 	free(pid);
 }
 
-// void	set_signal(int i, t_command *cmd)
-// {
-// 	int		num;
-// 	int		ms;
-
-// 	num = 0;
-// 	while (num++ < i)
-// 		cmd = cmd->next;
-// 	if (!cmd->cmd || !cmd->cmd[0])
-// 	{
-// 		signal(SIGINT, SIG_IGN);
-// 		signal(SIGQUIT, SIG_IGN);
-// 		return ;
-// 	}
-// 	ms = 0;
-// 	if (ft_strlen(cmd->cmd[0]) > 9 && !ft_strcmp(\
-// 				&cmd->cmd[0][ft_strlen(cmd->cmd[0]) - 10], "/minishell"))
-// 		ms = 1;
-// 	if (ft_strcmp(cmd->cmd[0], "minishell") && !ms)
-// 	{
-// 		signal(SIGINT, sig_pipex);
-// 		signal(SIGQUIT, sig_pipex);
-// 		return ;
-// 	}
-// 	signal(SIGINT, SIG_IGN);
-// 	signal(SIGQUIT, SIG_IGN);
-// }
-
 void	pipex(t_arg *data)
 {
 	pid_t	*pid;
@@ -113,7 +85,6 @@ void	pipex(t_arg *data)
 	i = -1;
 	while (++i < data->num)
 	{
-		// set_signal(i, data->cmd);
 		pid[i] = fork();
 		if (pid[i] == 0)
 			child_process(i, data);///

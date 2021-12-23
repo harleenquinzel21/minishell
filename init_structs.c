@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 20:02:15 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/22 13:46:47 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/23 17:22:42 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ void	ft_init_structs(t_arg **data)
 
 	(*data)->envp = NULL;
 	(*data)->num = 0;
+	(*data)->errnum = 0;
 
 
 	// (*data)->cmd->cmd = ft_calloc(10, 10);

@@ -31,7 +31,7 @@ void	ft_print_all(t_arg *data)
 		return ;
 	redir = data->redir;
 	j = 1;
-	ft_putstr_fd("\033[1;36m\n		data->redir\n", 1);
+	ft_putstr_fd("\033[1;36m		data->redir\n", 1);
 	while (redir)
 	{
 		ft_putnbr_fd(j, 1);
@@ -59,7 +59,7 @@ void	ft_print_all(t_arg *data)
 		redir = redir->data_next;
 		j++;
 	}
-	ft_putstr_fd("\n\033[0;37m", 1);
+	ft_putstr_fd("-*-*-*-*-*-*-*-*-*-*-*\n\033[0;37m", 1);
 	// if (!data->cmd->in && !data->cmd->out)
 	// 	return ;
 

@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 15:17:44 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/12 17:49:27 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/23 16:31:21 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	ft_env(t_arg *data)
 	t_env	*tmp;
 
 	if (!(data->envp))
-		return (0);
+		return (1);
 	tmp = data->envp;
 	while (tmp)
 	{
@@ -31,5 +31,5 @@ int	ft_env(t_arg *data)
 		}
 		tmp = tmp->next;
 	}
-	return (1);
+	return (0);
 }
