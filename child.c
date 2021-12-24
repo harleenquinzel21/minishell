@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 18:46:11 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/23 18:19:38 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/24 20:23:24 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ void	child_process(int i, t_arg *data)
 	path = find_path(cmd->cmd[0], data->env, data);
 	if (execve(path, cmd->cmd, data->env) == -1)
 	{
-		data->errnum = 2;
+		data->errnum = 127;
 		ft_exit(data->errnum, cmd->cmd[0], data);
 	}
 }

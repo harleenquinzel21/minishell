@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 17:19:18 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/23 21:02:05 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/24 21:07:10 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,14 +93,12 @@ int	main(int ac, char **av, char **envp)
 	if (ac != 1)
 		ft_exit(1, NULL, data);
 	parse_env(envp, data);
-	ft_shlvl_check(&data);
+	ft_shlvl_check(data);
 	data->errnum = 0;
 	while (1)
 	{
 
 		go_readline(&line);
-		if (line && *line)
-			add_history(line);
 		parser(data, line);
 
 		ft_print_all(data);/////если мешает закоменть:)

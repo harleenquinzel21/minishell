@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 13:55:52 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/23 17:28:57 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/24 19:25:56 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,6 @@ typedef struct s_arg
 }	t_arg;
 
 int g_errnum;
-
-
 
 void	ft_print_all(t_arg *data);
 
@@ -137,7 +135,7 @@ int		ft_exit(int errnum, char *msg, t_arg *data); //exit with no options
 void	free_cmd_redir(t_arg *data);
 int		ft_last_err(t_arg *data);
 
-void	ft_shlvl_check(t_arg **data);
+void	ft_shlvl_check(t_arg *data);
 void	ft_init_structs(t_arg **data);
 int		run_built(t_command *cmd, t_arg *data);
 

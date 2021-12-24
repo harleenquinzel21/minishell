@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 19:30:03 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/23 18:22:52 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/24 21:06:36 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,10 @@ void	ft_dup2(int i, int *file, t_command *cmd, t_arg *data)
 	int	dup2res;
 
 	dup2res = 0;
-	if (cmd->in)
+	if (cmd->in)//read file
 		dup2res = dup2(file[0], STDIN_FILENO);
 	else if (i && data->fd)
-		dup2res = dup2(data->fd[i - 1][0], STDIN_FILENO);
+		dup2res = dup2(data->fd[i - 1][0], STDIN_FILENO);// read prew cmd
 	if (dup2res == -1)
 		ft_exit(errno, "dup2", data);
 	if (cmd->out)

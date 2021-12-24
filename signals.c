@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 15:51:22 by fbeatris          #+#    #+#             */
-/*   Updated: 2021/12/13 20:56:54 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/12/24 19:51:25 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 void	go_readline(char **line)
 {
 	rl_on_new_line();
-	*line = readline("\033[1;35m>>>\033[0;37m");
+	*line = readline(">>> ");
 	if (*line && **line)
 		add_history(*line);
 	else if (*line == NULL)
 	{
-		printf("exit\n");
+		printf("\033[1A>>> exit\n");
 		exit(0);
 	}
 }
