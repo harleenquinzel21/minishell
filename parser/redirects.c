@@ -6,7 +6,7 @@
 /*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 22:19:52 by fbeatris          #+#    #+#             */
-/*   Updated: 2021/12/20 21:24:16 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/12/25 20:35:23 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,22 +54,11 @@ void	add_out_redir(char *line, int *i, t_command *cmd, t_arg *data)
 	}
 }
 
-void	read_here_doc(char *line, int *i, t_command *cmd, t_arg *data)
-{
-	(void)line;
-	(void)cmd;
-	(void)data;
-	(*i)++;
-	printf("¯\\_(ツ)_/¯   Ooops, \'<<\' not ready yet   :)\n");
-}
-
 char	*parse_redirects(char *line, int *i, t_command *cmd, t_arg *data)
 {
 	if (line[*i] && line[*i] == '>')
 		add_out_redir(line, i, cmd, data);
-	else if (line[*i] && line[*i] == '<' && line[*i + 1] != '<')
-		add_in_redir(line, i, cmd, data);
-	else if (line[*i] && line[*i] == '<' && line[*i + 1] == '<')
-		read_here_doc(line, i, cmd, data);	
+	else if (line[*i] && line[*i] == '<')
+		add_in_redir(line, i, cmd, data);	
 	return (line);
 }
