@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 18:46:11 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/24 21:54:53 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/12/25 20:29:39 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	child_process(int i, t_arg *data)
 	t_command	*cmd;
 	char		*path;
 
-	
+
 	cmd = data->cmd;
 	num = 0;
 	while (num++ < i)
@@ -106,6 +106,11 @@ void	child_process(int i, t_arg *data)
 	if (execve(path, cmd->cmd, data->env) == -1)
 	{
 		data->errnum = 127;
-		ft_exit(data->errnum, cmd->cmd[0], data);
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(cmd->cmd[0], 2);
+		ft_putstr_fd(": command not found\n", 2);
+
+		ft_exit(data->errnum, NULL, data);
 	}
+
 }
