@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 19:30:03 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/24 21:06:36 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/25 18:41:32 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,11 @@ void	pipex(t_arg *data)
 			ft_close(data, NULL, data->num - 1);
 			ft_waitpid(pid, i, NULL);
 			ft_exit(data->errnum, "fork", data);
+		}
+		if (pid[i] != 0)
+		{
+			signal(SIGINT, &sig_handler_child);
+			signal(SIGQUIT, &sig_handler_child);
 		}
 	}
 	ft_close(data, NULL, data->num - 1);

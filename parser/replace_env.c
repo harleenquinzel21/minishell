@@ -6,7 +6,7 @@
 /*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 16:21:14 by misha             #+#    #+#             */
-/*   Updated: 2021/12/08 23:55:16 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/12/25 18:30:42 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,14 @@ char	*env_replace(char *line, int *i, t_env *envp)
 	}
 	line = replace_str(line, env_key, env_value);
 	free(env_key);
+	return (line);
+}
+
+char *exit_code_replace(char *line, t_arg *data)
+{
+	char	*exit_code;
+
+	exit_code = ft_itoa(data->errnum);
+	line = replace_str(line, "?", exit_code);
 	return (line);
 }

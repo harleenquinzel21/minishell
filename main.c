@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 17:19:18 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/24 21:07:10 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/24 21:47:17 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,7 @@ int	main(int ac, char **av, char **envp)
 	char	*line;
 	(void)av;
 
-	signal(SIGINT, &sig_int_handler);
-	signal(SIGQUIT, SIG_IGN);
+
 
 	ft_init_structs(&data);
 	if (ac != 1)
@@ -97,7 +96,7 @@ int	main(int ac, char **av, char **envp)
 	data->errnum = 0;
 	while (1)
 	{
-
+		
 		go_readline(&line);
 		parser(data, line);
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 18:46:11 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/24 20:23:24 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/24 21:54:53 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,7 @@ void	child_process(int i, t_arg *data)
 	t_command	*cmd;
 	char		*path;
 
-	signal(SIGINT, &sig_handler);
-	signal(SIGQUIT, &sig_handler);
+	
 	cmd = data->cmd;
 	num = 0;
 	while (num++ < i)

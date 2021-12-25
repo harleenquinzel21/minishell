@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 15:51:22 by fbeatris          #+#    #+#             */
-/*   Updated: 2021/12/24 19:51:25 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/25 19:10:12 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 void	go_readline(char **line)
 {
+	signal(SIGINT, &sig_handler_parent);
+	signal(SIGQUIT, &sig_handler_parent);
+	
 	rl_on_new_line();
 	*line = readline(">>> ");
 	if (*line && **line)
@@ -25,26 +28,20 @@ void	go_readline(char **line)
 	}
 }
 
-void	sig_handler(int sig_num) // dosn't work :(
+void	sig_handler_child(int sig_num)
 {
-		if (sig_num == SIGINT)
-		{
-			rl_on_new_line();
-			rl_redisplay();
-			write(1, "  \b\b!!!\n", 8);
-			rl_on_new_line();
-			rl_replace_line("", 1);
-			rl_redisplay();
-			exit(2);
-		}
-		else if (sig_num == SIGQUIT)
-		{
-			write(2, "Quit: 3!!!\n", 11);
-			exit(3);
-		}
+	if (sig_num == SIGINT)
+	{
+		write(2, "\n", 1);
+		rl_on_new_line();
+	}
+	else if (sig_num == SIGQUIT)
+	{
+		write(2, "Quit: 3\n", 8);
+	}
 }
 
-void	sig_int_handler(int sig_num)
+void	sig_handler_parent(int sig_num)
 {
 	if (sig_num == SIGINT)
 	{
@@ -54,5 +51,13 @@ void	sig_int_handler(int sig_num)
 		rl_on_new_line();
 		rl_replace_line("", 1);
 		rl_redisplay();
+	}
+	else if (sig_num == SIGQUIT)
+	{
+		rl_on_new_line();
+		rl_replace_line("", 1);
+		rl_redisplay();
+		write(1, "  \b\b", 4);
+
 	}
 }

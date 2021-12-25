@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:09:43 by fbeatris          #+#    #+#             */
-/*   Updated: 2021/12/23 21:00:05 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/25 19:03:34 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ char	*parse_line(char *line_const, t_arg *data, t_command *cmd)
 			line = single_quotes(line, &i);
 		if (line[i] == '$' && (line[i + 1] == '_' || ft_isalpha(line[i + 1])))
 			line = env_replace(line, &i, data->envp);
+		if (line[i] == '$' && line[i + 1] == '?')
+			line = exit_code_replace(line, data);
 		if ((line[i] == '>' || line[i] == '<') && line[i + 1])
 			line = parse_redirects(line, &i, cmd, data);
 		if (line[i] != '|')
@@ -64,8 +66,8 @@ int	parser(t_arg *data, char *line)
 	i = 0;
 	if (check_syntax(line))
 	{
-		printf("syntax error\n");
-		exit (1);
+		data->errnum = 258;
+		return (1);
 	}
 	data->cmd = new_command();
 	data->num_cmd = 1;

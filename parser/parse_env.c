@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 23:03:14 by fbeatris          #+#    #+#             */
-/*   Updated: 2021/12/12 19:44:43 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/25 20:04:57 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,28 @@ void	env_add_new(char *env_line, t_env **first)
 	}
 }
 
+void	add_current_path(t_arg *data)
+{
+	t_env 	*temp;
+	char	*pwd;
+	char	*temp_path;
+	char	*new_path;
+
+	temp = data->envp;
+	while (ft_strcmp(temp->key, "PWD") != 0)
+		temp = temp->next;
+	pwd = temp->value;
+	temp = data->envp;
+	while (ft_strcmp(temp->key, "PATH") != 0)
+		temp = temp->next;
+	temp_path = ft_strjoin(temp->value, ":");
+	new_path = ft_strjoin(temp_path, pwd);
+	free(temp->value);
+	temp->value = ft_strdup(new_path);
+	free(temp_path);
+	free(new_path);
+}
+
 void	parse_env(char **envp, t_arg *data)
 {
 	int	i;
@@ -63,4 +85,5 @@ void	parse_env(char **envp, t_arg *data)
 		env_add_new(envp[i], &data->envp);
 		i++;
 	}
+	add_current_path(data);
 }
