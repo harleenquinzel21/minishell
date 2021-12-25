@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirects_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 23:51:22 by fbeatris          #+#    #+#             */
-/*   Updated: 2021/12/21 18:35:11 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/25 20:35:10 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,29 +80,41 @@ void	data_redir_list(t_redir *new, t_arg *data)
 	}
 }
 
+void	new_in_redir(char *line, int *i, t_redir *new)
+{
+	if (line[*i + 1] && line[*i + 1] != '<')
+	{
+		new->name = save_redir_name(line, i);
+		new->two = 0;
+		new->in = 1;
+	}
+	else if (line[*i + 1] && line[*i + 1] == '<')
+	{
+		new->name = save_redir_name(line, i);
+		new->two = 1;
+		new->in = 1;
+	}
+}
+
 t_redir	*new_redir(char *line, int *i, t_arg *data)
 {
 	t_redir *new;
 
 	new = malloc(sizeof(t_redir));
-	if (line[*i + 1] && line[*i + 1] == '>')
+	if (line[*i + 1] && line[*i] == '>' && line[*i + 1] != '>')
+	{
+		new->name = save_redir_name(line, i);
+		new->two = 0;
+		new->in = 0;
+	}
+	else if (line[*i + 1] && line[*i] == '>' && line[*i + 1] == '>')
 	{
 		new->name = save_redir_name(line, i);
 		new->two = 1;
 		new->in = 0;
 	}
 	else if (line[*i] && line[*i] == '<')
-	{
-		new->name = save_redir_name(line, i);
-		new->two = 0;
-		new->in = 1;
-	}
-	else
-	{
-		new->name = save_redir_name(line, i);
-		new->two = 0;
-		new->in = 0;
-	}
+		new_in_redir(line, i, new);
 	new->next = NULL;
 	new->data_next = NULL;
 	data_redir_list(new, data);
