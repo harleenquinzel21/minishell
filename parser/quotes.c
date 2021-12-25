@@ -6,27 +6,11 @@
 /*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 16:10:50 by misha             #+#    #+#             */
-/*   Updated: 2021/12/08 23:43:47 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/12/25 23:02:22 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-/*
-static char	*backslash(char *line, int *i) // любые символы или только спец?
-{
-	char	*first;
-	char	*second;
-	char	*final;
-
-	first = ft_substr(line, 0, *i);
-	second = ft_strdup(&line[*i + 1]);
-	final = ft_strjoin(first, second);
-	free(first);
-	free(second);
-	return (final);
-}
-*/
 
 static char	*remove_quotes(char *line, int begin, int *i)
 {
@@ -71,9 +55,6 @@ char	*double_quotes(char *line, int *i, t_env *envp)
 	(*i)++;
 	while (line[*i] && line[*i + 1] && line[*i] != '\"')
 	{
-		// if (line[*i] == '\\' && (line[*i + 1] == '\\' ||
-		// 	line[*i + 1] == '\'' || line[*i + 1] == '$'))
-		// 	line = backslash(line, i);
 		if (line[*i] == '$' && (line[*i + 1] == '_' || \
 			ft_isalpha(line[*i + 1])))
 			line = env_replace(line, i, envp);

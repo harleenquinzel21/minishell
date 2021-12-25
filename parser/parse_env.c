@@ -6,7 +6,7 @@
 /*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 23:03:14 by fbeatris          #+#    #+#             */
-/*   Updated: 2021/12/25 20:04:57 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/12/25 20:45:39 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	env_add_new(char *env_line, t_env **first)
 
 void	add_current_path(t_arg *data)
 {
-	t_env 	*temp;
+	t_env	*temp;
 	char	*pwd;
 	char	*temp_path;
 	char	*new_path;

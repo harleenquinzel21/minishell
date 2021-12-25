@@ -6,7 +6,7 @@
 /*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 23:51:22 by fbeatris          #+#    #+#             */
-/*   Updated: 2021/12/25 20:35:10 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/12/25 20:55:56 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	new_in_redir(char *line, int *i, t_redir *new)
 
 t_redir	*new_redir(char *line, int *i, t_arg *data)
 {
-	t_redir *new;
+	t_redir	*new;
 
 	new = malloc(sizeof(t_redir));
 	if (line[*i + 1] && line[*i] == '>' && line[*i + 1] != '>')

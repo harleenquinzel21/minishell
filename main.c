@@ -6,7 +6,7 @@
 /*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 17:19:18 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/24 21:47:17 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/12/25 22:20:12 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,14 +96,13 @@ int	main(int ac, char **av, char **envp)
 	data->errnum = 0;
 	while (1)
 	{
-		
 		go_readline(&line);
-		parser(data, line);
-
-		ft_print_all(data);/////если мешает закоменть:)
-
-		execution(data);
-		free_cmd_redir(data);
+		if (parser(data, line) == 0)
+		{
+			ft_print_all(data);/////если мешает закоменть:)
+			execution(data);
+			free_cmd_redir(data);
+		}
 	}
 
 	return (0);

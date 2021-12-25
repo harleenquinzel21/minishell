@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 13:55:52 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/25 20:13:26 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/25 23:34:02 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,18 @@ void	ft_print_all(t_arg *data);
 void	rl_replace_line(const char *str, int num);
 void	go_readline(char **line);
 
+int	unclosed_quotes(char *line);
+int	unclosed_double_quotes(char *line);
+int	wrong_semicolon(char *line);
+int	double_semicolon(char *line);
+
+
+
+
+
 int		parser(t_arg *data, char *line);
 char	*parse_line(char *line_const, t_arg *data, t_command *cmd);
-int		check_syntax(char *line);
+int		check_syntax(char *line, t_arg *data);
 char	*single_quotes(char *line, int *i);
 char	*double_quotes(char *line, int *i, t_env *envp);
 
