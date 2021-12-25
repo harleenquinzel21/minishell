@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 18:46:11 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/25 20:29:39 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/25 21:01:03 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	ft_check_path(t_arg *data, char *cmd)
 			return (0);
 		tmp=tmp->next;
 	}
+	data->errnum = 127;
 	ft_print_error(2, NULL, cmd);
 	return (1);
 }
@@ -97,11 +98,8 @@ void	child_process(int i, t_arg *data)
 	open_dup(i, cmd, data);
 	if (cmd->built)
 		ft_exit(run_built(cmd, data), NULL, data);
-
-	// ft_putstr_fd("here!", 1);
-	// if (!ft_check_path(data, cmd->cmd[0]))
-	ft_check_path(data, cmd->cmd[0]);
-		// return ;
+	if (ft_check_path(data, cmd->cmd[0]))
+		ft_exit(data->errnum, NULL, data);
 	path = find_path(cmd->cmd[0], data->env, data);
 	if (execve(path, cmd->cmd, data->env) == -1)
 	{
