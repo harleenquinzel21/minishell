@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 17:19:18 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/26 15:24:36 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/26 19:13:05 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int	main(int ac, char **av, char **envp)
 	data->errnum = 0;
 	while (1)
 	{
-		go_readline(&line);
+		go_readline(&line, data);
 		if (parser(data, line) == 0)
 		{
 			ft_print_all(data);/////если мешает закоменть:)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 13:55:52 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/26 15:04:53 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/26 20:17:34 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,16 +73,11 @@ void	ft_print_all(t_arg *data);
 
 /*./parser*/
 void	rl_replace_line(const char *str, int num);
-void	go_readline(char **line);
+void	go_readline(char **line, t_arg *data);
 
-int	unclosed_quotes(char *line);
-int	unclosed_double_quotes(char *line);
-int	wrong_semicolon(char *line);
-int	double_semicolon(char *line);
-
-
-
-
+char	*wrong_redirects(char *line);
+int		empty_redirect(char *line);
+char	*other_syntax_cases(char *line);
 
 int		parser(t_arg *data, char *line);
 char	*parse_line(char *line_const, t_arg *data, t_command *cmd);
@@ -92,6 +87,8 @@ char	*double_quotes(char *line, int *i, t_env *envp);
 
 char	*parse_redirects(char *line, int *i, t_command *cmd, t_arg *data);
 t_redir	*new_redir(char *line, int *i, t_arg *data);
+char	*save_redir_name(char *line, int *i);
+void	data_redir_list(t_redir *new, t_arg *data);
 
 void	parse_env(char **envp, t_arg *data);
 t_env	*env_create_new(char *key, char *sep, char *value);
@@ -101,8 +98,6 @@ char	*exit_code_replace(char *line, t_arg *data);
 
 
 /*signals*/
-void	sig_handler(int sig_num);
-void	sig_int_handler(int sig_num);
 void	sig_handler_child(int sig_num);
 void	sig_handler_parent(int sig_num);
 

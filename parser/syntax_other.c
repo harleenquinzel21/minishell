@@ -1,16 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   syntax_errors2.c                                   :+:      :+:    :+:   */
+/*   syntax_other.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/03 16:13:54 by misha             #+#    #+#             */
-/*   Updated: 2021/12/25 23:39:49 by fbeatris         ###   ########.fr       */
+/*   Created: 2021/12/26 20:05:36 by fbeatris          #+#    #+#             */
+/*   Updated: 2021/12/26 20:17:12 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int	last_pipe(char *line)
+{
+	int	i;
+
+	i = ft_strlen(line) - 1;
+	while (line[i] && line[i] == ' ')
+		i--;
+	if (line[i] == '|')
+		return (1);
+	return (0);
+}
 
 int	unclosed_quotes(char *line)
 {
@@ -56,40 +68,17 @@ int	unclosed_double_quotes(char *line)
 	return (0);
 }
 
-int	wrong_semicolon(char *line)
+
+
+
+char	*other_syntax_cases(char *line)
 {
-	int		i;
-
-	i = 0;
-	while (line[i] && line[i] == ' ')
-		i++;
-	if (line[i] == ';')
-		return (1);
-	while (line[i])
-	{
-		if (line[i] == ';')
-		{
-			i++;
-			while (line[i] == ' ')
-				i++;
-			if (line[i] == ';')
-				return (1);
-		}
-		i++;
-	}
-	return (0);
-}
-
-int	double_semicolon(char *line)
-{
-	int	i;
-
-	i = 0;
-	while (line[i])
-	{
-		if (line[i + 1] && line[i] == ';' && line[i + 1] == ';')
-			return (1);
-		i++;
-	}
-	return (0);
+	if (last_pipe(line))
+		return ("minishell: syntax error: unexpected end of file");
+	else if (unclosed_quotes(line))
+		return ("minishell: unexpected EOF while looking for matching `\'\'");
+	else if (unclosed_double_quotes(line))
+		return ("minishell: unexpected EOF while looking for matching `\"\'");
+	else
+		return (NULL);
 }

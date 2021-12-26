@@ -6,7 +6,7 @@
 /*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 16:13:54 by misha             #+#    #+#             */
-/*   Updated: 2021/12/26 00:04:31 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/12/26 20:17:25 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,14 @@ int	wrong_pipes(char *line)
 		return (1);
 	while (line[i])
 	{
-		if (line[i] == '|' || line[i] == '<' || line[i] == '>')
+		if (line[i] == '|' || line[i] == '>' || line[i] == '<')
 		{
 			i++;
-			while (line[i] == ' ')
+			if (line[i] && line[i] == '|')
+				return (0);
+			if (line[i] == '>' || line[i] == '<')
+				i++;
+			while (line[i] && !ft_isalnum(line[i]) && line[i] != '|')
 				i++;
 			if (line[i] == '|')
 				return (1);
@@ -36,84 +40,72 @@ int	wrong_pipes(char *line)
 	return (0);
 }
 
-int	last_pipe(char *line)
-{
-	int	i;
-
-	i = ft_strlen(line) - 1;
-	while (line[i] && line[i] == ' ')
-		i--;
-	if (line[i] == '|')
-		return (1);
-	return (0);
-}
-
-int	empty_redirect(char *line)
-{
-	int	i;
-
-	i = ft_strlen(line) - 1;
-	while (line[i] && line[i] == ' ')
-		i--;
-	if (line[i] == '<' || line[i] == '>')
-		return (1);
-	return (0);
-}
-
-/*
-char	two_redirects(char *line)
+int	wrong_semicolon(char *line)
 {
 	int		i;
 
 	i = 0;
+	while (line[i] && line[i] == ' ')
+		i++;
+	if (line[i] == ';')
+		return (1);
 	while (line[i])
 	{
-		if (line[i] == '<' || line[i] == '>')
+		if (line[i] == ';')
 		{
-			if (line[i + 1] && (line[i + 1] == '<' || line[i + 1] == '>'))
-				i += 2;
-			else
-				i++;
+			i++;
 			while (line[i] == ' ')
 				i++;
-			if (line[i] == '>')
+			if (line[i] == ';')
 				return (1);
 		}
 		i++;
 	}
 	return (0);
 }
-*/
 
-char	*syntax_cases(char *line)
+int	double_semicolon(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (line[i + 1] && line[i] == ';' && line[i + 1] == ';')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+char	*unexpected_token(char *line)
 {
 	if (wrong_pipes(line))
-		return ("minishell: syntax error near unexpected token `|\'");
-	else if (last_pipe(line))
-		return ("minishell: syntax error: unexpected end of file");
+		return ("|");
 	else if (wrong_semicolon(line))
-		return ("minishell: syntax error near unexpected token `;\'");
+		return (";");
 	else if (double_semicolon(line))
-		return ("minishell: syntax error near unexpected token `;;\'");
-	else if (unclosed_quotes(line))
-		return ("minishell: unexpected EOF while looking for matching `\'\'");
-	else if (unclosed_double_quotes(line))
-		return ("minishell: unexpected EOF while looking for matching `\"\'");
+		return (";;");
+	else if (wrong_redirects(line))
+		return (wrong_redirects(line));
 	else if (empty_redirect(line))
-		return ("minishell: syntax error near unexpected token `newline\'");
+		return ("newline");
 	else
-		return ("ok");
+		return (NULL);
 }
 
 int	check_syntax(char *line, t_arg *data)
 {
-	char	*msg;
-
-	msg = ft_strdup(syntax_cases(line));
-	if (ft_strcmp(msg, "ok") != 0)
+	if (unexpected_token(line))
 	{
-		printf("%s\n", msg);
-		free(msg);
+		printf("minishell: syntax error near unexpected token `%s\'\n",\
+			unexpected_token(line));
+		data->errnum = 258;
+		return (1);
+	}
+	else if (other_syntax_cases(line))
+	{
+		printf("%s\n", other_syntax_cases(line));
 		data->errnum = 258;
 		return (1);
 	}

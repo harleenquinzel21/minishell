@@ -6,13 +6,13 @@
 /*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 15:51:22 by fbeatris          #+#    #+#             */
-/*   Updated: 2021/12/25 19:10:12 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/12/26 19:12:07 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	go_readline(char **line)
+void	go_readline(char **line, t_arg *data)
 {
 	signal(SIGINT, &sig_handler_parent);
 	signal(SIGQUIT, &sig_handler_parent);
@@ -24,7 +24,7 @@ void	go_readline(char **line)
 	else if (*line == NULL)
 	{
 		printf("\033[1A>>> exit\n");
-		exit(0);
+		ft_exit(data->errnum, NULL, data);
 	}
 }
 
@@ -58,6 +58,5 @@ void	sig_handler_parent(int sig_num)
 		rl_replace_line("", 1);
 		rl_redisplay();
 		write(1, "  \b\b", 4);
-
 	}
 }
