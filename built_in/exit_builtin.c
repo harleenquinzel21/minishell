@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 20:19:43 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/23 20:36:18 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/26 17:48:32 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,10 @@ void free_cmd_redir(t_arg *data)
 	}
 	while (data->redir)
 	{
+
 		redir_temp = data->redir->data_next;
+		if (data->redir->in && data->redir->two)
+			unlink(data->redir->name);
 		free(data->redir);
 		data->redir = redir_temp;
 	}
