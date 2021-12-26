@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 13:55:52 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/25 23:34:02 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/12/26 15:04:53 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,5 +151,6 @@ int		ft_last_err(t_arg *data);
 void	ft_shlvl_check(t_arg *data);
 void	ft_init_structs(t_arg **data);
 int		run_built(t_command *cmd, t_arg *data);
+void	heredoc(char *name, char *limiter, t_arg *data);
 
 #endif

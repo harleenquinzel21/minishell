@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 20:12:51 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/23 15:25:25 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/26 15:24:19 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ int	check_open(t_arg *data)
 				return (1);
 			// ft_putstr_fd("check!", 1);
 		}
-		// else
-			// heredoc(tmp->name, tmp->limiter, data);
+		else
+			heredoc(tmp->name, tmp->limiter, data);
 
 		tmp = tmp->data_next;
 	}

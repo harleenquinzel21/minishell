@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+         #
+#    By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/21 16:31:18 by ogarthar          #+#    #+#              #
-#    Updated: 2021/12/25 23:37:54 by fbeatris         ###   ########.fr        #
+#    Updated: 2021/12/26 15:04:27 by ogarthar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ LIST =	main.c				parser/syntax_errors.c		built_in/export_builtin.c\
 		pipe.c				parser/syntax_errors2.c\
 		check_open.c\
 		pipex.c\
+		heredoc.c\
 		print.c
 
 
