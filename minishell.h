@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 13:55:52 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/26 15:04:53 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/26 20:14:21 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,14 @@ typedef struct s_cmd
 
 typedef struct s_arg
 {
-	t_command	*cmd;
-	t_redir		*redir;
-	t_env		*envp;
-	char		**env;
-	int			num;
-	int			num_cmd;
-	int			**fd;
-	int			errnum;
+	t_command		*cmd;
+	t_redir			*redir;
+	t_env			*envp;
+	char			**env;
+	int				num;
+	int				num_cmd;
+	int				**fd;
+	int				errnum;
 }	t_arg;
 
 int g_errnum;

@@ -6,17 +6,37 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 20:19:43 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/26 17:48:32 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/26 19:18:53 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+int	ft_isalldigit(char *str)
+{
+	int	i;
+
+	i = -1;
+	while (str[++i])
+	{
+		if (!ft_isdigit((unsigned char)str[i]))
+			return (1);
+	}
+	return (0);
+}
+
 int	ft_exit_cmd(t_arg *data)
 {
-	// printf("exit\n");
-	if (data->cmd->cmd[1])
+	ft_putstr_fd("exit\n", 1);
+	if (data->cmd->cmd[1] && !ft_isalldigit(data->cmd->cmd[1]))
 		ft_exit((unsigned char)ft_atoi(data->cmd->cmd[1]), NULL, data);
+	else if (data->cmd->cmd[1])
+	{
+		ft_putstr_fd("minishell: exit: ", 2);
+		ft_putstr_fd(data->cmd->cmd[1], 2);
+		ft_putstr_fd(": numeric argument required\n", 2);
+		ft_exit(255, NULL, data);
+	}
 	else
 		ft_exit(0, NULL, data);
 	return (0);
@@ -35,13 +55,11 @@ int	ft_exit(int errnum, char *msg, t_arg *data)
 		write(2, errmsg, ft_strlen(errmsg));
 		write(2, "\n", 1);
 	}
-
 	// ft_free(data);////
 	exit(errnum);
-	// return (0);
 }
 
-void free_cmd_redir(t_arg *data)
+void	free_cmd_redir(t_arg *data)
 {
 	t_command	*cmd_temp;
 	t_redir		*redir_temp;
@@ -54,7 +72,6 @@ void free_cmd_redir(t_arg *data)
 	}
 	while (data->redir)
 	{
-
 		redir_temp = data->redir->data_next;
 		if (data->redir->in && data->redir->two)
 			unlink(data->redir->name);
