@@ -6,7 +6,11 @@
 /*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 17:19:18 by ogarthar          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2021/12/26 19:13:05 by fbeatris         ###   ########.fr       */
+=======
+/*   Updated: 2021/12/26 20:14:28 by ogarthar         ###   ########.fr       */
+>>>>>>> f8b57fabded0a4dd59d59056aa5e347bb7634e58
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +90,6 @@ int	main(int ac, char **av, char **envp)
 	char	*line;
 	(void)av;
 
-
-
 	ft_init_structs(&data);
 	if (ac != 1)
 		ft_exit(1, NULL, data);
@@ -99,7 +101,7 @@ int	main(int ac, char **av, char **envp)
 		go_readline(&line, data);
 		if (parser(data, line) == 0)
 		{
-			ft_print_all(data);/////если мешает закоменть:)
+			// ft_print_all(data);/////если мешает закоменть:)
 			execution(data);
 			free_cmd_redir(data);
 		}
