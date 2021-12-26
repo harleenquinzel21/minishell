@@ -6,7 +6,7 @@
 /*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 23:51:22 by fbeatris          #+#    #+#             */
-/*   Updated: 2021/12/26 17:33:43 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/12/26 17:37:50 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ void	new_in_redir(char *line, int *i, t_redir *new)
 		new->name = save_redir_name(line, i);
 		new->two = 0;
 		new->in = 1;
+		new->limiter = NULL;
 	}
 	else if (line[*i + 1] && line[*i + 1] == '<')
 	{
@@ -107,12 +108,14 @@ t_redir	*new_redir(char *line, int *i, t_arg *data)
 		new->name = save_redir_name(line, i);
 		new->two = 0;
 		new->in = 0;
+		new->limiter = NULL;
 	}
 	else if (line[*i + 1] && line[*i] == '>' && line[*i + 1] == '>')
 	{
 		new->name = save_redir_name(line, i);
 		new->two = 1;
 		new->in = 0;
+		new->limiter = NULL;
 	}
 	else if (line[*i] && line[*i] == '<')
 		new_in_redir(line, i, new);

@@ -6,7 +6,7 @@
 /*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 22:19:52 by fbeatris          #+#    #+#             */
-/*   Updated: 2021/12/26 17:34:06 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/12/26 17:38:14 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char	*parse_redirects(char *line, int *i, t_command *cmd, t_arg *data)
 {
 	if (line[*i] && line[*i] == '>')
 		add_out_redir(line, i, cmd, data);
-	else if (line[*i] && line[*i] == '<')// && line[*i + 1] != '<')
+	else if (line[*i] && line[*i] == '<')
 		add_in_redir(line, i, cmd, data);
 	return (line);
 }
