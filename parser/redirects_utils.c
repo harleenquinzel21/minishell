@@ -6,7 +6,7 @@
 /*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 23:51:22 by fbeatris          #+#    #+#             */
-/*   Updated: 2021/12/25 20:55:56 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/12/26 17:33:43 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,8 @@ void	new_in_redir(char *line, int *i, t_redir *new)
 	}
 	else if (line[*i + 1] && line[*i + 1] == '<')
 	{
-		new->name = save_redir_name(line, i);
+		new->limiter = save_redir_name(line, i);
+		new->name = ft_strdup("heredoc");
 		new->two = 1;
 		new->in = 1;
 	}
