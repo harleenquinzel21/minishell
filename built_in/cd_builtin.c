@@ -3,39 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   cd_builtin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 17:07:40 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/27 16:30:43 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/12/27 18:00:36 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_cut_dots(t_env **pwd, t_env **oldpwd, t_arg *data)
-{
-	int		i;
-	char	**split;
-
-	i = 0;
-	split = ft_split((*pwd)->value, '.', data);
-	(*pwd)->value = split[0];
-	split = ft_split((*oldpwd)->value, '.', data);
-	(*oldpwd)->value = split[0];
-	while (split[i])
-	{
-		free(split[i]);
-		i++;
-	}
-	free(split);
-}
-
-	/*	51	tmp1->value = NULL;//----------------OLDPWD*/
-	/*	52	tmp1->value = ft_strdup(tmp->value);//--PWD*/
-	/*	53	tmp->value = NULL;//--------------------PWD*/
-	/*	54	tmp->value = ft_strdup(cd);//--------NEWPWD*/
-
-void	env_after_cd(t_arg **data, char *cd)
+void	env_after_cd(t_arg **data)
 {
 	t_env	*tmp;
 	t_env	*tmp1;
@@ -48,16 +25,16 @@ void	env_after_cd(t_arg **data, char *cd)
 		tmp1 = tmp1->next;
 	if (tmp && tmp1)
 	{
-		tmp1->value = NULL;
+		free(tmp1->value);
 		tmp1->value = ft_strdup(tmp->value, *data);
-		tmp->value = NULL;
-		tmp->value = ft_strdup(cd, *data);
+		free(tmp->value);
+		tmp->value = getcwd(NULL, 0);
+		if (!tmp->value)
+			ft_exit(errno, "getcwd", *data);
 	}
-	if ((*data)->cmd->cmd[1][0] == '.' && (*data)->cmd->cmd[1][1] == '.')
-		ft_cut_dots(&tmp, &tmp1, *data);
 }
 
-/*	70	cd = getcwd(NULL, 0);//----absolute path to current dir*/
+/*	47	cd = getcwd(NULL, 0);//----absolute path to current dir*/
 
 char	*get_cd(t_command *cmd, t_env *envp, t_arg *data)
 {
@@ -112,7 +89,7 @@ int	ft_cd(t_arg *data)
 	if (access(cd, F_OK) == 0)
 	{
 		chdir(cd);
-		env_after_cd(&data, cd);
+		env_after_cd(&data);
 	}
 	else
 		ft_cd_error(data, data->cmd->cmd[1]);
