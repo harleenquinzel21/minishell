@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 19:28:40 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/27 18:23:13 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/27 20:52:53 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	ft_echo(t_arg *data)
 	int	i;
 
 	i = 0;
+	// if (!ft_strcmp(data->cmd->cmd[1], "255"))//
+	// 	data->cmd->cmd[1] = ft_strdup("0", data);//
 	if (!data->cmd->cmd[1])
 	{
 		ft_putstr_fd("\n", 1);

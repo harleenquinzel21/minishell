@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 20:19:43 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/27 19:08:38 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/12/27 21:22:27 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,8 @@ void	free_cmd_redir(t_arg *data)
 		data->redir = redir_temp;
 	}
 //	free(redir_temp);
-	
-	if (data->fd)
+
+	if (data->fd)////// abort если первой строкой в minishell вызвать built_in
 	{
 		i = 0;
 		while (data->fd[i])
@@ -104,6 +104,6 @@ void	free_cmd_redir(t_arg *data)
 		}
 		free(data->fd);
 	}
-	
+
 //	printf("free ok\n");
 }
