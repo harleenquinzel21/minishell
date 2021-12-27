@@ -6,13 +6,10 @@
 /*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 13:55:52 by ogarthar          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2021/12/26 20:17:34 by fbeatris         ###   ########.fr       */
-=======
-/*   Updated: 2021/12/26 20:14:21 by ogarthar         ###   ########.fr       */
->>>>>>> f8b57fabded0a4dd59d59056aa5e347bb7634e58
+/*   Updated: 2021/12/27 14:36:01 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
