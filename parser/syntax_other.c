@@ -6,7 +6,7 @@
 /*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/26 20:05:36 by fbeatris          #+#    #+#             */
-/*   Updated: 2021/12/26 20:17:12 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/12/27 16:11:27 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,6 @@ int	unclosed_double_quotes(char *line)
 		return (1);
 	return (0);
 }
-
-
-
 
 char	*other_syntax_cases(char *line)
 {

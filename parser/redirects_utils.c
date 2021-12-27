@@ -6,7 +6,7 @@
 /*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 23:51:22 by fbeatris          #+#    #+#             */
-/*   Updated: 2021/12/26 18:33:04 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/12/27 16:37:15 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	remove_redirect(char *line, int start, int end)
 	}
 }
 
-char	*save_redir_name(char *line, int *i)
+char	*save_redir_name(char *line, int *i, t_arg *data)
 {
 	int		begin;
 	int		save;
@@ -49,7 +49,7 @@ char	*save_redir_name(char *line, int *i)
 	begin = *i;
 	while (line[*i] && line[*i] != ' ')
 		(*i)++;
-	result = ft_substr(line, begin, *i - begin);
+	result = ft_substr(line, begin, *i - begin, data);
 	remove_redirect(line, save, *i);
 	*i = save;
 	return (result);
@@ -65,7 +65,7 @@ void	data_redir_list(t_redir *new, t_arg *data)
 		data->redir = new;
 		data->redir->cmd = 1;
 		if (data->redir->in && data->redir->two)
-			data->redir->name = ft_strjoin("heredoc", "1");
+			data->redir->name = ft_strjoin("heredoc", "1", data);
 		if (data->redir->name == NULL)
 			ft_exit(12, "malloc", data);
 	}
@@ -77,7 +77,7 @@ void	data_redir_list(t_redir *new, t_arg *data)
 		data->redir->data_next->cmd = data->num_cmd;
 		if (data->redir->data_next->in && data->redir->data_next->two)
 			data->redir->data_next->name = ft_strjoin("heredoc", \
-				ft_itoa(data->redir->data_next->cmd));
+				ft_itoa(data->redir->data_next->cmd, data), data);
 		if (data->redir->name == NULL)
 			ft_exit(12, "malloc", data);
 		data->redir = temp;

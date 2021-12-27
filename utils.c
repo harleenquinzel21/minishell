@@ -6,7 +6,7 @@
 /*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 18:05:39 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/20 21:23:55 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/12/27 16:29:45 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,16 +71,16 @@ void	ft_make_array(t_env *envp, char **env, int len, t_arg *data)
 	i = -1;
 	while (++i < len)
 	{
-		env[i] = ft_strdup(envp->key);
+		env[i] = ft_strdup(envp->key, data);
 		if (envp->separator)
 		{
-			arr = ft_strjoin(env[i], envp->separator);
+			arr = ft_strjoin(env[i], envp->separator, data);
 			free(env[i]);
 			env[i] = arr;
 		}
 		if (envp->value)
 		{
-			arr = ft_strjoin(env[i], envp->value);
+			arr = ft_strjoin(env[i], envp->value, data);
 			free(env[i]);
 			env[i] = arr;
 		}

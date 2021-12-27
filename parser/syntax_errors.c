@@ -6,7 +6,7 @@
 /*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 16:13:54 by misha             #+#    #+#             */
-/*   Updated: 2021/12/26 20:17:25 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/12/27 16:42:17 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int	check_syntax(char *line, t_arg *data)
 {
 	if (unexpected_token(line))
 	{
-		printf("minishell: syntax error near unexpected token `%s\'\n",\
+		printf("minishell: syntax error near unexpected token `%s\'\n", \
 			unexpected_token(line));
 		data->errnum = 258;
 		return (1);

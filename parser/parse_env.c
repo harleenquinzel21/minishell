@@ -6,7 +6,7 @@
 /*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 23:03:14 by fbeatris          #+#    #+#             */
-/*   Updated: 2021/12/25 20:45:39 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/12/27 16:21:43 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_env	*env_create_new(char *key, char *sep, char *value)
 	return (new);
 }
 
-void	env_add_new(char *env_line, t_env **first)
+void	env_add_new(char *env_line, t_env **first, t_arg *data)
 {
 	t_env	*tmp;
 	char	*key;
@@ -37,11 +37,11 @@ void	env_add_new(char *env_line, t_env **first)
 	value = NULL;
 	while (env_line[i] && (env_line[i] == '_' || ft_isalnum(env_line[i])))
 		i++;
-	key = ft_substr(env_line, 0, i);
+	key = ft_substr(env_line, 0, i, data);
 	if (ft_strchr(env_line, '='))
-		sep = ft_substr(env_line, i, 1);
+		sep = ft_substr(env_line, i, 1, data);
 	if (env_line[i + 1])
-		value = ft_strdup(&env_line[i + 1]);
+		value = ft_strdup(&env_line[i + 1], data);
 	if (*first == NULL)
 		*first = env_create_new(key, sep, value);
 	else
@@ -67,10 +67,10 @@ void	add_current_path(t_arg *data)
 	temp = data->envp;
 	while (ft_strcmp(temp->key, "PATH") != 0)
 		temp = temp->next;
-	temp_path = ft_strjoin(temp->value, ":");
-	new_path = ft_strjoin(temp_path, pwd);
+	temp_path = ft_strjoin(temp->value, ":", data);
+	new_path = ft_strjoin(temp_path, pwd, data);
 	free(temp->value);
-	temp->value = ft_strdup(new_path);
+	temp->value = ft_strdup(new_path, data);
 	free(temp_path);
 	free(new_path);
 }
@@ -82,7 +82,7 @@ void	parse_env(char **envp, t_arg *data)
 	i = 0;
 	while (envp[i])
 	{
-		env_add_new(envp[i], &data->envp);
+		env_add_new(envp[i], &data->envp, data);
 		i++;
 	}
 	add_current_path(data);

@@ -6,7 +6,7 @@
 /*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 13:55:52 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/27 14:36:01 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/12/27 16:44:26 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,13 @@ typedef struct s_arg
 	int				errnum;
 }	t_arg;
 
-int g_errnum;
+//int g_errnum;
+
+char	**ft_split(char const *str, char c, t_arg *data);
+char	*ft_strdup(const char *s1, t_arg *data);
+char	*ft_strjoin(char const *s1, char const *s2, t_arg *data);
+char	*ft_substr(char const *s, unsigned int start, size_t len, t_arg *data);
+char	*ft_itoa(int n, t_arg *data);
 
 void	ft_print_all(t_arg *data);
 
@@ -83,18 +89,18 @@ char	*other_syntax_cases(char *line);
 int		parser(t_arg *data, char *line);
 char	*parse_line(char *line_const, t_arg *data, t_command *cmd);
 int		check_syntax(char *line, t_arg *data);
-char	*single_quotes(char *line, int *i);
-char	*double_quotes(char *line, int *i, t_env *envp);
+char	*single_quotes(char *line, int *i, t_arg *data);
+char	*double_quotes(char *line, int *i, t_env *envp, t_arg *data);
 
 char	*parse_redirects(char *line, int *i, t_command *cmd, t_arg *data);
 t_redir	*new_redir(char *line, int *i, t_arg *data);
-char	*save_redir_name(char *line, int *i);
+char	*save_redir_name(char *line, int *i, t_arg *data);
 void	data_redir_list(t_redir *new, t_arg *data);
 
 void	parse_env(char **envp, t_arg *data);
 t_env	*env_create_new(char *key, char *sep, char *value);
-void	env_add_new(char *env_line, t_env **first);
-char	*env_replace(char *line, int *i, t_env *envp);
+void	env_add_new(char *env_line, t_env **first, t_arg *data);
+char	*env_replace(char *line, int *i, t_env *envp, t_arg *data);
 char	*exit_code_replace(char *line, t_arg *data);
 
 
@@ -135,7 +141,7 @@ int		ft_echo(t_arg *data);// echo with option -n
 int		ft_unset(t_command *cmd, t_arg *data);// unset with no options
 int		ft_export(t_arg *data);//export with no options
 int		ft_add_new(char *str, t_arg *data);
-int		ft_export_join(char *str, t_env *envp);
+int		ft_export_join(char *new, t_env *envp, t_arg *data);
 void	ft_export_unset_error(t_arg *data, char *str, char *namecmd);
 void	ft_cd_error(t_arg *data, char *str);
 int		ft_exit_cmd(t_arg *data);

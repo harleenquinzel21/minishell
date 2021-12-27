@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 18:36:35 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/09/21 18:44:30 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/27 16:32:41 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	ft_nbrlen(int n)
 	return (len);
 }
 
-char	*ft_itoa(int n)
+char	*ft_itoa(int n, t_arg *data)
 {
 	int		i;
 	int		len_n;
@@ -37,11 +37,11 @@ char	*ft_itoa(int n)
 
 	i = 0;
 	if (n == -2147483648)
-		return (ft_strdup("-2147483648"));
+		return (ft_strdup("-2147483648", data));
 	len_n = ft_nbrlen(n);
 	str = (char *)malloc(sizeof(char) * (len_n + 1));
 	if (!str)
-		return (0);
+		ft_exit(12, "malloc", data);
 	str[len_n] = '\0';
 	if (n < 0)
 	{

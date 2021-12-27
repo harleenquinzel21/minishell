@@ -6,7 +6,7 @@
 /*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 16:21:14 by misha             #+#    #+#             */
-/*   Updated: 2021/12/25 20:56:25 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/12/27 16:36:16 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static char	*replace_str(char *line, char *old, char *new)
 	return (result);
 }
 
-char	*env_replace(char *line, int *i, t_env *envp)
+char	*env_replace(char *line, int *i, t_env *envp, t_arg *data)
 {
 	int		begin;
 	char	*env_key;
@@ -48,11 +48,11 @@ char	*env_replace(char *line, int *i, t_env *envp)
 	t_env	*temp;
 
 	begin = *i;
-	env_value = ft_strdup("");
+	env_value = ft_strdup("", data);
 	(*i)++;
 	while (line[*i] && (line[*i] == '_' || ft_isalnum(line[*i])))
 		(*i)++;
-	env_key = ft_substr(line, begin + 1, *i - begin - 1);
+	env_key = ft_substr(line, begin + 1, *i - begin - 1, data);
 	key_len = ft_strlen(env_key);
 	temp = envp;
 	while (temp)
@@ -70,7 +70,7 @@ char	*exit_code_replace(char *line, t_arg *data)
 {
 	char	*exit_code;
 
-	exit_code = ft_itoa(data->errnum);
+	exit_code = ft_itoa(data->errnum, data);
 	line = replace_str(line, "?", exit_code);
 	return (line);
 }

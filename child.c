@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 18:46:11 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/25 21:01:03 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/27 16:29:20 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,14 @@ char	*find_path(char *cmd, char **envp, t_arg *data)
 	i = 0;
 	while (ft_strnstr(envp[i], "PATH", 4) == 0)
 		i++;
-	paths = ft_split(envp[i] + 5, ':');
+	paths = ft_split(envp[i] + 5, ':', data);
 	if (!paths)
 		ft_exit(12, "malloc", data);
 	i = 0;
 	while (paths[i])
 	{
-		part_path = ft_strjoin(paths[i], "/");
-		path = ft_strjoin(part_path, cmd);
+		part_path = ft_strjoin(paths[i], "/", data);
+		path = ft_strjoin(part_path, cmd, data);
 		free(part_path);
 		if (access(path, F_OK) == 0)
 			return (path);

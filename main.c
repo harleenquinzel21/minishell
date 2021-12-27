@@ -6,7 +6,7 @@
 /*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 17:19:18 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/27 14:36:40 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/12/27 16:45:46 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,9 @@ int	run_built(t_command *cmd, t_arg *data)
 
 void	execution(t_arg *data)
 {
-	int		fd = 0;
+	int	fd;
 
+	fd = 0;
 	set_built(data->cmd);
 	ft_env_list_to_array(data->envp, data);
 	if (!check_open(data))//проверяет и создает если нужно файлы для редир, обр-ка ошибок

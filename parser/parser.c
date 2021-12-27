@@ -6,7 +6,7 @@
 /*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:09:43 by fbeatris          #+#    #+#             */
-/*   Updated: 2021/12/26 00:03:02 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/12/27 16:42:00 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,12 @@ void	parse_line_loop(char **line, t_arg *data, t_command *cmd, int *i)
 		while ((*line)[*i] == ' ')
 			(*i)++;
 		if ((*line)[*i] == '\"')
-			(*line) = double_quotes((*line), i, data->envp);
+			(*line) = double_quotes((*line), i, data->envp, data);
 		if ((*line)[*i] == '\'')
-			(*line) = single_quotes((*line), i);
+			(*line) = single_quotes((*line), i, data);
 		if ((*line)[*i] == '$' && ((*line)[*i + 1] == '_' || \
 			ft_isalpha((*line)[*i + 1])))
-			(*line) = env_replace((*line), i, data->envp);
+			(*line) = env_replace((*line), i, data->envp, data);
 		if ((*line)[*i] == '$' && (*line)[*i + 1] == '?')
 			(*line) = exit_code_replace((*line), data);
 		if (((*line)[*i] == '>' || (*line)[*i] == '<') && (*line)[(*i) + 1])
@@ -56,14 +56,14 @@ char	*parse_line(char *line_const, t_arg *data, t_command *cmd)
 	int		i;
 
 	i = 0;
-	line = ft_strdup(line_const);
+	line = ft_strdup(line_const, data);
 	if (!line)
 		return (NULL);
 	parse_line_loop(&line, data, cmd, &i);
-	one_cmd = ft_substr(line, 0, i);
+	one_cmd = ft_substr(line, 0, i, data);
 	if (!one_cmd)
 		return (NULL);
-	cmd->cmd = ft_split(one_cmd, ' ');
+	cmd->cmd = ft_split(one_cmd, ' ', data);
 	if (!(cmd->cmd))
 		return (NULL);
 	free (one_cmd);

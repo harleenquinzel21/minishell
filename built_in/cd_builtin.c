@@ -3,24 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   cd_builtin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 17:07:40 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/26 20:22:26 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/27 16:30:43 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_cut_dots(t_env **pwd, t_env **oldpwd)
+void	ft_cut_dots(t_env **pwd, t_env **oldpwd, t_arg *data)
 {
 	int		i;
 	char	**split;
 
 	i = 0;
-	split = ft_split((*pwd)->value, '.');
+	split = ft_split((*pwd)->value, '.', data);
 	(*pwd)->value = split[0];
-	split = ft_split((*oldpwd)->value, '.');
+	split = ft_split((*oldpwd)->value, '.', data);
 	(*oldpwd)->value = split[0];
 	while (split[i])
 	{
@@ -49,12 +49,12 @@ void	env_after_cd(t_arg **data, char *cd)
 	if (tmp && tmp1)
 	{
 		tmp1->value = NULL;
-		tmp1->value = ft_strdup(tmp->value);
+		tmp1->value = ft_strdup(tmp->value, *data);
 		tmp->value = NULL;
-		tmp->value = ft_strdup(cd);
+		tmp->value = ft_strdup(cd, *data);
 	}
 	if ((*data)->cmd->cmd[1][0] == '.' && (*data)->cmd->cmd[1][1] == '.')
-		ft_cut_dots(&tmp, &tmp1);
+		ft_cut_dots(&tmp, &tmp1, *data);
 }
 
 /*	70	cd = getcwd(NULL, 0);//----absolute path to current dir*/
@@ -70,9 +70,9 @@ char	*get_cd(t_command *cmd, t_env *envp, t_arg *data)
 		cd = getcwd(NULL, 0);
 		if (!cd)
 			ft_exit(errno, "getcwd", data);
-		pwd = ft_strjoin(cd, "/");
+		pwd = ft_strjoin(cd, "/", data);
 		free(cd);
-		cd = ft_strjoin(pwd, cmd->cmd[1]);
+		cd = ft_strjoin(pwd, cmd->cmd[1], data);
 		free(pwd);
 		return (cd);
 	}
@@ -80,8 +80,8 @@ char	*get_cd(t_command *cmd, t_env *envp, t_arg *data)
 		envp = envp->next;
 	if (envp)
 	{
-		pwd = ft_substr(cmd->cmd[1], 1, ft_strlen(cmd->cmd[1]) - 1);
-		cd = ft_strjoin(envp->value, pwd);
+		pwd = ft_substr(cmd->cmd[1], 1, ft_strlen(cmd->cmd[1]) - 1, data);
+		cd = ft_strjoin(envp->value, pwd, data);
 		free(pwd);
 	}
 	return (cd);
@@ -102,7 +102,7 @@ int	ft_cd(t_arg *data)
 
 	cd = NULL;
 	if (!data->cmd->cmd[1])
-		data->cmd->cmd[1] = ft_strdup("~");
+		data->cmd->cmd[1] = ft_strdup("~", data);
 	cd = get_cd(data->cmd, data->envp, data);
 	if (!cd)
 	{

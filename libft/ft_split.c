@@ -6,7 +6,7 @@
 /*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 18:36:35 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/26 20:29:24 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/12/27 16:31:33 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static int	ft_wlen(char const *str, char c)
 	return (size);
 }
 
-char	**ft_split(char const *str, char c)
+char	**ft_split(char const *str, char c, t_arg *data)
 {
 	int		i;
 	int		j;
@@ -64,13 +64,13 @@ char	**ft_split(char const *str, char c)
 	count = ft_wcount(str, c);
 	i = 0;
 	split = malloc(sizeof(char *) * (count + 1));
-	if (split == 0)
-		return (0);
+	if (!split)
+		ft_exit(12, "malloc", data);
 	while (count > 0)
 	{
 		while (*str == c)
 			str++;
-		split[j] = ft_substr(str, i, ft_wlen(str, c));
+		split[j] = ft_substr(str, i, ft_wlen(str, c), data);
 		str = str + ft_wlen(str, c);
 		j++;
 		count--;

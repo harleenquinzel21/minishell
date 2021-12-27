@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 01:29:07 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/26 17:20:30 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/27 16:31:08 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ static void	gnl(char **line, t_arg *data)
 	char	*end;
 	char	*tmp;
 
-	*line = ft_strdup("\0");
-	end = ft_strdup("\0\0");
+	*line = ft_strdup("\0", data);
+	end = ft_strdup("\0\0", data);
 	if (!*line || !end)
 		ft_exit(12, "malloc", data);
 	while (*end != '\n')
@@ -41,7 +41,7 @@ static void	gnl(char **line, t_arg *data)
 		read(0, end, 1);
 		if (*end == '\n')
 			break ;
-		tmp = ft_strjoin(*line, end);
+		tmp = ft_strjoin(*line, end, data);
 		if (!tmp)
 		{
 			free(end);
