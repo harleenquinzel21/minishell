@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 17:07:40 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/27 18:00:36 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/27 18:41:58 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char	*get_cd(t_command *cmd, t_env *envp, t_arg *data)
 
 void	ft_cd_error(t_arg *data, char *str)
 {
-	data->errnum = 2;
+	data->errnum = 1;
 	write(2, "cd", 2);
 	write(2, ": ", 2);
 	write(2, str, ft_strlen(str));
