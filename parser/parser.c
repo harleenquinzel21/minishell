@@ -6,7 +6,7 @@
 /*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:09:43 by fbeatris          #+#    #+#             */
-/*   Updated: 2021/12/27 16:42:00 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/12/27 19:22:30 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ char	*parse_line(char *line_const, t_arg *data, t_command *cmd)
 {
 	char	*line;
 	char	*one_cmd;
+	char	*new_line;
 	int		i;
 
 	i = 0;
@@ -66,8 +67,10 @@ char	*parse_line(char *line_const, t_arg *data, t_command *cmd)
 	cmd->cmd = ft_split(one_cmd, ' ', data);
 	if (!(cmd->cmd))
 		return (NULL);
-	free (one_cmd);
-	return (&line[i]);
+	free(one_cmd);
+	new_line = ft_strdup(&line[i], data);
+	free(line);
+	return (new_line);
 }
 
 /* return 1 if syntax error */
@@ -75,7 +78,9 @@ int	parser(t_arg *data, char *line)
 {
 	int			i;
 	t_command	*temp;
+//	char		*save_line;
 
+//	save_line = line;
 	i = 0;
 	if (check_syntax(line, data))
 		return (1);
@@ -96,5 +101,7 @@ int	parser(t_arg *data, char *line)
 			ft_exit(12, "malloc", data);
 	}
 	data->cmd = temp;
+//	free(save_line);
+//	free (line);
 	return (0);
 }

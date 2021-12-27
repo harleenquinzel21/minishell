@@ -6,7 +6,7 @@
 /*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 15:51:22 by fbeatris          #+#    #+#             */
-/*   Updated: 2021/12/26 19:12:07 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/12/27 18:13:48 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void	go_readline(char **line, t_arg *data)
 		printf("\033[1A>>> exit\n");
 		ft_exit(data->errnum, NULL, data);
 	}
+	// if (ft_strcmp(*line, "") == 0)
+	// 	data->errnum = 0;
 }
 
 void	sig_handler_child(int sig_num)

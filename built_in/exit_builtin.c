@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 20:19:43 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/26 19:18:53 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/27 19:08:38 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,20 +63,47 @@ void	free_cmd_redir(t_arg *data)
 {
 	t_command	*cmd_temp;
 	t_redir		*redir_temp;
+	int			i;
 
 	while (data->cmd)
 	{
 		cmd_temp = data->cmd->next;
+		i = 0;
+		while(data->cmd->cmd[i])
+		{
+			free(data->cmd->cmd[i]);
+			i++;
+		}
+		free(data->cmd->cmd);
 		free(data->cmd);
 		data->cmd = cmd_temp;
 	}
+//	free(cmd_temp);
 	while (data->redir)
 	{
 		redir_temp = data->redir->data_next;
 		if (data->redir->in && data->redir->two)
+		{
 			unlink(data->redir->name);
+			free(data->redir->limiter);
+		}
+		free(data->redir->name);
 		free(data->redir);
 		data->redir = redir_temp;
 	}
+//	free(redir_temp);
+	
+	if (data->fd)
+	{
+		i = 0;
+		while (data->fd[i])
+		{
+			free(data->fd[0]);
+			free(data->fd[1]);
+			i++;
+		}
+		free(data->fd);
+	}
+	
 //	printf("free ok\n");
 }
