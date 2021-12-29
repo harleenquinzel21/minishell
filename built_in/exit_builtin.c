@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 20:19:43 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/27 21:22:27 by ogarthar         ###   ########.fr       */
+/*   Updated: 2021/12/29 16:08:10 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	ft_isalldigit(char *str)
 	int	i;
 
 	i = -1;
+	if (str[0] == '-')
+			i++;
 	while (str[++i])
 	{
 		if (!ft_isdigit((unsigned char)str[i]))
@@ -93,17 +95,17 @@ void	free_cmd_redir(t_arg *data)
 	}
 //	free(redir_temp);
 
-	if (data->fd)////// abort если первой строкой в minishell вызвать built_in
-	{
-		i = 0;
-		while (data->fd[i])
-		{
-			free(data->fd[0]);
-			free(data->fd[1]);
-			i++;
-		}
-		free(data->fd);
-	}
+	// if (data->fd)////// abort если первой строкой в minishell вызвать built_in
+	// {
+	// 	i = 0;
+	// 	while (data->fd[i])
+	// 	{
+	// 		free(data->fd[0]);
+	// 		free(data->fd[1]);
+	// 		i++;
+	// 	}
+	// 	free(data->fd);
+	// }
 
 //	printf("free ok\n");
 }
