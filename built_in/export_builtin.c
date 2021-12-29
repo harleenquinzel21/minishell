@@ -3,40 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   export_builtin.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 17:06:22 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/27 16:27:22 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/12/29 20:31:47 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+
 int	ft_search_dups(t_env *envp, char *new, int i, t_arg *data)
 {
-	char	*newvalue;
+	// char	*newvalue;
 	char	*newkey;
 
 	while (new[i] && (new[i] == '_' || ft_isalnum(new[i])))
 		i++;
 	newkey = ft_substr(new, 0, i, data);
-	newvalue = ft_strdup(&new[i + 1], data);
+	// newvalue = ft_strdup(&new[i + 1], data);
 	while (envp)
 	{
 		if (!(ft_strcmp(envp->key, newkey)))
 		{
 			if (envp->value)
 				envp->value = NULL;
-			envp->value = ft_strdup(newvalue, data);
+			envp->value = ft_strdup(&new[i + 1], data);
 			free(newkey);
-			free(newvalue);
+			// free(newvalue);
 			return (1);
 		}
 		else
 			envp = envp->next;
 	}
 	free(newkey);
-	free(newvalue);
+	// free(newvalue);
 	return (0);
 }
 
@@ -57,7 +58,7 @@ int	if_without_arg(t_env *env)
 			printf("declare -x %s\n", tmp->key);
 		tmp = tmp->next;
 	}
-	return (1);
+	return (0);
 }
 
 int	ft_export_join(char *new, t_env *envp, t_arg *data)
@@ -70,22 +71,22 @@ int	ft_export_join(char *new, t_env *envp, t_arg *data)
 	while (new[i] && (new[i] == '_' || ft_isalnum(new[i])))
 		i++;
 	if (new[i] != '+' && new[i + 1] != '=')
-		return (1);
+		return (0);
 	newkey = ft_substr(new, 0, i, data);
 	newvalue = ft_strdup(&new[i + 2], data);
 	while (envp)
 	{
 		if (!(ft_strcmp(envp->key, newkey)))
 		{
-			envp->value = ft_strjoin(envp->value, &new[i + 2], data);
-			return (0);
+			envp->value = ft_strjoin(envp->value, newvalue, data);
+			return (1);
 		}
 		// else
 		envp = envp->next;
 	}
 	free(newkey);
 	free(newvalue);
-	return (1);
+	return (0);
 }
 
 int	ft_add_new(char	*new, t_arg *data)
@@ -122,15 +123,16 @@ int	ft_export(t_arg *data)
 		if (ft_isalpha(data->cmd->cmd[i][0]))
 		{
 			if (ft_strchr(data->cmd->cmd[i], '+') && \
+				ft_strchr(data->cmd->cmd[i], '=') && \
 				(ft_export_join(data->cmd->cmd[i], data->envp, data)))
-				return (1);
+				continue;
 			if (ft_search_dups(data->envp, data->cmd->cmd[i], j, data))
-				return (1);
+				continue;
 			if (!ft_add_new(data->cmd->cmd[i], data))
 				env_add_new(data->cmd->cmd[i], &data->envp, data);
 		}
 		else
 			ft_export_unset_error(data, data->cmd->cmd[i], "export");
 	}
-	return (1);
+	return (data->errnum);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 17:19:18 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/27 18:20:34 by fbeatris         ###   ########.fr       */
+/*   Updated: 2021/12/29 18:06:00 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,9 +92,11 @@ int	main(int ac, char **av, char **envp)
 		ft_exit(1, NULL, data);
 	parse_env(envp, data);
 	ft_shlvl_check(data);
-	data->errnum = 0;
+	// data->errnum = 0;
 	while (1)
 	{
+		if (data->errnum == 255)
+			data->errnum = 0;
 		go_readline(&line, data);
 		if (parser(data, line) == 0)
 		{
