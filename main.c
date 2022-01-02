@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 17:19:18 by ogarthar          #+#    #+#             */
-/*   Updated: 2022/01/02 02:56:12 by fbeatris         ###   ########.fr       */
+/*   Updated: 2022/01/02 17:31:28 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,11 @@ void	execution(t_arg *data)
 	fd = 0;
 	set_built(data->cmd);
 	ft_env_list_to_array(data->envp, data);
-	if (!check_open(data))//проверяет и создает если нужно файлы для редир, обр-ка ошибок
+	if (!check_open(data)) //проверяет и создает если нужно файлы для редир, обр-ка ошибок
 	{
 		data->num = ft_count_cmd(data->cmd);
+		if (data->num == 0) ///fixed exit code 255
+			return ;
 		if (data->num > 1)
 		{
 			ft_pipe(data);
@@ -85,27 +87,22 @@ int	main(int ac, char **av, char **envp)
 {
 	t_arg	*data;
 	char	*line;
-	(void)av;
 
+	(void)av;
 	ft_init_structs(&data);
 	if (ac != 1)
 		ft_exit(1, NULL, data);
 	parse_env(envp, data);
 	ft_shlvl_check(data);
-	// data->errnum = 0;
 	while (1)
 	{
-		if (data->errnum == 255)
-			data->errnum = 0;
 		go_readline(&line, data);
 		if (parser(data, line) == 0)
 		{
-			// ft_print_all(data);/////если мешает закоменть:)
+			// ft_print_all(data); /////если мешает закоменть:)
 			execution(data);
-			free_structs(data);
+			// free_structs(data);
 		}
 	}
-
 	return (0);
 }
-

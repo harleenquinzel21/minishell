@@ -3,29 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 01:29:07 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/27 16:31:08 by fbeatris         ###   ########.fr       */
+/*   Updated: 2022/01/02 16:42:43 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// static int	ft_strcmp_h(const char *s1, const char *s2)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (s1[i] || s2[i])
-// 	{
-// 		if (s1[i] == s2[i])
-// 			i++;
-// 		else
-// 			return (1);
-// 	}
-// 	return (0);
-// }
 
 static void	gnl(char **line, t_arg *data)
 {
@@ -67,11 +52,7 @@ void	heredoc(char *name, char *limiter, t_arg *data)
 	int		fd;
 	int		i;
 
-	// limiter = ft_strdup(name);
-	// free(name);
-	// name = ft_strdup("here_doc");
-
-	fd = open(name, O_RDWR| O_CREAT | O_TRUNC | O_APPEND, 0644);
+	fd = open(name, O_RDWR | O_CREAT | O_TRUNC | O_APPEND, 0644);
 	if (fd == -1)
 		ft_exit(errno, name, data);
 	i = 1;
@@ -79,7 +60,6 @@ void	heredoc(char *name, char *limiter, t_arg *data)
 	{
 		write(1, "> ", 2);
 		gnl(&line, data);
-		// if (ft_strcmp_h(line, limiter))
 		if (ft_strcmp(line, limiter))
 			write_file(name, fd, line, data);
 		else

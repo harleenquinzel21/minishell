@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 13:55:52 by ogarthar          #+#    #+#             */
-/*   Updated: 2022/01/02 02:54:08 by fbeatris         ###   ########.fr       */
+/*   Updated: 2022/01/02 16:52:11 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -103,7 +102,6 @@ void	env_add_new(char *env_line, t_env **first, t_arg *data);
 char	*env_replace(char *line, int *i, t_env *envp, t_arg *data);
 char	*exit_code_replace(char *line, t_arg *data);
 
-
 /*signals*/
 void	sig_handler_child(int sig_num);
 void	sig_handler_parent(int sig_num);
@@ -116,19 +114,22 @@ void	ft_make_array(t_env *envp, char **env, int len, t_arg *data);
 void	ft_print_error(int errnum, char *str, char *cmd_name);
 
 /*check_open.c*/
-int	check_open(t_arg *data);
+int		check_open(t_arg *data);
 
 /*child.c*/
 void	child_process(int i, t_arg *data);
 void	execute(char **cmd, char **env, t_arg *data);
 char	*find_path(char *cmd, char **envp, t_arg *data);
 int		ft_check_path(t_arg *data, char *cmd);
+int		check_x(t_arg *data, char *path, char *cmd);
 
 /*redirects.c*/
 int		dup_cmd(t_command *cmd, t_arg *data);
 void	redup_cmd(int fd, t_arg *data);
+
 /*pipe.c*/
 void	ft_pipe(t_arg *data);
+
 /*pipex.c*/
 void	pipex(t_arg *data);
 void	ft_dup2(int i, int *file, t_command *cmd, t_arg *data);

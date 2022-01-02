@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 20:19:43 by ogarthar          #+#    #+#             */
-/*   Updated: 2022/01/02 02:57:01 by fbeatris         ###   ########.fr       */
+/*   Updated: 2022/01/02 16:47:35 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	ft_isalldigit(char *str)
 
 	i = -1;
 	if (str[0] == '-')
-			i++;
+		i++;
 	while (str[++i])
 	{
 		if (!ft_isdigit((unsigned char)str[i]))
@@ -98,7 +98,7 @@ void	free_structs(t_arg *data)
 	{
 		cmd_temp = data->cmd->next;
 		i = 0;
-		while(data->cmd->cmd[i])
+		while (data->cmd->cmd[i])
 		{
 			free(data->cmd->cmd[i]);
 			i++;

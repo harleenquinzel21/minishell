@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 18:05:39 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/27 16:29:45 by fbeatris         ###   ########.fr       */
+/*   Updated: 2022/01/02 16:55:02 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,11 @@ int	ft_count_cmd(t_command *cmd)
 	int	res;
 
 	if (!cmd->cmd[0])
-	return (0);
+		return (0);
 	res = 0;
 	while (cmd)
 	{
 		res++;
-
-		// ft_putstr_fd(cmd->cmd[0], 1);
-		// ft_putstr_fd("\n", 1);
-
 		cmd = cmd->next;
 	}
 	return (res);
@@ -56,7 +52,6 @@ void	ft_print_error(int errnum, char *str, char *cmd_name)
 	{
 		write(2, str, ft_strlen(str));
 		write(2, ": ", 3);
-
 	}
 	write(2, errmsg, ft_strlen(errmsg));
 	write(2, "\n", 1);
@@ -98,6 +93,4 @@ void	ft_env_list_to_array(t_env *envp, t_arg *data)
 	if (!data->env)
 		ft_exit(12, "malloc", data);
 	ft_make_array(envp, data->env, len, data);
-
-
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 15:51:22 by fbeatris          #+#    #+#             */
-/*   Updated: 2021/12/27 18:13:48 by fbeatris         ###   ########.fr       */
+/*   Updated: 2022/01/02 14:54:06 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,15 @@
 
 void	go_readline(char **line, t_arg *data)
 {
+	// int a = 0;
+
 	signal(SIGINT, &sig_handler_parent);
 	signal(SIGQUIT, &sig_handler_parent);
-	
+
+	// a = rl_on_new_line();
 	rl_on_new_line();
 	*line = readline(">>> ");
+
 	if (*line && **line)
 		add_history(*line);
 	else if (*line == NULL)
@@ -28,6 +32,7 @@ void	go_readline(char **line, t_arg *data)
 	}
 	// if (ft_strcmp(*line, "") == 0)
 	// 	data->errnum = 0;
+	// printf("errnum: %d\nrl: %d\n", data->errnum, a);////////////////
 }
 
 void	sig_handler_child(int sig_num)
