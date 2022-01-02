@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 20:19:43 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/29 16:08:10 by ogarthar         ###   ########.fr       */
+/*   Updated: 2022/01/02 02:57:01 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,37 @@ int	ft_exit(int errnum, char *msg, t_arg *data)
 	exit(errnum);
 }
 
-void	free_cmd_redir(t_arg *data)
+void	free_redir_env_fd(t_arg *data)
+{
+	int		i;
+	t_redir	*redir_temp;
+
+	while (data->redir)
+	{
+		redir_temp = data->redir->data_next;
+		if (data->redir->in && data->redir->two)
+		{
+			unlink(data->redir->name);
+			free(data->redir->limiter);
+		}
+		free(data->redir->name);
+		free(data->redir);
+		data->redir = redir_temp;
+	}
+	i = 0;
+	while (data->env[i])
+	{
+		free(data->env[i]);
+		i++;
+	}
+	free (data->env);
+	if (data->num > 1)
+		free(data->fd);
+}
+
+void	free_structs(t_arg *data)
 {
 	t_command	*cmd_temp;
-	t_redir		*redir_temp;
 	int			i;
 
 	while (data->cmd)
@@ -80,32 +107,5 @@ void	free_cmd_redir(t_arg *data)
 		free(data->cmd);
 		data->cmd = cmd_temp;
 	}
-//	free(cmd_temp);
-	while (data->redir)
-	{
-		redir_temp = data->redir->data_next;
-		if (data->redir->in && data->redir->two)
-		{
-			unlink(data->redir->name);
-			free(data->redir->limiter);
-		}
-		free(data->redir->name);
-		free(data->redir);
-		data->redir = redir_temp;
-	}
-//	free(redir_temp);
-
-	// if (data->fd)////// abort если первой строкой в minishell вызвать built_in
-	// {
-	// 	i = 0;
-	// 	while (data->fd[i])
-	// 	{
-	// 		free(data->fd[0]);
-	// 		free(data->fd[1]);
-	// 		i++;
-	// 	}
-	// 	free(data->fd);
-	// }
-
-//	printf("free ok\n");
+	free_redir_env_fd(data);
 }

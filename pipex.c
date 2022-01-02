@@ -6,7 +6,7 @@
 /*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 19:30:03 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/25 18:41:32 by fbeatris         ###   ########.fr       */
+/*   Updated: 2022/01/02 02:49:51 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ void	ft_close(t_arg *data, int *file, int num)
 		close(data->fd[i][1]);
 		free(data->fd[i]);
 	}
-	// if (data->fd)
-	// 	free(data->fd);
-	data->fd = NULL;
+//	if (data->fd)
+//	 	free(data->fd);
+//	data->fd = NULL;
 	if (!file)
 		return ;
 	if (file[0])
