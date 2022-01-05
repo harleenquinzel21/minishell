@@ -6,50 +6,49 @@
 /*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 16:10:50 by misha             #+#    #+#             */
-/*   Updated: 2021/12/27 16:22:11 by fbeatris         ###   ########.fr       */
+/*   Updated: 2022/01/02 20:18:06 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static char	*remove_quotes(char *line, int begin, int *i, t_arg *data)
+void	remove_quotes(char *line, int begin, int *i)
 {
-	char	*first;
-	char	*second;
-	char	*third;
-	char	*pre_final;
-	char	*final;
+	int	j;
+	int	len;
 
-	first = ft_substr(line, 0, begin, data);
-	second = ft_substr(line, begin + 1, *i - begin - 1, data);
-	third = ft_strdup(&line[*i + 1], data);
-	pre_final = ft_strjoin(first, second, data);
-	final = ft_strjoin(pre_final, third, data);
-	free(first);
-	free(second);
-	free(third);
-	free(pre_final);
-	free(line);
-	return (final);
+	j = 0;
+	len = ft_strlen(line);
+	while (begin + j < *i - 1)
+	{
+		line[begin + j] = line[begin + j + 1];
+		j++;
+	}
+	while (begin + j < len)
+	{
+		line[begin + j] = line[begin + j + 2];
+		j++;
+	}
+	while (line[begin + j + 2])
+		line[begin + j + 2] = '\0';
 }
 
 char	*single_quotes(char *line, int *i, t_arg *data)
 {
 	int		begin;
-	char	*new_line;
 
+	(void) data;
 	begin = *i;
 	(*i)++;
 	while (line[*i] && line[*i + 1] && line[*i] != '\'')
 		(*i)++;
-	new_line = remove_quotes(line, begin, i, data);
-	return (new_line);
+	remove_quotes(line, begin, i);
+	return (line);
 }
 
 char	*double_quotes(char *line, int *i, t_env *envp, t_arg *data)
 {
 	int		begin;
-	char	*new_line;
 
 	begin = *i;
 	(*i)++;
@@ -60,6 +59,6 @@ char	*double_quotes(char *line, int *i, t_env *envp, t_arg *data)
 			line = env_replace(line, i, envp, data);
 		(*i)++;
 	}
-	new_line = remove_quotes(line, begin, i, data);
-	return (new_line);
+	remove_quotes(line, begin, i);
+	return (line);
 }

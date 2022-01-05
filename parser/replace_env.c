@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   replace_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 16:21:14 by misha             #+#    #+#             */
-/*   Updated: 2022/01/02 17:32:21 by ogarthar         ###   ########.fr       */
+/*   Updated: 2022/01/02 20:52:06 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,10 @@ char	*env_replace(char *line, int *i, t_env *envp, t_arg *data)
 	while (temp)
 	{
 		if (ft_strcmp(temp->key, env_key) == 0)
+		{
+			free(env_value);
 			env_value = temp->value;
+		}
 		temp = temp->next;
 	}
 	line = replace_str(line, env_key, env_value);

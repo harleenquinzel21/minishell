@@ -6,7 +6,7 @@
 /*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:09:43 by fbeatris          #+#    #+#             */
-/*   Updated: 2022/01/02 02:22:06 by fbeatris         ###   ########.fr       */
+/*   Updated: 2022/01/02 20:50:47 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,6 @@ int	parser(t_arg *data, char *read_line)
 			ft_exit(12, "malloc", data);
 	}
 	data->cmd = temp;
-//	free(save_line);
 	free(line);
 	return (0);
 }
