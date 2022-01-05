@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 20:19:43 by ogarthar          #+#    #+#             */
-/*   Updated: 2022/01/02 16:47:35 by ogarthar         ###   ########.fr       */
+/*   Updated: 2022/01/05 19:25:49 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,21 @@ int	ft_isalldigit(char *str)
 	return (0);
 }
 
-int	ft_exit_cmd(t_arg *data)
+int	ft_exit_cmd(t_arg *data, t_command *cmd)
 {
-	ft_putstr_fd("exit\n", 1);
-	if (data->cmd->cmd[1] && !ft_isalldigit(data->cmd->cmd[1]))
+	if (data->num == 1)
+		ft_putstr_fd("exit\n", 1);
+	if (cmd->cmd[1] && cmd->cmd[2])
+	{
+		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
+		return(1);
+	}
+	if (cmd->cmd[1] && !ft_isalldigit(cmd->cmd[1]))
 		ft_exit((unsigned char)ft_atoi(data->cmd->cmd[1]), NULL, data);
-	else if (data->cmd->cmd[1])
+	else if (cmd->cmd[1])
 	{
 		ft_putstr_fd("minishell: exit: ", 2);
-		ft_putstr_fd(data->cmd->cmd[1], 2);
+		ft_putstr_fd(cmd->cmd[1], 2);
 		ft_putstr_fd(": numeric argument required\n", 2);
 		ft_exit(255, NULL, data);
 	}

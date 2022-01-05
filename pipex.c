@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 19:30:03 by ogarthar          #+#    #+#             */
-/*   Updated: 2022/01/02 02:49:51 by fbeatris         ###   ########.fr       */
+/*   Updated: 2022/01/05 19:06:13 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ static void	ft_waitpid(pid_t *pid, int num, t_arg *data)
 		waitpid(-1, &status, 0);
 	if (data)
 	{
+		// printf("%d\n", status);
 		if (WIFEXITED(status))
 			data->errnum = WEXITSTATUS(status);
 		else
@@ -85,9 +86,9 @@ void	pipex(t_arg *data)
 	i = -1;
 	while (++i < data->num)
 	{
-		pid[i] = fork();
+		pid[i] = fork();///
 		if (pid[i] == 0)
-			child_process(i, data);///
+			child_process(i, data);
 		if (pid[i] == -1)
 		{
 			data->errnum = errno;

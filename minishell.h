@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 13:55:52 by ogarthar          #+#    #+#             */
-/*   Updated: 2022/01/02 16:52:11 by ogarthar         ###   ########.fr       */
+/*   Updated: 2022/01/05 19:45:50 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,17 +135,18 @@ void	pipex(t_arg *data);
 void	ft_dup2(int i, int *file, t_command *cmd, t_arg *data);
 
 /*./built_in*/
-int		ft_cd(t_arg *data); //cd with only a relative or absolute path
+int		ft_cd(t_arg *data, t_command *cmd); //cd with only a relative or absolute path
 int		ft_pwd(t_arg *data);// pwd with no options
-int		ft_env(t_arg *data);// env with no options or arguments
-int		ft_echo(t_arg *data);// echo with option -n
+int		ft_env(t_arg *data, t_command *cmd);// env with no options or arguments
+int		ft_echo(t_arg *data, t_command *cmd);// echo with option -n
 int		ft_unset(t_command *cmd, t_arg *data);// unset with no options
-int		ft_export(t_arg *data);//export with no options
+int		ft_export(t_arg *data, t_command *cmd);//export with no options
 int		ft_add_new(char *str, t_arg *data);
 int		ft_export_join(char *new, t_env *envp, t_arg *data);
 void	ft_export_unset_error(t_arg *data, char *str, char *namecmd);
+int		check_arg_export(char *str);
 void	ft_cd_error(t_arg *data, char *str);
-int		ft_exit_cmd(t_arg *data);
+int		ft_exit_cmd(t_arg *data, t_command *cmd);
 int		check_exit(t_arg *data);
 int		ft_exit(int errnum, char *msg, t_arg *data); //exit with no options
 void	free_structs(t_arg *data);

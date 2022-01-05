@@ -6,16 +6,18 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 17:06:22 by ogarthar          #+#    #+#             */
-/*   Updated: 2022/01/02 16:53:04 by ogarthar         ###   ########.fr       */
+/*   Updated: 2022/01/05 18:35:12 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	ft_search_dups(t_env *envp, char *new, int i, t_arg *data)
+int	ft_search_dups(t_env *envp, char *new, t_arg *data)
 {
 	char	*newkey;
+	int		i;
 
+	i = 0;
 	while (new[i] && (new[i] == '_' || ft_isalnum(new[i])))
 		i++;
 	newkey = ft_substr(new, 0, i, data);
@@ -58,29 +60,29 @@ int	if_without_arg(t_env *env)
 
 int	ft_export_join(char *new, t_env *envp, t_arg *data)
 {
-	char	*newkey;
-	char	*newvalue;
 	int		i;
 
 	i = 0;
 	while (new[i] && (new[i] == '_' || ft_isalnum(new[i])))
 		i++;
-	if (new[i] != '+' && new[i + 1] != '=')
+	if (new[i] == '=')
 		return (0);
-	newkey = ft_substr(new, 0, i, data);
-	newvalue = ft_strdup(&new[i + 2], data);
 	while (envp)
 	{
-		if (!(ft_strcmp(envp->key, newkey)))
+		if (!(ft_strcmp(envp->key, ft_substr(new, 0, i, data))))
 		{
-			envp->value = ft_strjoin(envp->value, newvalue, data);
+			if (envp->separator)
+				free(envp->separator);
+			envp->separator = ft_strdup("=", data);
+			if (envp->value)
+				envp->value = ft_strjoin(envp->value, ft_strdup(&new[i + 2], \
+				data), data);
+			else
+				envp->value = ft_strdup(ft_strdup(&new[i + 2], data), data);
 			return (1);
 		}
-		// else
 		envp = envp->next;
 	}
-	free(newkey);
-	free(newvalue);
 	return (0);
 }
 
@@ -103,31 +105,32 @@ int	ft_add_new(char	*new, t_arg *data)
 	return (1);
 }
 
-int	ft_export(t_arg *data)
+int	ft_export(t_arg *data, t_command *cmd)
 {
 	int	i;
-	int	j;
 
 	i = 0;
-	j = 0;
 	data->errnum = 0;
-	if (!data->cmd->cmd[1])
+	if (!cmd->cmd[1])
 		return (if_without_arg(data->envp));
-	while (data->cmd->cmd[++i])
+	while (cmd->cmd[++i])
 	{
-		if (ft_isalpha(data->cmd->cmd[i][0]))
+		if (!check_arg_export(cmd->cmd[i]))
 		{
-			if (ft_strchr(data->cmd->cmd[i], '+') && \
-				ft_strchr(data->cmd->cmd[i], '=') && \
-				(ft_export_join(data->cmd->cmd[i], data->envp, data)))
-				continue ;
-			if (ft_search_dups(data->envp, data->cmd->cmd[i], j, data))
-				continue ;
-			if (!ft_add_new(data->cmd->cmd[i], data))
-				env_add_new(data->cmd->cmd[i], &data->envp, data);
+			if (data->num == 1)
+			{
+				if (ft_strchr(cmd->cmd[i], '+') && \
+					ft_strchr(cmd->cmd[i], '=') && \
+					(ft_export_join(cmd->cmd[i], data->envp, data)))
+					continue ;
+				if (ft_search_dups(data->envp, cmd->cmd[i], data))
+					continue ;
+				if (!ft_add_new(cmd->cmd[i], data))
+					env_add_new(cmd->cmd[i], &data->envp, data);
+			}
 		}
 		else
-			ft_export_unset_error(data, data->cmd->cmd[i], "export");
+			ft_export_unset_error(data, cmd->cmd[i], "export");
 	}
 	return (data->errnum);
 }

@@ -6,11 +6,28 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 15:17:44 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/27 18:43:05 by ogarthar         ###   ########.fr       */
+/*   Updated: 2022/01/05 19:46:10 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int	check_arg_export(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (!ft_isalpha(str[0]))
+		return (1);
+	while (str[i] && (str[i] == '_' || ft_isalnum(str[i])))
+		i++;
+	if (str[i] == '+' && str[i + 1] != '=')
+	{
+		// ft_export_unset_error(data, str, "export");
+		return (1);
+	}
+	return (0);
+}
 
 void	ft_env_error(t_arg *data, char *str)
 {
@@ -21,15 +38,15 @@ void	ft_env_error(t_arg *data, char *str)
 	write(2, " : No such file or directory\n", 29);
 }
 
-int	ft_env(t_arg *data)
+int	ft_env(t_arg *data, t_command *cmd)
 {
 	t_env	*tmp;
 
 	if (!(data->envp))
 		return (1);
-	if (data->cmd->cmd[1])
+	if (cmd->cmd[1])
 	{
-		ft_env_error(data, data->cmd->cmd[1]);
+		ft_env_error(data, cmd->cmd[1]);
 		return (data->errnum);
 	}
 	tmp = data->envp;

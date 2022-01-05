@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 14:00:18 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/23 16:35:43 by ogarthar         ###   ########.fr       */
+/*   Updated: 2022/01/05 18:39:38 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	ft_unset(t_command *cmd, t_arg *data)
 	i = 0;
 	while (cmd->cmd[++i])
 	{
-		if (ft_check_error(data->cmd->cmd[i], data) || !data->envp)
+		if (ft_check_error(cmd->cmd[i], data) || !data->envp)
 			return (1);
 		if (cmd->cmd[i][0] == '_')
 			continue ;

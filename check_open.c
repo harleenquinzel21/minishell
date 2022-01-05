@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 20:12:51 by ogarthar          #+#    #+#             */
-/*   Updated: 2022/01/02 16:32:34 by ogarthar         ###   ########.fr       */
+/*   Updated: 2022/01/02 20:25:47 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 static int	err_open(int errnum, char *text, t_arg *data)
 {
 	char	*errmsg;
-
+	// if (errnum == 1)
+	// 	ft_putstr_fd(": ambiguous redirect", )
 	errmsg = strerror(errnum);
 	write(2, text, ft_strlen(text));
 	write(2, ": ", 2);
@@ -29,6 +30,9 @@ static int	open_file(t_redir *tmp, t_arg *data)
 {
 	int	fd;
 
+	// if (ambiguous_redirect(data, tmp));//////
+	if (tmp->name[0] == '$')//
+		return (err_open(1, tmp->name, data));//print ambiguous redirect
 	if (!tmp->in && tmp->two) //// >>
 	{
 		fd = open(tmp->name, O_RDWR | O_CREAT | O_APPEND, 0644);

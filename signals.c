@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 15:51:22 by fbeatris          #+#    #+#             */
-/*   Updated: 2022/01/02 14:54:06 by ogarthar         ###   ########.fr       */
+/*   Updated: 2022/01/05 19:53:31 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ void	go_readline(char **line, t_arg *data)
 
 	// a = rl_on_new_line();
 	rl_on_new_line();
-	*line = readline(">>> ");
+	*line = readline("minishell>>> ");
 
 	if (*line && **line)
 		add_history(*line);
 	else if (*line == NULL)
 	{
-		printf("\033[1A>>> exit\n");
+		printf("\033[1Aminishell>>> exit\n");
 		ft_exit(data->errnum, NULL, data);
 	}
 	// if (ft_strcmp(*line, "") == 0)

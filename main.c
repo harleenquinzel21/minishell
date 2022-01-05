@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 17:19:18 by ogarthar          #+#    #+#             */
-/*   Updated: 2022/01/02 17:31:28 by ogarthar         ###   ########.fr       */
+/*   Updated: 2022/01/05 19:45:12 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,19 +40,19 @@ void	set_built(t_command *cmd)
 int	run_built(t_command *cmd, t_arg *data)
 {
 	if (cmd->built == 1)
-		return (ft_echo(data));
+		return (ft_echo(data, cmd));
 	if (cmd->built == 2)
-		return (ft_cd(data));
+		return (ft_cd(data, cmd));
 	if (cmd->built == 3)
 		return (ft_pwd(data));
 	if (cmd->built == 4)
-		return (ft_export(data));
+		return (ft_export(data, cmd));
 	if (cmd->built == 5)
-		return (ft_unset(data->cmd, data));
+		return (ft_unset(cmd, data));
 	if (cmd->built == 6)
-		return (ft_env(data));
+		return (ft_env(data, cmd));
 	if (cmd->built == 7)
-		return (ft_exit_cmd(data));
+		return (ft_exit_cmd(data, cmd));
 	return (0);
 }
 
@@ -99,9 +99,9 @@ int	main(int ac, char **av, char **envp)
 		go_readline(&line, data);
 		if (parser(data, line) == 0)
 		{
-			// ft_print_all(data); /////если мешает закоменть:)
+			ft_print_all(data); /////если мешает закоменть:)
 			execution(data);
-			// free_structs(data);
+			free_structs(data);
 		}
 	}
 	return (0);
