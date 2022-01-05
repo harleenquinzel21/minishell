@@ -3,16 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/21 17:19:18 by ogarthar          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/01/05 19:45:12 by ogarthar         ###   ########.fr       */
-=======
-/*   Updated: 2022/01/02 20:17:15 by fbeatris         ###   ########.fr       */
->>>>>>> e02e25a50803bb7deba0b4cc4e8d7118984b754f
+/*   Created: 2022/01/05 20:04:11 by ogarthar          #+#    #+#             */
+/*   Updated: 2022/01/05 20:04:17 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minishell.h"
 
