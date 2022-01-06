@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 13:55:52 by ogarthar          #+#    #+#             */
-/*   Updated: 2022/01/05 20:08:33 by ogarthar         ###   ########.fr       */
+/*   Updated: 2022/01/06 18:24:07 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int		empty_redirect(char *line);
 char	*other_syntax_cases(char *line);
 
 int		parser(t_arg *data, char *line);
-void	parse_line(char **line, t_arg *data, t_command *cmd);
+//void	parse_line(char **line, t_arg *data, t_command *cmd);
 int		check_syntax(char *line, t_arg *data);
 char	*single_quotes(char *line, int *i, t_arg *data);
 char	*double_quotes(char *line, int *i, t_env *envp, t_arg *data);

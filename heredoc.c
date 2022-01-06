@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 01:29:07 by ogarthar          #+#    #+#             */
-/*   Updated: 2022/01/02 16:42:43 by ogarthar         ###   ########.fr       */
+/*   Updated: 2022/01/06 19:56:21 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	heredoc(char *name, char *limiter, t_arg *data)
 	int		fd;
 	int		i;
 
+	signal(SIGINT, &sig_handler_child);
 	fd = open(name, O_RDWR | O_CREAT | O_TRUNC | O_APPEND, 0644);
 	if (fd == -1)
 		ft_exit(errno, name, data);

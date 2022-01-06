@@ -6,7 +6,7 @@
 /*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:09:43 by fbeatris          #+#    #+#             */
-/*   Updated: 2022/01/02 20:50:47 by fbeatris         ###   ########.fr       */
+/*   Updated: 2022/01/06 23:50:35 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,59 +49,50 @@ void	parse_line_loop(char **line, t_arg *data, t_command *cmd, int *i)
 	}
 }
 
-void	parse_line(char **line, t_arg *data, t_command *cmd)
+char	*parse_line(char **line, t_arg *data, t_command *cmd)
 {
 	char	*one_cmd;
 	int		i;
+	int		start;
 	char	*new_line;
-	char	*save_line;
 
 	i = 0;
-	save_line = *line;
+	start = 0;
 	if ((*line)[i] == '|')
-		(*line)++;
-	// printf("start: |%s|\n", *line);
+	{
+		i++;
+		start++;
+	}
 	parse_line_loop(line, data, cmd, &i);
-	one_cmd = ft_substr(*line, 0, i, data);
+	one_cmd = ft_substr(*line, start, i, data);
 	cmd->cmd = ft_split(one_cmd, ' ', data);
 	free(one_cmd);
 	new_line = ft_strdup(&(*line)[i], data);
-	free(save_line);
-	// printf("finish: |%s|\n", *line);
-//	printf("new line: |%s|\n", new_line);
-
-	*line = new_line;
-	// printf("new line: |%s|\n", *line);
+	free(*line);
+	return (new_line);
 }
 
 /* return 1 if syntax error */
-int	parser(t_arg *data, char *read_line)
+int	parser(t_arg *data, char *line)
 {
-	int			i;
 	t_command	*temp;
-	char		*line;
 
-	line = ft_strdup(read_line, data);
-	free (read_line);
 	if (!line)
 		ft_exit(12, "malloc", data);
-	i = 0;
 	if (check_syntax(line, data))
 		return (1);
 	data->cmd = new_command();
 	data->num_cmd = 1;
 	temp = data->cmd;
-	parse_line(&line, data, data->cmd);
+	line = parse_line(&line, data, data->cmd);
 	if (!line)
 		ft_exit(12, "malloc", data);
-	i = 0;
-	// printf("parser line: |%s|\n--------\n", line);
-	while (line[i] && line[i] == '|')
+	while (line[0] && line[0] == '|')
 	{
 		data->cmd->next = new_command();
 		data->cmd = data->cmd->next;
 		data->num_cmd++;
-		parse_line(&line, data, data->cmd);
+		line = parse_line(&line, data, data->cmd);
 		if (!line)
 			ft_exit(12, "malloc", data);
 	}
