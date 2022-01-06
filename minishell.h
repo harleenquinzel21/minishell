@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 13:55:52 by ogarthar          #+#    #+#             */
-/*   Updated: 2022/01/05 20:08:33 by ogarthar         ###   ########.fr       */
+/*   Updated: 2022/01/06 20:51:38 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ void	ft_print_all(t_arg *data);
 
 /*./parser*/
 void	rl_replace_line(const char *str, int num);
+int		rl_clear_history();
 void	go_readline(char **line, t_arg *data);
 
 char	*wrong_redirects(char *line);

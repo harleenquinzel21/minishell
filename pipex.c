@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 19:30:03 by ogarthar          #+#    #+#             */
-/*   Updated: 2022/01/05 19:06:13 by ogarthar         ###   ########.fr       */
+/*   Updated: 2022/01/06 17:17:52 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ static void	ft_waitpid(pid_t *pid, int num, t_arg *data)
 		if (WIFEXITED(status))
 			data->errnum = WEXITSTATUS(status);
 		else
-			data->errnum = status + 128;
+			data->errnum = status;
+			// data->errnum = status + 128;
 	}
 	free(pid);
 }
