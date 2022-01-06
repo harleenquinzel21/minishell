@@ -6,7 +6,7 @@
 /*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 13:55:52 by ogarthar          #+#    #+#             */
-/*   Updated: 2022/01/06 18:24:07 by fbeatris         ###   ########.fr       */
+/*   Updated: 2022/01/06 23:57:50 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ void	ft_print_all(t_arg *data);
 
 /*./parser*/
 void	rl_replace_line(const char *str, int num);
+int		rl_clear_history();
 void	go_readline(char **line, t_arg *data);
 
 char	*wrong_redirects(char *line);
