@@ -6,7 +6,7 @@
 /*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 13:35:44 by ogarthar          #+#    #+#             */
-/*   Updated: 2022/01/07 18:29:46 by fbeatris         ###   ########.fr       */
+/*   Updated: 2022/01/07 18:50:22 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ void	free_commands(t_arg *data)
 	int	i;
 
 	i = 0;
-	if (ft_strcmp(data->cmd->cmd[0], "cd") == 0 && \
+	if (data->cmd->cmd && data->cmd->cmd[0] && \
+		ft_strcmp(data->cmd->cmd[0], "cd") == 0 && \
 		ft_strcmp(data->cmd->cmd[1], "~") == 0)
 	{
 		free(data->cmd->cmd[0]);
