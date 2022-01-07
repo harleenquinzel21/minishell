@@ -6,7 +6,7 @@
 /*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:09:43 by fbeatris          #+#    #+#             */
-/*   Updated: 2022/01/07 05:06:55 by fbeatris         ###   ########.fr       */
+/*   Updated: 2022/01/07 18:23:35 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_command	*new_command(void)
 void	parse_line_loop(char **line, t_arg *data, t_command *cmd, int *i)
 {
 	while ((*line)[*i] && (*line)[*i] != '|')
-	{
+	{		
 		while ((*line)[*i] == ' ')
 			(*i)++;
 		if ((*line)[*i] == '\"')
@@ -83,7 +83,10 @@ char	*parse_line(char **line, t_arg *data, t_command *cmd)
 		start++;
 	}
 	parse_line_loop(line, data, cmd, &i);
-	one_cmd = ft_substr(*line, start, i, data);
+	if ((*line)[i] == '|')
+		one_cmd = ft_substr(*line, start, i - 1, data);
+	else
+		one_cmd = ft_substr(*line, start, i, data);
 	cmd->cmd = ft_split(one_cmd, ' ', data);
 	replace_spaces(cmd->cmd);
 	free(one_cmd);
