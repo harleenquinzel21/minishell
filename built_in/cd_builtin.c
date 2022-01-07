@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 17:07:40 by ogarthar          #+#    #+#             */
-/*   Updated: 2022/01/05 15:10:02 by ogarthar         ###   ########.fr       */
+/*   Updated: 2022/01/07 13:30:54 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	ft_cd(t_arg *data, t_command *cmd)
 		write(2, "cd: HOME not set\n", 17);
 		return (1);
 	}
-	if (access(cd, F_OK) == 0 && data->num > 1)
+	if (access(cd, F_OK) == 0 && data->num == 1)
 	{
 		chdir(cd);
 		env_after_cd(&data);
