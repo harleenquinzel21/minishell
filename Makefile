@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+         #
+#    By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/21 16:31:18 by ogarthar          #+#    #+#              #
-#    Updated: 2022/01/02 15:16:56 by ogarthar         ###   ########.fr        #
+#    Updated: 2022/01/07 18:30:27 by fbeatris         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,8 @@ LIST =	main.c				parser/syntax_errors.c		built_in/export_builtin.c\
 		check_open.c		parser/syntax_other.c\
 		pipex.c\
 		heredoc.c\
-		print.c
+		print.c \
+		free_all.c
 
 
 OBJ = $(LIST:.c=.o)

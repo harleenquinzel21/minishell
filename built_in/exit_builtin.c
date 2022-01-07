@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 20:19:43 by ogarthar          #+#    #+#             */
-/*   Updated: 2022/01/07 18:38:46 by ogarthar         ###   ########.fr       */
+/*   Updated: 2022/01/07 18:41:59 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	ft_exit_cmd(t_arg *data, t_command *cmd)
 	if (cmd->cmd[1] && cmd->cmd[2])
 	{
 		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
-		return(1);
+		return (1);
 	}
 	if (cmd->cmd[1] && !ft_isalldigit(cmd->cmd[1]))
 		ft_exit((unsigned char)ft_atoi(data->cmd->cmd[1]), NULL, data);
@@ -65,53 +65,4 @@ int	ft_exit(int errnum, char *msg, t_arg *data)
 	}
 	// ft_free(data);////
 	exit(errnum);
-}
-
-void	free_redir_env_fd(t_arg *data)
-{
-	int		i;
-	t_redir	*redir_temp;
-
-	while (data->redir)
-	{
-		redir_temp = data->redir->data_next;
-		if (data->redir->in && data->redir->two)
-		{
-			unlink(data->redir->name);
-			free(data->redir->limiter);
-		}
-		free(data->redir->name);
-		free(data->redir);
-		data->redir = redir_temp;
-	}
-	i = 0;
-	while (data->env[i])
-	{
-		free(data->env[i]);
-		i++;
-	}
-	free (data->env);
-	if (data->num > 1)
-		free(data->fd);
-}
-
-void	free_structs(t_arg *data)
-{
-	t_command	*cmd_temp;
-	int			i;
-
-	while (data->cmd)
-	{
-		cmd_temp = data->cmd->next;
-		i = 0;
-		while (data->cmd->cmd[i])
-		{
-			free(data->cmd->cmd[i]);
-			i++;
-		}
-		free(data->cmd->cmd);
-		free(data->cmd);
-		data->cmd = cmd_temp;
-	}
-	free_redir_env_fd(data);
 }
