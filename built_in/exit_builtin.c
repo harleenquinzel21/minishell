@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 20:19:43 by ogarthar          #+#    #+#             */
-/*   Updated: 2022/01/07 16:55:19 by ogarthar         ###   ########.fr       */
+/*   Updated: 2022/01/07 18:38:46 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,11 +104,11 @@ void	free_structs(t_arg *data)
 	{
 		cmd_temp = data->cmd->next;
 		i = 0;
-		// while (data->cmd->cmd[i])
-		// {
-		// 	free(data->cmd->cmd[i]);
-		// 	i++;
-		// }
+		while (data->cmd->cmd[i])
+		{
+			free(data->cmd->cmd[i]);
+			i++;
+		}
 		free(data->cmd->cmd);
 		free(data->cmd);
 		data->cmd = cmd_temp;
