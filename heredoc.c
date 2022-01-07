@@ -6,27 +6,18 @@
 /*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 01:29:07 by ogarthar          #+#    #+#             */
-/*   Updated: 2022/01/06 23:58:59 by fbeatris         ###   ########.fr       */
+/*   Updated: 2022/01/07 05:08:08 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// int	g_ex = 0;
-
-void	heredoc_sig_int(int sig)
+static void	gnl_init_strings(char **end, char **line, t_arg *data)
 {
-	(void)sig;
-	// rl_clear_history();
-	// ft_putchar_fd('\n', STDERR_FILENO);
-	// // rl_on_new_line();
-	// rl_redisplay();
-//	write(1, "  \b\b\n", 5);
-	// rl_on_new_line();
-	// // rl_replace_line("", 1);
-	// // rl_redisplay();
-	printf("\033[1F                 !");
-	ft_exit(1, NULL, NULL);
+	*line = ft_strdup("\0", data);
+	*end = ft_strdup("\0\0", data);
+	if (!*line || !*end)
+		ft_exit(12, "malloc", data);
 }
 
 static void	gnl(char **line, t_arg *data)
@@ -34,10 +25,7 @@ static void	gnl(char **line, t_arg *data)
 	char	*end;
 	char	*tmp;
 
-	*line = ft_strdup("\0", data);
-	end = ft_strdup("\0\0", data);
-	if (!*line || !end)
-		ft_exit(12, "malloc", data);
+	gnl_init_strings(&end, line, data);
 	while (*end != '\n')
 	{
 		read(0, end, 1);
@@ -46,7 +34,7 @@ static void	gnl(char **line, t_arg *data)
 		if (!*end)
 		{
 			*line = NULL;
-			return;
+			return ;
 		}
 		tmp = ft_strjoin(*line, end, data);
 		if (!tmp)
@@ -68,59 +56,54 @@ static void	write_file(char *name, int fd, char *line, t_arg *data)
 		ft_exit(errno, name, data);
 }
 
-void	heredoc(char *name, char *limiter, t_arg *data)
+void	heredoc_loop(char *name, char *limiter, t_arg *data, int fd)
 {
 	char	*line;
+	int		i;
+
+	i = 1;
+	while (i)
+	{
+		write(1, "> ", 2);
+		signal(SIGINT, &heredoc_sig_int);
+		gnl(&line, data);
+		if (!line)
+		{
+			write(1, "  \b\b", 1);
+			break ;
+		}
+		if (ft_strcmp(line, limiter))
+			write_file(name, fd, line, data);
+		else
+			i = 0;
+		free(line);
+	}
+}
+
+void	heredoc(char *name, char *limiter, t_arg *data)
+{
 	int		fd;
-	int		i = 1;
-	int	status;
+	int		status;
 	pid_t	pid;
 
 	pid = fork();///
-
 	if (pid == -1)
 	{
 		data->errnum = errno;
 		waitpid(pid, &status, 0);
 		ft_exit(data->errnum, "fork", data);
 	}
+	if (pid != 0)
+		signal(SIGINT, SIG_IGN);
 	if (pid == 0)
 	{
-
 		fd = open(name, O_RDWR | O_CREAT | O_TRUNC | O_APPEND, 0644);
 		if (fd == -1)
 			ft_exit(errno, name, data);
-		i = 1;
-		while (i)
-		{
-			signal(SIGINT, &heredoc_sig_int);
-			// if (g_ex == 1)
-			// {
-			// 	// printf("!!\n");
-			// 	// line = ft_strdup(limiter, data);
-			// 	// line = ft_strdup("\n", data);
-			// 	g_ex = 0;
-			// 	break;
-			// }
-			write(1, "> ", 2);
-
-			gnl(&line, data);
-			if (!line)
-			{
-				write(1, "  \b\b", 1);
-				break;
-			}
-
-			if (ft_strcmp(line, limiter))
-				write_file(name, fd, line, data);
-			else
-				i = 0;
-			free(line);
-
-		}
-	// g_ex = 0;
-	close(fd);
+		heredoc_loop(name, limiter, data, fd);
+		close(fd);
+		ft_exit(data->errnum, NULL, data); // правильные аргументы ????
 	}
-
 	waitpid(pid, &status, 0);
+	signal(SIGINT, &sig_handler_parent);
 }

@@ -6,7 +6,7 @@
 /*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:09:43 by fbeatris          #+#    #+#             */
-/*   Updated: 2022/01/06 23:50:35 by fbeatris         ###   ########.fr       */
+/*   Updated: 2022/01/07 05:06:55 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,20 +32,39 @@ void	parse_line_loop(char **line, t_arg *data, t_command *cmd, int *i)
 		while ((*line)[*i] == ' ')
 			(*i)++;
 		if ((*line)[*i] == '\"')
-			(*line) = double_quotes((*line), i, data->envp, data);
-		if ((*line)[*i] == '\'')
+			(*line) = double_quotes((*line), i, data);
+		else if ((*line)[*i] == '\'')
 			(*line) = single_quotes((*line), i, data);
 		if ((*line)[*i] == '$' && ((*line)[*i + 1] == '_' || \
 			ft_isalpha((*line)[*i + 1])))
 			(*line) = env_replace((*line), i, data->envp, data);
 		if ((*line)[*i] == '$' && (*line)[*i + 1] == '?')
-			(*line) = exit_code_replace((*line), data);
+			(*line) = exit_code_replace((*line), data, i);
 		if (((*line)[*i] == '>' || (*line)[*i] == '<') && (*line)[(*i) + 1])
 			(*line) = parse_redirects((*line), i, cmd, data);
 		if ((*line)[*i] != '|')
 			(*i)++;
 		else
 			data->num_cmd++;
+	}
+}
+
+void	replace_spaces(char **cmd)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (cmd[i])
+	{
+		j = 0;
+		while (cmd[i][j])
+		{
+			if (cmd[i][j] == '\a')
+				cmd[i][j] = ' ';
+			j++;
+		}
+		i++;
 	}
 }
 
@@ -66,6 +85,7 @@ char	*parse_line(char **line, t_arg *data, t_command *cmd)
 	parse_line_loop(line, data, cmd, &i);
 	one_cmd = ft_substr(*line, start, i, data);
 	cmd->cmd = ft_split(one_cmd, ' ', data);
+	replace_spaces(cmd->cmd);
 	free(one_cmd);
 	new_line = ft_strdup(&(*line)[i], data);
 	free(*line);

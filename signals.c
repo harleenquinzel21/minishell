@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 15:51:22 by fbeatris          #+#    #+#             */
-/*   Updated: 2022/01/05 19:53:31 by ogarthar         ###   ########.fr       */
+/*   Updated: 2022/01/07 05:10:16 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,12 @@ void	sig_handler_parent(int sig_num)
 		rl_redisplay();
 		write(1, "  \b\b", 4);
 	}
+}
+
+void	heredoc_sig_int(int sig)
+{
+	(void)sig;
+	write(STDOUT_FILENO, "\b\b  \b\b\n", 7);
+	rl_on_new_line();
+	ft_exit(1, NULL, NULL);
 }

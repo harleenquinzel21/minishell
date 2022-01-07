@@ -6,7 +6,7 @@
 /*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 16:21:14 by misha             #+#    #+#             */
-/*   Updated: 2022/01/06 23:49:49 by fbeatris         ###   ########.fr       */
+/*   Updated: 2022/01/07 03:49:47 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,9 @@ static char	*replace_str(char *line, char *old, char *new, int start)
 	i = 0;
 	j = 0;
 	k = 0;
-//	printf("replace line: %s, start %d\n", line, start);
-
 	res_len = ft_strlen(line) - ft_strlen(old) + ft_strlen(new);
 	result = malloc(sizeof(*line) * res_len);
-	while (i < res_len && i < start)// && ft_strncmp(&line[i + 1], old, ft_strlen(old)))
+	while (i < res_len && i < start)
 	{
 		result[i] = line[i];
 		i++;
@@ -38,7 +36,6 @@ static char	*replace_str(char *line, char *old, char *new, int start)
 	while (line[k])
 		result[i++] = line[k++];
 	result[i] = '\0';
-//	printf("final i %d\n", i);
 	return (result);
 }
 
@@ -66,18 +63,16 @@ char	*env_replace(char *line, int *i, t_env *envp, t_arg *data)
 		temp = temp->next;
 	}
 	line = replace_str(line, env_key, env_value, begin);
-	*i = begin + ft_strlen(env_value);
-	// printf("NOW I %d\n", *i);
-//	printf("new line: %s, i %d\n---\n", line, *i);
+	*i = begin + ft_strlen(env_value) - 1;
 	free(env_key);
 	return (line);
 }
 
-char	*exit_code_replace(char *line, t_arg *data)
+char	*exit_code_replace(char *line, t_arg *data, int *i)
 {
 	char	*exit_code;
 
 	exit_code = ft_itoa(data->errnum, data);
-	line = replace_str(line, "?", exit_code, 0);
+	line = replace_str(line, "?", exit_code, *i);
 	return (line);
 }
