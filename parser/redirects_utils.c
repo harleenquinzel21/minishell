@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirects_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 23:51:22 by fbeatris          #+#    #+#             */
-/*   Updated: 2021/12/27 16:37:15 by fbeatris         ###   ########.fr       */
+/*   Updated: 2022/01/07 19:56:06 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	*save_redir_name(char *line, int *i, t_arg *data)
 	while (line[*i] && line[*i] == ' ')
 		(*i)++;
 	begin = *i;
-	while (line[*i] && line[*i] != ' ')
+	while (line[*i] && line[*i] != ' ' && line[*i] != '|')
 		(*i)++;
 	result = ft_substr(line, begin, *i - begin, data);
 	remove_redirect(line, save, *i);

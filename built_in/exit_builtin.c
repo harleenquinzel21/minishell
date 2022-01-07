@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 20:19:43 by ogarthar          #+#    #+#             */
-/*   Updated: 2022/01/07 18:41:59 by ogarthar         ###   ########.fr       */
+/*   Updated: 2022/01/07 19:55:39 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	ft_exit(int errnum, char *msg, t_arg *data)
 {
 	char	*errmsg;
 
-	(void)data;///
+	(void)data;
 	if (msg)
 	{
 		errmsg = strerror(errnum);
@@ -63,6 +63,5 @@ int	ft_exit(int errnum, char *msg, t_arg *data)
 		write(2, errmsg, ft_strlen(errmsg));
 		write(2, "\n", 1);
 	}
-	// ft_free(data);////
 	exit(errnum);
 }

@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/17 17:03:40 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/22 15:32:51 by ogarthar         ###   ########.fr       */
+/*   Updated: 2022/01/07 19:30:52 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 void	ft_pipe(t_arg *data)
 {
 	int	i;
-
-	// ft_putstr_fd("here\n", 1);
 
 	data->fd = malloc((data->num - 1) * sizeof(int *));
 	if (!data->fd)

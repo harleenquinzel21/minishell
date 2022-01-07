@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 19:30:03 by ogarthar          #+#    #+#             */
-/*   Updated: 2022/01/06 17:17:52 by ogarthar         ###   ########.fr       */
+/*   Updated: 2022/01/07 20:16:45 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,6 @@ void	ft_close(t_arg *data, int *file, int num)
 		close(data->fd[i][1]);
 		free(data->fd[i]);
 	}
-//	if (data->fd)
-//	 	free(data->fd);
-//	data->fd = NULL;
 	if (!file)
 		return ;
 	if (file[0])
@@ -41,10 +38,10 @@ void	ft_dup2(int i, int *file, t_command *cmd, t_arg *data)
 	int	dup2res;
 
 	dup2res = 0;
-	if (cmd->in)//read file
+	if (cmd->in)
 		dup2res = dup2(file[0], STDIN_FILENO);
 	else if (i && data->fd)
-		dup2res = dup2(data->fd[i - 1][0], STDIN_FILENO);// read prew cmd
+		dup2res = dup2(data->fd[i - 1][0], STDIN_FILENO);
 	if (dup2res == -1)
 		ft_exit(errno, "dup2", data);
 	if (cmd->out)
@@ -66,14 +63,18 @@ static void	ft_waitpid(pid_t *pid, int num, t_arg *data)
 		waitpid(-1, &status, 0);
 	if (data)
 	{
-		// printf("%d\n", status);
 		if (WIFEXITED(status))
 			data->errnum = WEXITSTATUS(status);
 		else
-			data->errnum = status;
-			// data->errnum = status + 128;
+			data->errnum = status + 128;
 	}
 	free(pid);
+}
+
+void	sig_pipex(void)
+{
+	signal(SIGINT, &sig_handler_child);
+	signal(SIGQUIT, &sig_handler_child);
 }
 
 void	pipex(t_arg *data)
@@ -87,7 +88,7 @@ void	pipex(t_arg *data)
 	i = -1;
 	while (++i < data->num)
 	{
-		pid[i] = fork();///
+		pid[i] = fork();
 		if (pid[i] == 0)
 			child_process(i, data);
 		if (pid[i] == -1)
@@ -98,10 +99,7 @@ void	pipex(t_arg *data)
 			ft_exit(data->errnum, "fork", data);
 		}
 		if (pid[i] != 0)
-		{
-			signal(SIGINT, &sig_handler_child);
-			signal(SIGQUIT, &sig_handler_child);
-		}
+			sig_pipex();
 	}
 	ft_close(data, NULL, data->num - 1);
 	ft_waitpid(pid, data->num, data);
