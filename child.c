@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 18:46:11 by ogarthar          #+#    #+#             */
-/*   Updated: 2022/01/02 16:38:04 by ogarthar         ###   ########.fr       */
+/*   Updated: 2022/01/07 18:36:42 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,12 @@ char	*find_path(char *cmd, char **envp, t_arg *data)
 	int		i;
 
 	i = 0;
+	if (ft_strchr(cmd, '/') || ft_strchr(cmd, '.'))
+	{
+		// if (access(cmd, F_OK) == 0)
+		return(cmd);
+
+	}
 	while (ft_strnstr(envp[i], "PATH", 4) == 0)
 		i++;
 	paths = ft_split(envp[i] + 5, ':', data);
@@ -113,9 +119,17 @@ void	child_process(int i, t_arg *data)
 	path = find_path(cmd->cmd[0], data->env, data);
 	if (execve(path, cmd->cmd, data->env) == -1)
 	{
+		data->errnum = 127;
+		if (access(path, F_OK) != 0)
+		{
+			ft_putstr_fd("minishell: ", 2);
+			ft_putstr_fd(cmd->cmd[0], 2);
+			write(2, " : No such file or directory\n", 29);
+			ft_exit(data->errnum, NULL, data);
+		}
 		if (path && check_x(data, path, cmd->cmd[0]))
 			ft_exit(data->errnum, NULL, data);
-		data->errnum = 127;
+
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(cmd->cmd[0], 2);
 		ft_putstr_fd(": command not found\n", 2);
