@@ -6,7 +6,7 @@
 /*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 13:55:52 by ogarthar          #+#    #+#             */
-/*   Updated: 2022/01/07 19:26:30 by fbeatris         ###   ########.fr       */
+/*   Updated: 2022/01/07 20:35:31 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,12 +140,12 @@ void	pipex(t_arg *data);
 void	ft_dup2(int i, int *file, t_command *cmd, t_arg *data);
 
 /*./built_in*/
-int		ft_cd(t_arg *data, t_command *cmd); //cd with only a relative or absolute path
-int		ft_pwd(t_arg *data);// pwd with no options
-int		ft_env(t_arg *data, t_command *cmd);// env with no options or arguments
-int		ft_echo(t_arg *data, t_command *cmd);// echo with option -n
-int		ft_unset(t_command *cmd, t_arg *data);// unset with no options
-int		ft_export(t_arg *data, t_command *cmd);//export with no options
+int		ft_cd(t_arg *data, t_command *cmd);
+int		ft_pwd(t_arg *data);
+int		ft_env(t_arg *data, t_command *cmd);
+int		ft_echo(t_arg *data, t_command *cmd);
+int		ft_unset(t_command *cmd, t_arg *data);
+int		ft_export(t_arg *data, t_command *cmd);
 int		ft_add_new(char *str, t_arg *data);
 int		ft_export_join(char *new, t_env *envp, t_arg *data);
 void	ft_export_unset_error(t_arg *data, char *str, char *namecmd);
@@ -153,7 +153,7 @@ int		check_arg_export(char *str, t_arg *data);
 void	ft_cd_error(t_arg *data, char *str, int flag);
 int		ft_exit_cmd(t_arg *data, t_command *cmd);
 int		check_exit(t_arg *data);
-int		ft_exit(int errnum, char *msg, t_arg *data); //exit with no options
+int		ft_exit(int errnum, char *msg, t_arg *data);
 void	free_structs(t_arg *data);
 int		ft_last_err(t_arg *data);
 

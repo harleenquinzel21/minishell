@@ -6,10 +6,9 @@
 /*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 20:04:11 by ogarthar          #+#    #+#             */
-/*   Updated: 2022/01/07 20:26:48 by fbeatris         ###   ########.fr       */
+/*   Updated: 2022/01/07 20:34:53 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "minishell.h"
 
@@ -64,10 +63,10 @@ void	execution(t_arg *data)
 	fd = 0;
 	set_built(data->cmd);
 	ft_env_list_to_array(data->envp, data);
-	if (!check_open(data)) //проверяет и создает если нужно файлы для редир, обр-ка ошибок
+	if (!check_open(data))
 	{
 		data->num = ft_count_cmd(data->cmd);
-		if (data->num == 0) ///fixed exit code 255
+		if (data->num == 0)
 			return ;
 		if (data->num > 1)
 		{
@@ -100,7 +99,6 @@ int	main(int ac, char **av, char **envp)
 		go_readline(&line, data);
 		if (parser(data, line) == 0)
 		{
-			ft_print_all(data); /////если мешает закоменть:)
 			execution(data);
 			free_structs(data);
 		}

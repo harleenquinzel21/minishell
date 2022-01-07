@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 01:29:07 by ogarthar          #+#    #+#             */
-/*   Updated: 2022/01/07 05:08:08 by fbeatris         ###   ########.fr       */
+/*   Updated: 2022/01/07 20:05:30 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,21 +48,11 @@ static void	gnl(char **line, t_arg *data)
 	free(end);
 }
 
-static void	write_file(char *name, int fd, char *line, t_arg *data)
-{
-	if (write(fd, line, ft_strlen(line)) == -1)
-		ft_exit(errno, name, data);
-	if (write(fd, "\n", 1) == -1)
-		ft_exit(errno, name, data);
-}
-
 void	heredoc_loop(char *name, char *limiter, t_arg *data, int fd)
 {
 	char	*line;
-	int		i;
 
-	i = 1;
-	while (i)
+	while (1)
 	{
 		write(1, "> ", 2);
 		signal(SIGINT, &heredoc_sig_int);
@@ -73,10 +63,27 @@ void	heredoc_loop(char *name, char *limiter, t_arg *data, int fd)
 			break ;
 		}
 		if (ft_strcmp(line, limiter))
-			write_file(name, fd, line, data);
+		{
+			if (write(fd, line, ft_strlen(line)) == -1)
+				ft_exit(errno, name, data);
+			if (write(fd, "\n", 1) == -1)
+				ft_exit(errno, name, data);
+		}
 		else
-			i = 0;
+			break ;
 		free(line);
+	}
+}
+
+static void	ft_waitpid(pid_t pid, int status, t_arg *data)
+{
+	waitpid(pid, &status, 0);
+	if (data)
+	{
+		if (WIFEXITED(status))
+			data->errnum = WEXITSTATUS(status);
+		else
+			data->errnum = 1;
 	}
 }
 
@@ -86,7 +93,8 @@ void	heredoc(char *name, char *limiter, t_arg *data)
 	int		status;
 	pid_t	pid;
 
-	pid = fork();///
+	status = 0;
+	pid = fork();
 	if (pid == -1)
 	{
 		data->errnum = errno;
@@ -102,8 +110,8 @@ void	heredoc(char *name, char *limiter, t_arg *data)
 			ft_exit(errno, name, data);
 		heredoc_loop(name, limiter, data, fd);
 		close(fd);
-		ft_exit(data->errnum, NULL, data); // правильные аргументы ????
+		ft_exit(data->errnum, NULL, data);
 	}
-	waitpid(pid, &status, 0);
+	ft_waitpid(pid, status, data);
 	signal(SIGINT, &sig_handler_parent);
 }

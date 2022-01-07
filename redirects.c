@@ -6,16 +6,15 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 19:41:57 by ogarthar          #+#    #+#             */
-/*   Updated: 2021/12/22 14:56:23 by ogarthar         ###   ########.fr       */
+/*   Updated: 2022/01/07 20:29:31 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
-int		dup_fd(int file, t_arg *data)
+int	dup_fd(int file, t_arg *data)
 {
-	int fd;
+	int	fd;
 
 	fd = dup(STDOUT_FILENO);
 	if (fd == -1)
@@ -32,14 +31,13 @@ int		dup_fd(int file, t_arg *data)
 	return (fd);
 }
 
-int		dup_cmd(t_command *cmd, t_arg *data)
+int	dup_cmd(t_command *cmd, t_arg *data)
 {
 	int		fd;
 	int		file;
 	t_redir	*temp;
 
 	temp = cmd->out;
-	// printf("redir name |%s|\n", cmd->out->name);
 	if (!cmd->out)
 		return (-1);
 	while (cmd->out)
@@ -61,9 +59,9 @@ int		dup_cmd(t_command *cmd, t_arg *data)
 
 void	redup_cmd(int fd, t_arg *data)
 {
-	(void)data;
+	int	i;
 
-	int i;
+	(void)data;
 	if (fd == -1)
 		return ;
 	i = dup2(fd, STDOUT_FILENO);

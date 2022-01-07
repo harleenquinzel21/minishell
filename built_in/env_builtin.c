@@ -6,11 +6,28 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 15:17:44 by ogarthar          #+#    #+#             */
-/*   Updated: 2022/01/07 17:11:24 by ogarthar         ###   ########.fr       */
+/*   Updated: 2022/01/07 19:39:43 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int	ft_check_path(t_arg *data, char *cmd)
+{
+	t_env	*tmp;
+
+	tmp = data->envp;
+	while (tmp)
+	{
+		if (!ft_strcmp(tmp->key, "PATH"))
+			return (0);
+		tmp = tmp->next;
+	}
+	data->errnum = 127;
+	ft_print_error(2, NULL, cmd);
+	ft_exit(data->errnum, NULL, data);
+	return (1);
+}
 
 int	check_arg_export(char *str, t_arg *data)
 {

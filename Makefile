@@ -6,7 +6,7 @@
 #    By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/21 16:31:18 by ogarthar          #+#    #+#              #
-#    Updated: 2022/01/07 20:29:10 by fbeatris         ###   ########.fr        #
+#    Updated: 2022/01/07 20:35:20 by fbeatris         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,6 @@ LIST =	main.c				parser/syntax_errors.c		built_in/export_builtin.c\
 		check_open.c		parser/syntax_other.c\
 		pipex.c\
 		heredoc.c\
-		print.c\
 		free_all.c\
 		sort_env.c
 
