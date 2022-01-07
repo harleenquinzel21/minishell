@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 20:04:11 by ogarthar          #+#    #+#             */
-/*   Updated: 2022/01/07 04:35:05 by fbeatris         ###   ########.fr       */
+/*   Updated: 2022/01/07 15:50:28 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int	main(int ac, char **av, char **envp)
 		go_readline(&line, data);
 		if (parser(data, line) == 0)
 		{
-			//ft_print_all(data); /////если мешает закоменть:)
+			ft_print_all(data); /////если мешает закоменть:)
 			execution(data);
 			free_structs(data);
 		}

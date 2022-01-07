@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 13:55:52 by ogarthar          #+#    #+#             */
-/*   Updated: 2022/01/07 05:09:02 by fbeatris         ###   ########.fr       */
+/*   Updated: 2022/01/07 17:10:22 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,8 +145,8 @@ int		ft_export(t_arg *data, t_command *cmd);//export with no options
 int		ft_add_new(char *str, t_arg *data);
 int		ft_export_join(char *new, t_env *envp, t_arg *data);
 void	ft_export_unset_error(t_arg *data, char *str, char *namecmd);
-int		check_arg_export(char *str);
-void	ft_cd_error(t_arg *data, char *str);
+int		check_arg_export(char *str, t_arg *data);
+void	ft_cd_error(t_arg *data, char *str, int flag);
 int		ft_exit_cmd(t_arg *data, t_command *cmd);
 int		check_exit(t_arg *data);
 int		ft_exit(int errnum, char *msg, t_arg *data); //exit with no options

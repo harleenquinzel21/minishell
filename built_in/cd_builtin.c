@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/07 13:36:49 by ogarthar          #+#    #+#             */
-/*   Updated: 2022/01/07 13:36:52 by ogarthar         ###   ########.fr       */
+/*   Created: 2021/12/04 17:07:40 by ogarthar          #+#    #+#             */
+/*   Updated: 2022/01/07 17:00:24 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,16 @@ char	*get_cd(t_command *cmd, t_env *envp, t_arg *data)
 	return (cd);
 }
 
-void	ft_cd_error(t_arg *data, char *str)
+void	ft_cd_error(t_arg *data, char *str, int flag)
 {
 	data->errnum = 1;
 	write(2, "cd", 2);
 	write(2, ": ", 2);
 	write(2, str, ft_strlen(str));
-	write(2, " : No such file or directory\n", 29);
+	if (flag == 1)
+		write(2, " : No such file or directory\n", 29);
+	if (flag == 2)
+		write(2, " : Not a directory\n", 19);
 }
 
 int	ft_cd(t_arg *data, t_command *cmd)
@@ -80,7 +83,10 @@ int	ft_cd(t_arg *data, t_command *cmd)
 	cd = NULL;
 	if (!cmd->cmd[1])
 		cmd->cmd[1] = ft_strdup("~", data);
-	cd = get_cd(cmd, data->envp, data);
+	if (cmd->cmd[1][0] == '/' || cmd->cmd[1][0] == '.')
+		cd = ft_strdup(cmd->cmd[1], data);
+	else
+		cd = get_cd(cmd, data->envp, data);
 	if (!cd)
 	{
 		write(2, "cd: HOME not set\n", 17);
@@ -88,11 +94,13 @@ int	ft_cd(t_arg *data, t_command *cmd)
 	}
 	if (access(cd, F_OK) == 0 && data->num == 1)
 	{
-		chdir(cd);
-		env_after_cd(&data);
+		if (chdir(cd) != 0)
+			ft_cd_error(data, cmd->cmd[1], 2);
+		else
+			env_after_cd(&data);
 	}
 	else
-		ft_cd_error(data, cmd->cmd[1]);
+		ft_cd_error(data, cmd->cmd[1], 1);
 	free(cd);
 	return (data->errnum);
 }
