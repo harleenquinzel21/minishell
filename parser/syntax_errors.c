@@ -6,7 +6,7 @@
 /*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 16:13:54 by misha             #+#    #+#             */
-/*   Updated: 2021/12/27 16:42:17 by fbeatris         ###   ########.fr       */
+/*   Updated: 2022/01/07 02:42:01 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +80,14 @@ int	double_semicolon(char *line)
 
 char	*unexpected_token(char *line)
 {
+	if (line[0] == '|' && line[1] == '|')
+		return ("||");
 	if (wrong_pipes(line))
 		return ("|");
-	else if (wrong_semicolon(line))
-		return (";");
 	else if (double_semicolon(line))
 		return (";;");
+	else if (wrong_semicolon(line))
+		return (";");
 	else if (wrong_redirects(line))
 		return (wrong_redirects(line));
 	else if (empty_redirect(line))

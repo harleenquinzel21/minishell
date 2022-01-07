@@ -6,13 +6,13 @@
 /*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 16:21:14 by misha             #+#    #+#             */
-/*   Updated: 2022/01/02 20:52:06 by fbeatris         ###   ########.fr       */
+/*   Updated: 2022/01/07 03:49:47 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static char	*replace_str(char *line, char *old, char *new)
+static char	*replace_str(char *line, char *old, char *new, int start)
 {
 	int		i;
 	int		j;
@@ -25,7 +25,7 @@ static char	*replace_str(char *line, char *old, char *new)
 	k = 0;
 	res_len = ft_strlen(line) - ft_strlen(old) + ft_strlen(new);
 	result = malloc(sizeof(*line) * res_len);
-	while (i < res_len && ft_strncmp(&line[i + 1], old, ft_strlen(old)))
+	while (i < res_len && i < start)
 	{
 		result[i] = line[i];
 		i++;
@@ -44,7 +44,6 @@ char	*env_replace(char *line, int *i, t_env *envp, t_arg *data)
 	int		begin;
 	char	*env_key;
 	char	*env_value;
-	int		key_len;
 	t_env	*temp;
 
 	begin = *i;
@@ -53,7 +52,6 @@ char	*env_replace(char *line, int *i, t_env *envp, t_arg *data)
 	while (line[*i] && (line[*i] == '_' || ft_isalnum(line[*i])))
 		(*i)++;
 	env_key = ft_substr(line, begin + 1, *i - begin - 1, data);
-	key_len = ft_strlen(env_key);
 	temp = envp;
 	while (temp)
 	{
@@ -64,16 +62,17 @@ char	*env_replace(char *line, int *i, t_env *envp, t_arg *data)
 		}
 		temp = temp->next;
 	}
-	line = replace_str(line, env_key, env_value);
+	line = replace_str(line, env_key, env_value, begin);
+	*i = begin + ft_strlen(env_value) - 1;
 	free(env_key);
 	return (line);
 }
 
-char	*exit_code_replace(char *line, t_arg *data)
+char	*exit_code_replace(char *line, t_arg *data, int *i)
 {
 	char	*exit_code;
 
 	exit_code = ft_itoa(data->errnum, data);
-	line = replace_str(line, "?", exit_code);
+	line = replace_str(line, "?", exit_code, *i);
 	return (line);
 }

@@ -6,7 +6,7 @@
 /*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 16:10:50 by misha             #+#    #+#             */
-/*   Updated: 2022/01/02 20:18:06 by fbeatris         ###   ########.fr       */
+/*   Updated: 2022/01/07 05:07:17 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,16 @@ void	remove_quotes(char *line, int begin, int *i)
 		line[begin + j] = line[begin + j + 1];
 		j++;
 	}
-	while (begin + j < len)
+	while (begin + j < len - 2)
 	{
 		line[begin + j] = line[begin + j + 2];
 		j++;
 	}
-	while (line[begin + j + 2])
-		line[begin + j + 2] = '\0';
+	while (begin + j < len)
+	{
+		line[begin + j] = '\0';
+		j++;
+	}
 }
 
 char	*single_quotes(char *line, int *i, t_arg *data)
@@ -41,12 +44,17 @@ char	*single_quotes(char *line, int *i, t_arg *data)
 	begin = *i;
 	(*i)++;
 	while (line[*i] && line[*i + 1] && line[*i] != '\'')
+	{
+		if (line[*i] == ' ')
+			line[*i] = '\a';
 		(*i)++;
+	}
 	remove_quotes(line, begin, i);
+	(*i) -= 2;
 	return (line);
 }
 
-char	*double_quotes(char *line, int *i, t_env *envp, t_arg *data)
+char	*double_quotes(char *line, int *i, t_arg *data)
 {
 	int		begin;
 
@@ -56,9 +64,15 @@ char	*double_quotes(char *line, int *i, t_env *envp, t_arg *data)
 	{
 		if (line[*i] == '$' && (line[*i + 1] == '_' || \
 			ft_isalpha(line[*i + 1])))
-			line = env_replace(line, i, envp, data);
+		{
+			line = env_replace(line, i, data->envp, data);
+			(*i)--;
+		}
+		if (line[*i] == ' ')
+			line[*i] = '\a';
 		(*i)++;
 	}
 	remove_quotes(line, begin, i);
+	(*i) -= 2;
 	return (line);
 }
