@@ -6,7 +6,7 @@
 /*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 13:55:52 by ogarthar          #+#    #+#             */
-/*   Updated: 2022/01/07 20:36:45 by fbeatris         ###   ########.fr       */
+/*   Updated: 2022/01/07 20:46:03 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ void	go_readline(char **line, t_arg *data);
 char	*wrong_redirects(char *line);
 int		empty_redirect(char *line);
 char	*other_syntax_cases(char *line);
+void	tabs_to_spaces(char **line);
 
 int		parser(t_arg *data, char *line);
 int		check_syntax(char *line, t_arg *data);

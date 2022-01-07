@@ -6,7 +6,7 @@
 /*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/26 20:05:36 by fbeatris          #+#    #+#             */
-/*   Updated: 2021/12/27 16:11:27 by fbeatris         ###   ########.fr       */
+/*   Updated: 2022/01/07 20:47:16 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,4 +78,17 @@ char	*other_syntax_cases(char *line)
 		return ("minishell: unexpected EOF while looking for matching `\"\'");
 	else
 		return (NULL);
+}
+
+void	tabs_to_spaces(char **line)
+{
+	int	i;
+
+	i = 0;
+	while ((*line)[i])
+	{
+		if ((*line)[i] == '\t' || (*line)[i] == '\n')
+			(*line)[i] = ' ';
+		i++;
+	}
 }

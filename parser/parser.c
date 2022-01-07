@@ -6,7 +6,7 @@
 /*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:09:43 by fbeatris          #+#    #+#             */
-/*   Updated: 2022/01/07 18:23:35 by fbeatris         ###   ########.fr       */
+/*   Updated: 2022/01/07 20:46:48 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ int	parser(t_arg *data, char *line)
 
 	if (!line)
 		ft_exit(12, "malloc", data);
+	tabs_to_spaces(&line);
 	if (check_syntax(line, data))
 		return (1);
 	data->cmd = new_command();
