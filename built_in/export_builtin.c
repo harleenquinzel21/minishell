@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_builtin.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 17:06:22 by ogarthar          #+#    #+#             */
-/*   Updated: 2022/01/07 17:19:00 by ogarthar         ###   ########.fr       */
+/*   Updated: 2022/01/07 20:31:14 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,13 @@ int	ft_search_dups(t_env *envp, char *new, t_arg *data)
 	return (0);
 }
 
-int	if_without_arg(t_env *env)
+int	if_without_arg(t_env *env, t_arg *data)
 {
 	t_env	*tmp;
 
-	tmp = env;
+	(void) env;
+	sort_env(data);
+	tmp = data->envp_alpha;
 	while (tmp)
 	{
 		if (tmp->separator && tmp->value)
@@ -53,7 +55,7 @@ int	if_without_arg(t_env *env)
 					tmp->separator);
 		else
 			printf("declare -x %s\n", tmp->key);
-		tmp = tmp->next;
+		tmp = tmp->alpha_next;
 	}
 	return (0);
 }
@@ -112,7 +114,7 @@ int	ft_export(t_arg *data, t_command *cmd)
 	i = 0;
 	data->errnum = 0;
 	if (!cmd->cmd[1])
-		return (if_without_arg(data->envp));
+		return (if_without_arg(data->envp, data));
 	while (cmd->cmd[++i])
 	{
 		if (check_arg_export(cmd->cmd[i], data))

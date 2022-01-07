@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 13:55:52 by ogarthar          #+#    #+#             */
-/*   Updated: 2022/01/07 17:10:22 by ogarthar         ###   ########.fr       */
+/*   Updated: 2022/01/07 19:26:30 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_env
 	char			*separator;
 	char			*value;
 	struct s_env	*next;
+	struct s_env	*alpha_next;
 }	t_env;
 
 typedef struct s_redir
@@ -60,6 +61,7 @@ typedef struct s_arg
 	t_command		*cmd;
 	t_redir			*redir;
 	t_env			*envp;
+	t_env			*envp_alpha;
 	char			**env;
 	int				num;
 	int				num_cmd;
@@ -101,6 +103,8 @@ t_env	*env_create_new(char *key, char *sep, char *value);
 void	env_add_new(char *env_line, t_env **first, t_arg *data);
 char	*env_replace(char *line, int *i, t_env *envp, t_arg *data);
 char	*exit_code_replace(char *line, t_arg *data, int *i);
+void	sort_env(t_arg *data);
+
 
 /*signals*/
 void	sig_handler_child(int sig_num);
