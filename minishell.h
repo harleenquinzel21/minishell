@@ -6,7 +6,7 @@
 /*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 13:55:52 by ogarthar          #+#    #+#             */
-/*   Updated: 2022/01/07 20:35:31 by fbeatris         ###   ########.fr       */
+/*   Updated: 2022/01/07 20:36:45 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,6 @@ typedef struct s_arg
 	int				errnum;
 }	t_arg;
 
-//int g_errnum;
-
 char	**ft_split(char const *str, char c, t_arg *data);
 char	*ft_strdup(const char *s1, t_arg *data);
 char	*ft_strjoin(char const *s1, char const *s2, t_arg *data);
@@ -104,7 +102,6 @@ void	env_add_new(char *env_line, t_env **first, t_arg *data);
 char	*env_replace(char *line, int *i, t_env *envp, t_arg *data);
 char	*exit_code_replace(char *line, t_arg *data, int *i);
 void	sort_env(t_arg *data);
-
 
 /*signals*/
 void	sig_handler_child(int sig_num);
