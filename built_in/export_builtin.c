@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 17:06:22 by ogarthar          #+#    #+#             */
-/*   Updated: 2022/01/05 18:35:12 by ogarthar         ###   ########.fr       */
+/*   Updated: 2022/01/07 17:19:00 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,22 +115,18 @@ int	ft_export(t_arg *data, t_command *cmd)
 		return (if_without_arg(data->envp));
 	while (cmd->cmd[++i])
 	{
-		if (!check_arg_export(cmd->cmd[i]))
-		{
-			if (data->num == 1)
-			{
-				if (ft_strchr(cmd->cmd[i], '+') && \
-					ft_strchr(cmd->cmd[i], '=') && \
-					(ft_export_join(cmd->cmd[i], data->envp, data)))
-					continue ;
-				if (ft_search_dups(data->envp, cmd->cmd[i], data))
-					continue ;
-				if (!ft_add_new(cmd->cmd[i], data))
-					env_add_new(cmd->cmd[i], &data->envp, data);
-			}
-		}
-		else
-			ft_export_unset_error(data, cmd->cmd[i], "export");
+		if (check_arg_export(cmd->cmd[i], data))
+			continue ;
+		if (data->num != 1)
+			break ;
+		if (ft_strchr(cmd->cmd[i], '+') && \
+			ft_strchr(cmd->cmd[i], '=') && \
+			(ft_export_join(cmd->cmd[i], data->envp, data)))
+			continue ;
+		if (ft_search_dups(data->envp, cmd->cmd[i], data))
+			continue ;
+		if (!ft_add_new(cmd->cmd[i], data))
+			env_add_new(cmd->cmd[i], &data->envp, data);
 	}
 	return (data->errnum);
 }

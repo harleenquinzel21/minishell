@@ -6,23 +6,29 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 15:17:44 by ogarthar          #+#    #+#             */
-/*   Updated: 2022/01/05 20:46:25 by ogarthar         ###   ########.fr       */
+/*   Updated: 2022/01/07 17:11:24 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	check_arg_export(char *str)
+int	check_arg_export(char *str, t_arg *data)
 {
 	int	i;
 
 	i = 0;
 	if (!ft_isalpha(str[0]))
+	{
+		ft_export_unset_error(data, str, "export");
 		return (1);
+	}
 	while (str[i] && (str[i] == '_' || ft_isalnum(str[i])))
 		i++;
 	if (str[i] == '+' && str[i + 1] != '=')
+	{
+		ft_export_unset_error(data, str, "export");
 		return (1);
+	}
 	return (0);
 }
 
