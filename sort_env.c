@@ -6,7 +6,7 @@
 /*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 20:26:15 by fbeatris          #+#    #+#             */
-/*   Updated: 2022/01/07 20:32:23 by fbeatris         ###   ########.fr       */
+/*   Updated: 2022/01/08 16:10:02 by fbeatris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,9 @@ t_env	*sort_env_find_next(t_arg *data, t_env *current)
 	new = sort_env_find_last(data);
 	while (temp)
 	{
-		if (sort_env_compare(temp, new) < 0 && \
-			sort_env_compare(temp, current) > 0)
+		if (sort_env_compare(temp, new) <= 0 && \
+			sort_env_compare(temp, current) > 0 && \
+			ft_strcmp(temp->key, "_"))
 			new = temp;
 		temp = temp->next;
 	}
@@ -94,7 +95,7 @@ void	sort_env(t_arg *data)
 	}
 	current = sort_env_find_first(data);
 	data->envp_alpha = current;
-	while (i > 2)
+	while (i > 0)
 	{
 		new = sort_env_find_next(data, current);
 		current->alpha_next = new;
