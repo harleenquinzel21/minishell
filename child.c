@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 18:46:11 by ogarthar          #+#    #+#             */
-/*   Updated: 2022/01/07 20:04:42 by ogarthar         ###   ########.fr       */
+/*   Updated: 2022/01/08 16:10:45 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,16 @@ static void	open_dup(int i, t_command *cmd, t_arg *data)
 
 void	execve_faild(t_arg *data, char *path, t_command *cmd)
 {
-	data->errnum = 127;
+	if (!path)
+	{
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(cmd->cmd[0], 2);
+		ft_putstr_fd(": command not found\n", 2);
+		ft_exit(data->errnum, NULL, data);
+	}
 	if (access(path, F_OK) != 0)
 	{
+		data->errnum = 127;
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(cmd->cmd[0], 2);
 		write(2, " : No such file or directory\n", 29);
@@ -86,10 +93,7 @@ void	execve_faild(t_arg *data, char *path, t_command *cmd)
 		ft_putstr_fd(": Permission denied\n", 2);
 		ft_exit(data->errnum, NULL, data);
 	}
-	ft_putstr_fd("minishell: ", 2);
-	ft_putstr_fd(cmd->cmd[0], 2);
-	ft_putstr_fd(": command not found\n", 2);
-	ft_exit(data->errnum, NULL, data);
+
 }
 
 void	child_process(int i, t_arg *data)

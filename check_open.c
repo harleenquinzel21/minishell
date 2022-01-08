@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 20:12:51 by ogarthar          #+#    #+#             */
-/*   Updated: 2022/01/07 20:04:00 by ogarthar         ###   ########.fr       */
+/*   Updated: 2022/01/08 16:00:01 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,30 @@
 static int	err_open(int errnum, char *msg, t_arg *data)
 {
 	char	*errmsg;
-
+	(void)data;
 	if (errnum == 1)
 	{
+		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(msg, 2);
 		ft_putstr_fd(": ambiguous redirect\n", 2);
 	}
+	else if (errnum == 3)
+	{
+		errnum = 1;
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(msg, 2);
+		ft_putstr_fd(": Is a directory\n", 2);
+	}
 	else
 	{
+		ft_putstr_fd("minishell: ", 2);
 		errmsg = strerror(errnum);
 		write(2, msg, ft_strlen(msg));
 		write(2, ": ", 2);
 		write(2, errmsg, ft_strlen(errmsg));
 		write(2, "\n", 1);
 	}
-	data->errnum = errnum;
+	data->errnum = 1;
 	return (1);
 }
 
@@ -37,6 +46,8 @@ int	ambiguous_redirect(t_redir *tmp, t_arg *data)
 {
 	t_env	*env;
 
+	if (ft_strchr(tmp->name, '/') || ft_strchr(tmp->name, '.'))
+		return (3);
 	if (tmp->name[0] != '$')
 		return (0);
 	env = data->envp;
@@ -61,8 +72,8 @@ static int	open_file(t_redir *tmp, t_arg *data)
 {
 	int	fd;
 
-	if (ambiguous_redirect(tmp, data))
-		return (err_open(1, tmp->name, data));
+	if (ambiguous_redirect(tmp, data) != 0)
+		return (err_open(ambiguous_redirect(tmp, data), tmp->name, data));
 	if (!tmp->in && tmp->two)
 	{
 		fd = open(tmp->name, O_RDWR | O_CREAT | O_APPEND, 0644);
