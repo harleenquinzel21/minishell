@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 20:12:51 by ogarthar          #+#    #+#             */
-/*   Updated: 2022/01/08 16:00:01 by ogarthar         ###   ########.fr       */
+/*   Updated: 2022/01/12 13:43:22 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	err_open(int errnum, char *msg, t_arg *data)
 {
 	char	*errmsg;
-	(void)data;
+
 	if (errnum == 1)
 	{
 		ft_putstr_fd("minishell: ", 2);
@@ -24,7 +24,6 @@ static int	err_open(int errnum, char *msg, t_arg *data)
 	}
 	else if (errnum == 3)
 	{
-		errnum = 1;
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(msg, 2);
 		ft_putstr_fd(": Is a directory\n", 2);
@@ -46,7 +45,7 @@ int	ambiguous_redirect(t_redir *tmp, t_arg *data)
 {
 	t_env	*env;
 
-	if (ft_strchr(tmp->name, '/') || ft_strchr(tmp->name, '.'))
+	if (ft_strchr(tmp->name, '/') || (tmp->name[1] == '.'))
 		return (3);
 	if (tmp->name[0] != '$')
 		return (0);

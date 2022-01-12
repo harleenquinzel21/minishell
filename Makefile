@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+         #
+#    By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/21 16:31:18 by ogarthar          #+#    #+#              #
-#    Updated: 2022/01/07 20:35:20 by fbeatris         ###   ########.fr        #
+#    Updated: 2022/01/08 17:13:18 by ogarthar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,7 @@ CC = gcc
 
 CFLAGS = -Wall -Werror -Wextra -g -O3
 
-%.o:  %.c Makefile
+%.o:  %.c Makefile minishell.h
 	$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
 
 # COLORS

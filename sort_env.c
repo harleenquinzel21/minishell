@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sort_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbeatris <fbeatris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 20:26:15 by fbeatris          #+#    #+#             */
-/*   Updated: 2022/01/08 16:10:02 by fbeatris         ###   ########.fr       */
+/*   Updated: 2022/01/08 16:28:19 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_env	*sort_env_find_first(t_arg *data)
 	temp = data->envp;
 	while (temp)
 	{
-		if (sort_env_compare(temp, first) < 0)
+		if (sort_env_compare(temp, first) <= 0)
 			first = temp;
 		temp = temp->next;
 	}

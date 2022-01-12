@@ -6,7 +6,7 @@
 /*   By: ogarthar <ogarthar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 20:19:43 by ogarthar          #+#    #+#             */
-/*   Updated: 2022/01/07 19:55:39 by ogarthar         ###   ########.fr       */
+/*   Updated: 2022/01/08 16:27:19 by ogarthar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	ft_isalldigit(char *str)
 		i++;
 	while (str[++i])
 	{
-		if (!ft_isdigit((unsigned char)str[i]))
+		if (!ft_isdigit((unsigned char)str[i]) || ft_strlen(str) >= 19)
 			return (1);
 	}
 	return (0);
